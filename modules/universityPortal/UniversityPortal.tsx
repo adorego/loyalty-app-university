@@ -20,7 +20,7 @@ const UniversityPortal = (props:UniversityPortalProps) =>{
     const router = useRouter();
     const sigla = useAppSelector((state) => state.auth.university.sigla);
     
-    console.log("props:", props);
+    
 
     const onRegisterButtonClick = () =>{
         sigla ? router.push(`/${sigla}/auth/register`) : '';
