@@ -2,7 +2,7 @@ import { BUSINESS_EVENTS, GrantingBenefit } from "../../common/models/grantingBe
 
 import BasicCard from "../../common/Layout/BasicCard";
 import Button from "../../common/UI/Button";
-import Image from "next/Image";
+import Image from "next/image";
 import ImageModel from "../../common/models/ImageModel";
 import classes from './BenefitToShareCard.module.css';
 import { colors_app } from "../../common/models/colors";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Button from '../../common/UI/Button';
-import Image from 'next/Image';
+import Image from 'next/image';
 import ImageModel from '../../common/models/ImageModel';
 import classes from './UniversityPortal.module.css';
 import { useAppSelector } from '../../hooks/store-hooks';

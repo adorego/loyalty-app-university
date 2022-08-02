@@ -1,7 +1,7 @@
 import React, {Component, Fragment, ReactNode} from "react";
 
 import Button from "../../common/UI/Button";
-import Image from "next/Image";
+import Image from "next/image";
 import Link from "next/link";
 import classes from "./HomeHeader.module.css";
 import logo from '../../public/images/loyalty_logo.png';
