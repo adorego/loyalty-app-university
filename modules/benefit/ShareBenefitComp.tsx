@@ -27,7 +27,7 @@ const ShareBenefitComp = () =>{
     const codeGenerated = useRef<boolean>(false);
     const [benefitCode, setBenefitCode] = useState<string>("");
     const benefitToShare:Benefit = useAppSelector(state => state.shareBenefit.benefit);
-
+    let urlWA = '';
          
     const validateName = useCallback((value:string) =>{
         const empty = value.length === 0;
@@ -127,6 +127,17 @@ const ShareBenefitComp = () =>{
         return false;
     },[name, lastName, cellPhone]);
 
+    const transformCellPhoneNumber = (number:string) =>{
+        const formatedNumber = '+595' + number.slice(1);
+        console.log("formatedNumber:", formatedNumber);
+        return formatedNumber;
+    }
+
+    const createShareUrl = () =>{
+        const formatedCellPhone = transformCellPhoneNumber(cellPhone);
+        urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.google.com.py`
+    }
+
     useEffect(
         () =>{
             const callGenerateCode = async () =>{
@@ -146,6 +157,7 @@ const ShareBenefitComp = () =>{
                 console.log("before generate code");
                 if(isOkToShareButtonAvailable()){
                     callGenerateCode();
+                    createShareUrl();
                 }
             }catch(error){
                 dispatch(uiActions.showNotification({show:true, 
@@ -165,7 +177,7 @@ const ShareBenefitComp = () =>{
         )
     }
     // const urlWA = `https://wa.me/+595981902272?text=http://localhost:3000/${sigla}/benefit/${benefitCode.current}`;
-    const urlWA = `https://wa.me/+595981902272?text=https://www.google.com.py`;
+    // const urlWA = `https://wa.me/+595981902272?text=https://www.google.com.py`;
     
     if(Object.keys(benefitToShare).length === 0){
         router.push(`/${sigla}/mainClient`);
