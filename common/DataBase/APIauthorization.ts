@@ -1,4 +1,4 @@
-import {UNIVERSITIES, USERS} from "./collectionNames";
+import {UNIVERSITIES, USERS} from "./CollectionsName";
 
 import { Db } from "mongodb";
 import { NextApiResponse } from "next";
