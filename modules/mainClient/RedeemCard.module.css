@@ -1,0 +1,46 @@
+.container{
+    width: 90%;
+    max-width: 320px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* border: 2px solid red; */
+}
+
+.imageContainer{
+    width: 80%;
+    align-self: center;
+    height: auto;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    /* border: 2px solid red; */
+}
+
+.textContainer{
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid red; */
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.titleContainer{
+    align-items: center;
+}
+
+.requiredPoints{
+    margin: 0px 0px 40px 0px;
+    padding: 0px 0px 0px 0px;
+    text-align: center;
+}
+
+.requiredPoints h4{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.requiredPoints p{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}

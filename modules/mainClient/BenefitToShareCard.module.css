@@ -1,0 +1,40 @@
+
+.ImagePointsContainer{
+    display: flex;
+    flex-direction: row;
+
+}
+.imageContainer{
+    width: 50%;
+    height: auto;
+    max-width: 150px;
+}
+
+.benefitDescription{
+    margin: 16px 8px 16px 8px;
+    padding: 0px 0px 0px 0px;
+}
+
+.pointsToGrant{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.pointsTitle{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.pointsEvent{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+.grantPointsContainer{
+    margin: 0px 8px 0px 8px;
+    padding: 8px 10% 8px 10%;
+    text-align: center;
+}
+
+.shareButtonContainer{
+    margin: 16px 0px 16px 0px;
+}

@@ -1,0 +1,54 @@
+.container{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+   
+    
+
+    
+
+}
+
+
+.logo{
+    margin-top: 5px;
+    margin-bottom: 16px;
+    width:50vw;
+    max-width: 320px;
+    height: auto;
+    z-index: 0;
+}
+
+.SignOutLink{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-size: 20px;
+    /*optional*/
+    /* font-family: arial, sans-serif; */
+    /*input has OS specific font-family*/
+    /* color: #069; */
+    /* text-decoration: underline; */
+    cursor: pointer;
+}
+.SignInOutLink{
+    font-size: 20px;
+    padding: 0!important;
+    cursor: pointer;
+}
+@media screen and (max-width:600px) {
+    
+}
+
+@media screen and (min-width:600px) {
+    
+}

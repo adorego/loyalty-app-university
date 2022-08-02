@@ -1,0 +1,8 @@
+.button-per{
+  border-radius: 8px;
+  border: none;
+  max-width: 420px;
+  min-height:60px;
+  cursor:pointer;
+}
+

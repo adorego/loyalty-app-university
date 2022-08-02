@@ -1,0 +1,82 @@
+.topElements{
+    width: 100%;
+    /* max-width: 60vw; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 100%;
+}
+.helpLinkContainer{
+    display: none;
+}
+.helpLink{
+    color: var(--on-surface-text-color);
+    
+}
+
+.centerTitle{
+    text-align: center;
+}
+
+#titleId{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+@media screen and (max-width:600px) {
+    .topElements{
+        padding: 0px 0px 0px 0px;
+    }
+    .returnIconContainer{
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+    .title{
+        margin: 8px 0px 0px 8px;
+        padding: 0px 0px 0px 0px;
+    }
+    .helpLinkContainer{
+        margin: 0px 8px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+    .subTitleText{
+        margin: 0px 0px 0px 8px;
+        padding: 0px 0px 0px 0px;
+    }
+    .explanationText{
+        margin: 0px 0px 0px 8px;
+        padding: 0px 0px 0px 0px;
+    }
+    .highlightText{
+        margin: 0px 0px 0px 8px;
+        padding: 0px 0px 0px 0px;
+    }
+}
+@media screen and (min-width:600px) {
+    .topElements{
+        padding: 16px 0px 0px 8px;
+    }
+    .returnIconContainer{
+        margin: 0px 0px 0px 16px;
+        padding: 0px 0px 0px 0px;
+    }
+    .title{
+        margin: 32px 0px 0px 16px;
+        padding: 0px 0px 0px 0px;
+    }
+    .helpLinkContainer{
+        margin: 0px 16px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+    .subTitleText{
+        margin: 16px 0px 32px 16px;
+        padding: 0px 0px 0px 0px;
+    }
+    .explanationText{
+        margin: 0px 0px 0px 16px;
+        padding: 0px 0px 0px 0px;
+    }
+    .highlightText{
+        margin: 0px 0px 0px 16px;
+        padding: 0px 0px 0px 0px;
+    }
+}

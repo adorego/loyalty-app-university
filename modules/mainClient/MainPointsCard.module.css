@@ -1,0 +1,25 @@
+
+.container{
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    /* margin: 0px 0px 0px 0px; */
+    padding: 0px 0px 0px 0px;
+}
+
+.header{
+    color: #1A1A1A;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.points{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.footer{
+    color: #1A1A1A;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}

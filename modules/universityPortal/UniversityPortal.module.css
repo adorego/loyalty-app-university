@@ -1,0 +1,127 @@
+.container ul{
+    margin: 16px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.container ul li{
+    display: block;
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.container ul li h5{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    text-decoration: underline;
+}
+
+.container h3{
+    margin: 32px 0px 0px 0px;
+    text-align: center;
+
+}
+
+.headline{
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.insideContent{
+    position: absolute;
+    top:0vw;
+    left: 2vw;
+    text-align: center;
+    color: white;
+}
+
+.imageContainer{
+    width: 100%;
+    height: 100px;
+    max-height: 100px;
+    
+}
+
+.registerButtonContainer{
+   cursor: pointer;    
+        
+}
+
+
+@media screen and (min-width:320px) and (max-width:400px){
+    .container{
+        margin: 0px 16px 0px 16px;
+        
+    }
+
+    .topLinks{
+        font-size: 15px;
+        
+    }
+    .title{
+        margin: 24px 0px 0px 0px;
+        font-size: 35px;
+    }
+    .headline{
+        margin: 24px 0px 0px 0px;
+        height: auto;
+    }
+    .headline h5{
+        line-height: 1.5;
+        height: 100%;
+        font-size: 18px;
+    }
+
+    /* .registerButtonContainer{
+
+        top: 43vh;
+        left: calc((100% - 187px) / 2);
+    } */
+}
+@media screen and (min-width:400px) and (max-width:600px) {
+    .container{
+        margin: 0px 16px 0px 16px;
+        
+    }
+    .topLinks{
+        font-size: 17px;
+        
+    }
+    .title{
+        margin: 24px 0px 0px 0px;
+        font-size: 40px;
+    }
+    .headline{
+        margin: 24px 0px 0px 0px;
+        height: auto;
+    }
+    .headline h5{
+        line-height: 1.4;
+        height: 100%;
+    }
+    
+}
+
+@media screen and (min-width:600px) {
+    .container{
+        margin: 0px 64px 0px 64px;
+    }
+    .headline{
+        margin: 32px 0px 0px 0px;
+    }
+    .headline h5{
+        margin: 10vw 32px 0px 32px;
+        line-height: 1.4;
+        font-size: 4vw;
+    }
+
+    .registerButtonContainer{
+
+        margin: 32px 0px 0px 0px;
+    }
+}
