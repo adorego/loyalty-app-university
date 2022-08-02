@@ -38,7 +38,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const logOut = useAppSelector(state => state.auth.logOut);
     const [loadingState, setLoadingState] = useState(loading);
-    console.log("Imgreso a UniversityHome");
+    console.log("Ingreso a UniversityHome");
     useEffect(
         () =>{
             if(logOut){
