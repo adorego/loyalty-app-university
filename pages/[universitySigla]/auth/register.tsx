@@ -11,7 +11,7 @@ const Register = (props:RegisterProps) =>{
     const colors = useAppSelector(state => state.ui.color)
     
     return(
-         <RegisterComp primary_color={colors.primary_color} />
+         <RegisterComp primary_color={colors.primary} />
        
     )
 }

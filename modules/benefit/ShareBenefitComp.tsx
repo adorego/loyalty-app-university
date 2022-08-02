@@ -16,19 +16,23 @@ import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
 import {useSession} from 'next-auth/react';
 
-const ShareBenefitComp = () =>{
-    const dispatch = useAppDispatch();
+export interface ShareBenefitCompProps{
+
+}
+const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const sigla = useAppSelector(state => state.auth.university.sigla);
     const colors = useAppSelector(state => state.ui.color);
     const {data:session, status} = useSession();
-    const {universitySigla} = router.query;
+    
     const [loading, setLoading] = useState(true);
     const codeGenerated = useRef<boolean>(false);
     const [benefitCode, setBenefitCode] = useState<string>("");
     const benefitToShare:Benefit = useAppSelector(state => state.shareBenefit.benefit);
     let urlWA = '';
-         
+    
+    
     const validateName = useCallback((value:string) =>{
         const empty = value.length === 0;
         
@@ -110,13 +114,14 @@ const ShareBenefitComp = () =>{
             
             if(sigla === ""){
                 setLoading(true);
+                const {universitySigla} = router.query;
                 universitySigla !== undefined ? dispatch(fetchPortalData(String(universitySigla))) : "";
                  
             }else{
                 setLoading(false);
                
             }
-        },[sigla, universitySigla, dispatch]
+        },[sigla, dispatch]
     )
 
     const isOkToShareButtonAvailable = useCallback(() =>{
@@ -125,7 +130,7 @@ const ShareBenefitComp = () =>{
             return true;
         }
         return false;
-    },[name, lastName, cellPhone]);
+    },[validateName, name, validateLastName, lastName, validateCellPhone, cellPhone]);
 
     const transformCellPhoneNumber = (number:string) =>{
         const formatedNumber = '+595' + number.slice(1);
@@ -133,10 +138,7 @@ const ShareBenefitComp = () =>{
         return formatedNumber;
     }
 
-    const createShareUrl = () =>{
-        const formatedCellPhone = transformCellPhoneNumber(cellPhone);
-        urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.google.com.py`
-    }
+    
 
     useEffect(
         () =>{
@@ -151,6 +153,10 @@ const ShareBenefitComp = () =>{
                         setBenefitCode(data.code);
                         codeGenerated.current = true;
                     }
+                }
+            const createShareUrl = () =>{
+                    const formatedCellPhone = transformCellPhoneNumber(cellPhone);
+                    urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.google.com.py`
                 }
             
             try{
@@ -171,21 +177,23 @@ const ShareBenefitComp = () =>{
 
 
            
-    if(loading || status === 'loading'){
-        return(
-            <div className={spinnerClasses.spin}></div>
-        )
-    }
-    // const urlWA = `https://wa.me/+595981902272?text=http://localhost:3000/${sigla}/benefit/${benefitCode.current}`;
-    // const urlWA = `https://wa.me/+595981902272?text=https://www.google.com.py`;
+    // if(loading === true || status === 'loading'){
+    //     return(
+    //         <div className={spinnerClasses.spin}></div>
+    //     )
+    // }
     
-    if(Object.keys(benefitToShare).length === 0){
-        router.push(`/${sigla}/mainClient`);
-    }
-    if(status === 'unauthenticated'){
-        router.push(`/${sigla}/mainClient`);
-    }
-    if(status === 'authenticated'){
+    
+    // if(Object.keys(benefitToShare).length === 0){
+    //     router.push(`/${sigla}/mainClient`);
+    // }
+    // if(status === 'unauthenticated'){
+    //     router.push(`/${sigla}/mainClient`);
+    //     return(
+    //         <div className={spinnerClasses.spin}></div>
+    //     )
+    // }
+    // if(status === 'authenticated'){
         return(
             <div className={classes.container}>
                 <SectionHeader titleText="" centerMarginTitle={false} />
@@ -247,7 +255,7 @@ const ShareBenefitComp = () =>{
                 
             </div>
         )
-    }
+    
 }
 
 export default ShareBenefitComp;

@@ -1,7 +1,6 @@
 import CachedUniversityLayout from "../../../common/Layout/CacheUniversityLayout"
 import PageWithLayoutType from "../../../types/PageWithLayout"
 import ShareBenefitComp from "../../../modules/benefit/ShareBenefitComp"
-import { useAppSelector } from "../../../hooks/store-hooks"
 
 export interface ShareBenefitProps{
 

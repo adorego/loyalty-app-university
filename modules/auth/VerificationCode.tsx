@@ -34,7 +34,7 @@ const VerificationCode = () =>{
             isAvailable={true} 
             label="Confirmar" 
             additionalStyle={{color:"var(--loyalty-on-primary-text-color)", 
-            backgroundColor:colors.primary_color,
+            backgroundColor:colors.primary,
             margin:"16px 0px 0px 0px", width:"320px"}}/>
         </div>
     )

@@ -48,7 +48,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
             }else{
                 setLoadingState(false);
             }
-        }
+        }, [logOut, dispatch]
     )
     
     useEffect(

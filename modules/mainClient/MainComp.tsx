@@ -33,7 +33,8 @@ const MainComp = (props:MainCompProps) =>{
     
     const selectTab = (e:React.SyntheticEvent<HTMLButtonElement>) =>{
         // console.log("selected tab:", e.target.value);
-        setSelectedTab(e.target.value);
+        const currentValue = e.target as any;
+        setSelectedTab(currentValue.value as any);
     }
 
     useEffect(

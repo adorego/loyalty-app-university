@@ -1,13 +1,17 @@
 import Button from '../common/UI/Button';
-import Image from 'next/Image';
+import Image from 'next/image';
 import MainLayout from '../common/Layout/MainLayout';
 import {NextPage} from 'next';
+import PageWithLayoutType from '../types/PageWithLayout';
 import { ReactNode } from 'react';
 import background from '../public/images/backGround.png';
 import classes from '../styles/Home.module.css';
 import {useRouter} from "next/router";
 
-const HomePage = () =>{
+export interface HomePageProps{
+
+}
+const HomePage = (props:HomePageProps) =>{
     const router = useRouter();
     const onRegistrarmeClickHandler = () =>{
         router.push('/register');
@@ -52,11 +56,12 @@ const HomePage = () =>{
     )
 }
 
-HomePage.getLayout = function getLayout(page:ReactNode) {
-    return(
-        <MainLayout>
-            {page}
-        </MainLayout>
-    )
-}
+(HomePage as PageWithLayoutType).layout = MainLayout
+// HomePage.getLayout = function getLayout(page:ReactNode) {
+//     return(
+//         <MainLayout>
+//             {page}
+//         </MainLayout>
+//     )
+// }
 export default HomePage;
