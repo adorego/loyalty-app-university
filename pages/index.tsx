@@ -41,13 +41,13 @@ const HomePage = (props:HomePageProps) =>{
                         Lo mejor de todo es que LoyaltyAPP solo te cobra por resultados reales, ya no más cobros por vistas, 
                         por interacción, solamente matriculaciones.
                     </p>
-                    <div className={classes.registerButtonContainer}>
+                    {/* <div className={classes.registerButtonContainer}>
                         <Button label={"Registrarme"} isAvailable={true} 
                         onClickHandler={onRegistrarmeClickHandler}
                         additionalStyle={{backgroundColor:"var(--loyalty-primary-color)", 
                                         color:"var(--loyalty-on-primary-text-color)",
                                         padding:"0px 30px 0px 30px"}}/>
-                    </div>
+                    </div> */}
                     
                 </div>
                

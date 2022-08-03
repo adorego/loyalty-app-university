@@ -31,9 +31,9 @@ const HomeHeader = () =>{
                             <li><Link href={'/#contacto'}><a>Contacto</a></Link></li>
                         </ul>
                     </div>
-                    <Link href='/login'>
+                    {/* <Link href='/login'>
                         <a style={{color:"var(--loyalty-secondary-color)"}}>Ingresar</a>
-                    </Link>
+                    </Link> */}
                             
                     
                 </nav>
