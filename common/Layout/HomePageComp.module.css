@@ -121,10 +121,11 @@
       text-align: center;
     }  
   
-  @media screen and (max-width:600px) {
+  @media screen and (max-width:899px) {
       .imageContainer{
         display: none;
       }
+      
       /* .screenContainer{
         display: none;
       } */
@@ -155,8 +156,13 @@
 
   }
 
-  @media screen and (min-width:600px) {
+  @media screen and (min-width:899px) {
+    .imageContainer{
+      display: none;
+    }
     .landingContainer{
+      /* border: 2px solid red; */
+      margin: 0px 0px 0px 0px;
       height: 750px;
     }
     .imageContainer{
@@ -170,6 +176,7 @@
       left: 0px;
       width: 100%;
       text-align: center;
+      margin: 16px 0px 0px 0px;
     }
     .landingContentContainer{
       position: absolute;

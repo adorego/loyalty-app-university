@@ -12,10 +12,18 @@ const HomeHeader = () =>{
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
     
+    
+
     useEffect(
         ()=>{
+            console.log("Entro en useEffect");
+            const getWindowWidth = () =>{
+                return window.innerWidth;
+            }
             function handleWindowResize() {
-                if(getWindowWidth() >= 600){
+                // console.log("width:", getWindowWidth());
+                if(getWindowWidth() >= 900){
+                    // console.log("Es mayor o igual a 600:", getWindowWidth());
                     setShowMenu(true);
                 }else{
                     setShowMenu(false);
@@ -27,7 +35,7 @@ const HomeHeader = () =>{
               return () => {
                 window.removeEventListener('resize', handleWindowResize);
               };
-        },[]
+        }
     )
 
     const onLogoClickHandler = () =>{
@@ -37,9 +45,7 @@ const HomeHeader = () =>{
         setShowMenu(!showMenu);
     }
 
-    const getWindowWidth = () =>{
-        return window.innerWidth;
-    }
+    
     
     return(
         <Fragment>
