@@ -1,6 +1,7 @@
-import React, {Component, Fragment, ReactNode} from "react";
+import React, {Component, Fragment, ReactNode, useEffect, useState} from "react";
 
 import Button from "../../common/UI/Button";
+import { FaBars } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./HomeHeader.module.css";
@@ -9,10 +10,37 @@ import {useRouter} from 'next/router';
 
 const HomeHeader = () =>{
     const router = useRouter();
+    const [showMenu, setShowMenu] = useState(false);
+    
+    useEffect(
+        ()=>{
+            function handleWindowResize() {
+                if(getWindowWidth() >= 600){
+                    setShowMenu(true);
+                }else{
+                    setShowMenu(false);
+                }
+              }
+          
+              window.addEventListener('resize', handleWindowResize);
+          
+              return () => {
+                window.removeEventListener('resize', handleWindowResize);
+              };
+        },[]
+    )
 
     const onLogoClickHandler = () =>{
         router.push('/');
     }
+    const onMenuBarClickHandler = () =>{
+        setShowMenu(!showMenu);
+    }
+
+    const getWindowWidth = () =>{
+        return window.innerWidth;
+    }
+    
     return(
         <Fragment>
                 <nav className={classes.container}>
@@ -24,26 +52,21 @@ const HomeHeader = () =>{
                         onClick={onLogoClickHandler}
                          />
                     </div>
-                    <div className={classes.links}>
+                    {showMenu && <div className={classes.links}>
                         <ul>
-                            <li><Link href={'/#como_funciona'}><a>Cómo funciona ?</a></Link></li>
-                            <li><Link href={'/#cuanto_cuesta'}><a>Cuanto cuesta ?</a></Link></li>
-                            <li><Link href={'/#contacto'}><a>Contacto</a></Link></li>
+                            <li><Link href={'/#como_funciona'}><a onClick={onMenuBarClickHandler}>Cómo funciona ?</a></Link></li>
+                            <li><Link href={'/#cuanto_cuesta'} ><a onClick={onMenuBarClickHandler}>Cúanto cuesta ?</a></Link></li>
+                            <li><Link href={'/#contacto'} ><a onClick={onMenuBarClickHandler}>Contacto</a></Link></li>
                         </ul>
-                    </div>
+                    </div>}
+                    <FaBars className={classes.menuBar} onClick={onMenuBarClickHandler} />
                     {/* <Link href='/login'>
                         <a style={{color:"var(--loyalty-secondary-color)"}}>Ingresar</a>
                     </Link> */}
                             
                     
                 </nav>
-                <nav className={classes.mobileLinks}>
-                        <ul>
-                            <li><Link href={'/#como_funciona'}><a>Cómo funciona ?</a></Link></li>
-                            <li><Link href={'/#cuanto_cuesta'}><a>Cuanto cuesta ?</a></Link></li>
-                            <li><Link href={'/#contacto'}><a>Contacto</a></Link></li>
-                        </ul>
-                </nav>
+                
             </Fragment>
     )
 }

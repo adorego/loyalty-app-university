@@ -1,0 +1,244 @@
+
+    .landingContainer{
+      margin: 0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px;
+      
+    }
+    .imageContainer{
+      width: 100%;
+      height: 100vh;
+     
+    }
+    .backGroundImage{
+      height: 100vh;
+    }
+
+    .landingContentContainer{
+      display: flex;
+      
+    }
+
+    .landingLegend{
+      color: #1A1A1A;
+      margin: 0px 8px 0px 8px;
+      width: 90vw;
+      height: auto;
+      text-align: justify;
+      animation-name: mainText;
+      animation-duration: 6s;
+    }
+    .sectionTitle{
+      padding: 0px 0px 0px 0px;
+      margin: 0px 0px 0px 0px;
+      width: 100vw;
+      text-align: center;
+      background-color: var(--loyalty-primary-color);
+      color: var(--loyalty-on-primary-text-color);
+    }
+    .sectionTitle h2{
+      padding: 0px 0px 0px 0px;
+      margin: 8px 0px 0px 0px;
+    }
+    
+
+    .landingLegend a{
+      text-decoration: underline;
+    }
+
+    .howItWorks{
+      color: #1A1A1A;
+      margin: 8px 8px 0px 8px;
+      width: 90vw;
+      height: auto;
+      text-align: center;
+      animation-name: mainText;
+      animation-duration: 6s;
+    }
+
+    @keyframes mainText {
+      from{opacity:0;}
+      to{opacity: 1;}
+    }
+
+    .howItWorks h5 p{
+      margin:0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px;
+    }
+    .howItWorks a{
+      text-decoration: underline;
+    }
+    .howItWorks h2{
+      /* text-align: start; */
+    }
+
+    /*****************Section Cuánto cuesta ******************************/
+    .cuantoCuesta{
+      color: #1A1A1A;
+      margin: 16px 8px 0px 8px;
+      width: 90vw;
+      height: auto;
+      text-align: center;
+      animation-name: mainText;
+      animation-duration: 6s;
+    }
+
+    .cuantoCuesta p h2 h4{
+      margin:0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px;
+    }
+
+    .cuantoCuesta p{
+      text-align: start;
+      /* margin:0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px; */
+    }
+    .cuantoCuesta h2{
+      text-align: start;
+      /* margin:0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px; */
+    }
+    .cuantoCuesta h4{
+      text-align: start;
+      /* margin:0px 0px 0px 0px;
+      padding: 0px 0px 0px 0px; */
+    }
+
+    /*********************************************************************/
+
+    /*****************Section Contacto ******************************/
+    .contacto{
+      background-color: var(--loyalty-primary-color);
+      color: var(--loyalty-on-primary-text-color);
+      margin: 16px 0px 0px 0px;
+      padding: 0px 8px 16px 8px;
+      width: 100vw;
+      height: auto;
+      text-align: center;
+      animation-name: mainText;
+      animation-duration: 6s;
+    }
+    .contacto h2{
+      text-align: center;
+    }  
+  
+  @media screen and (max-width:600px) {
+      .imageContainer{
+        display: none;
+      }
+      /* .screenContainer{
+        display: none;
+      } */
+      .landingContentContainer{
+       
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+      }
+      .screenAppContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        
+        width: 100%;
+        height: 300px;
+      }
+      .screenContainer{
+        width: 110px;
+        height: auto;
+      }
+      .screenContainer2{
+        width:110px;
+        height: auto;
+      }
+
+  }
+
+  @media screen and (min-width:600px) {
+    .landingContainer{
+      height: 750px;
+    }
+    .imageContainer{
+      position: relative;
+      z-index: -10;
+      /* display: none; */
+    }
+    .landingContainer .sectionTitle{
+      position: absolute;
+      top: 130px;
+      left: 0px;
+      width: 100%;
+      text-align: center;
+    }
+    .landingContentContainer{
+      position: absolute;
+      padding: 0px 0px 0px 0px;
+      top: 250px;
+      left: 0px; 
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 0px;
+      width: 100vw;
+      height: auto;
+      
+    }
+
+    .landingLegend{
+      background-color: white;
+      opacity: 1;
+      border-radius: 20px;
+      color: #1A1A1A;
+      padding: 0px 16px 0px 16px;
+      
+      width: 50%;
+      height: auto;
+    }
+    .landingLegend p{
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    .screenAppContainer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 1vw;
+      align-items: center;
+      width: 30%;
+      height: 300px;
+    }
+    .screenContainer{
+     
+      width: 150px;
+      height: auto;
+    }
+    .screenContainer2{
+      width:150px;
+      height: auto;
+    }
+
+    #como_funciona .sectionTitle{
+      margin: 100px 0px 0px 0px;
+      padding: 200px 0px 0px 0px;
+    }
+
+    .cuantoCuesta p{
+      text-align: center;
+    }
+
+    .cuantoCuesta h4{
+      text-align: center;
+    }
+
+  }
+
+  @keyframes screenshot {
+    from{opacity:0;}
+    to{opacity: 1;}
+  }
+
+  @keyframes screenshot2 {
+    from{opacity:0;}
+    to{opacity: 1;}
+  }

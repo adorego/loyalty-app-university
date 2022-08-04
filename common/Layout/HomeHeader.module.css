@@ -15,52 +15,94 @@
 .logo{
     margin-top: 5px;
     margin-bottom: 16px;
-    width:40vw;
+    width:50vw;
     max-width: 320px;
     height: auto;
     z-index: 0;
     
 }
-.links ul{
-    list-style-type: none;
-}
 
-.links ul li{
-    color: var(--loyalty-on-primary-text-color);
-    display: inline;
-    margin-right: 5vw;
-    
-}
 
-@media screen and (min-width:900px){
-    .container{
-        padding-left: 32px;
-        padding-right: 32px;
-    }
 
-    .mobileLinks{
-        display: none;
-    }
-    
-}
-
-@media screen and (max-width:900px){
+@media screen and (max-width:600px){
     .links{
-        display: none;
-        
+        position: absolute;
+        top:50px;
+        right:55px;
+        max-width: 80vw;
+        background-color: white;
+        z-index: 10;
     }
-    .mobileLinks{
-        display: flex;
-        width: 100%;
-        text-align: center;
-        background-color: var(--loyalty-primary-color);
-        color: var(--loyalty-on-primary-text-color);
-    }
-    .mobileLinks ul{
+
+    .links ul{
         list-style-type: none;
     }
-    .mobileLinks ul li{
-        display: inline;
+
+    .links ul li{
+        color: black;
+        display: block;
         margin-right: 5vw;
+        font-size: 24px;
+        line-height: 2.2;
+        
+    }
+    .menuBar{
+        color:var(--loyalty-on-primary-text-color);
+        font-size: 32px;
     }
 }
+@media screen and (min-width:600px) and (max-width:900px){
+    .container{
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .links{
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        /* border: 2px solid red; */
+        align-self: flex-end;
+        margin: 0px 8px 16px 8px;
+    }
+    .links ul li{
+        color: var(--loyalty-on-primary-text-color);
+        display: inline;
+        margin-right: 5vw;
+        font-size: 18px;
+    }
+    .menuBar{
+        display: none;
+    }
+}
+@media screen and (min-width:900px){
+    .container{
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .logo{
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        /* border: 2px solid red; */
+    }
+    .links{
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+        /* border: 2px solid red; */
+        align-self: flex-end;
+        margin: 0px 8px 16px 8px;
+    }
+    .menuBar{
+        display: none;
+    }
+    .links ul li{
+        color: var(--loyalty-on-primary-text-color);
+        display: inline;
+        margin-right: 5vw;
+        font-size: 18px;
+    }
+
+}
+

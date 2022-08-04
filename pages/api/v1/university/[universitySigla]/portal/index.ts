@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import runMiddleware, { cors } from '../../../../_cors';
 
 import API400Error from './../../../../../../common/DataBase/Api400Error';
 import {connect} from '../../../../../../common/DataBase/Connect';
 import errorHandler from '../../../../../../common/DataBase/errorHandler';
 
 const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
+    await runMiddleware(req, res, cors);
+    
     if(req.method === 'GET'){
         try{
             const {universitySigla} = req.query;

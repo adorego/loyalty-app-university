@@ -156,7 +156,7 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                 }
             const createShareUrl = () =>{
                     const formatedCellPhone = transformCellPhoneNumber(cellPhone);
-                    urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.google.com.py`
+                    urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/benefit/${benefitCode}`;
                 }
             
             try{
