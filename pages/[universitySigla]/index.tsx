@@ -38,7 +38,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const logOut = useAppSelector(state => state.auth.logOut);
     const [loadingState, setLoadingState] = useState(loading);
-    console.log("Ingreso a UniversityHome");
+    
     useEffect(
         () =>{
             if(logOut){
@@ -93,7 +93,7 @@ export default UniversityHome;
 
 export  const getServerSideProps:GetServerSideProps = async (context) =>{
     const {universitySigla} = context.query;
-    const url = new URL(`http://localhost:3000/api/v1/university/${universitySigla}/portal`);
+    const url = new URL(`https://loyaltyapp.com.py/api/v1/university/${universitySigla}/portal`);
     const result = await fetch(url.href);
     const data = await result.json();
     console.log("data:", data);
