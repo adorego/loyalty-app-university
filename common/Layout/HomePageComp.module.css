@@ -38,6 +38,7 @@
     .sectionTitle h2{
       padding: 0px 0px 0px 0px;
       margin: 8px 0px 0px 0px;
+      font-size: 32px;
     }
     
 
@@ -88,17 +89,20 @@
     }
 
     .cuantoCuesta p{
-      text-align: start;
+      text-align: justify;
+
       /* margin:0px 0px 0px 0px;
       padding: 0px 0px 0px 0px; */
     }
     .cuantoCuesta h2{
       text-align: start;
+      
       /* margin:0px 0px 0px 0px;
       padding: 0px 0px 0px 0px; */
     }
     .cuantoCuesta h4{
-      text-align: start;
+      
+      text-align: center;
       /* margin:0px 0px 0px 0px;
       padding: 0px 0px 0px 0px; */
     }
@@ -118,8 +122,14 @@
       animation-duration: 6s;
     }
     .contacto h2{
+      margin: 0px 0px 0px 0px;
       text-align: center;
+      font-size: 32px;
     }  
+
+    .contacto h6{
+      margin: 0px 0px 0px 0px;
+    }
   
   @media screen and (max-width:899px) {
       .imageContainer{

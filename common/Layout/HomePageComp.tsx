@@ -39,20 +39,20 @@ const HomePageComp = () =>{
                     <div id="landingLegend" className={classes.landingLegend}>
                         
                         
-                        <p className={'body1'}>Imaginate poder crear tu propia APP de Marketing Digital personalizada
+                        <h6>Imaginate poder crear tu propia APP de Marketing Digital personalizada
                             a la marca de tu Universidad.
-                        </p>
-                        <p className={'body1'}>
+                        </h6>
+                        <h6>
                             Esta APP permite a tus principales Testimonios (tus alumnos) compartir beneficios únicos con su entorno y poder ganar a la vez
                             con las nuevas matriculaciones que cada uno genere.
-                        </p>
-                        <p className={'body1'}>
-                            Si ya lo estas vizualizando, contactanos hoy a: <FaWhatsapp />: <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005</a>  y comenzá a hacerlo realidad.
-                        </p>
-                        <p className={'body1'}>
-                            Lo mejor de todo es que LoyaltyAPP solo te cobra por resultados reales, ya no más cobros por vistas, 
-                            por interacción, solamente matriculaciones.
-                        </p>
+                        </h6>
+                        <h6>
+                            Si ya lo estás vizualizando, contactanos hoy a: <FaWhatsapp />: <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005</a>  y comenzá a hacerlo realidad.
+                        </h6>
+                        <h6>
+                            Lo mejor de todo es que LoyaltyAPP sólo te cobra por resultados reales, ya no más cobros por vistas, 
+                            por interacción, solamente por matriculaciones.
+                        </h6>
                         
                         
                     </div>
@@ -84,15 +84,15 @@ const HomePageComp = () =>{
                 <div className={classes.howItWorks}>
                     
                     <h5>Paso 1:</h5>
-                    <p>Contactanos al <FaWhatsapp />: <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005</a></p>
+                    <h6>Contactanos al <FaWhatsapp />: <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005.</a></h6>
                     <h5>Paso 2:</h5>
-                    <p>Creamos tu cuenta LoyaltyAPP Universidad personalizada a tu marca</p>
+                    <h6>Creamos tu cuenta LoyaltyAPP Universidad personalizada a tu marca.</h6>
                     <h5>Paso 3:</h5>
-                    <p>Te ayudamos a crear tus Campañas de Marketing Digital Uno a Uno</p>
+                    <h6>Te ayudamos a crear tus Campañas de Marketing Digital Uno a Uno.</h6>
                     <h5>Paso 4:</h5>
-                    <p>Probás la solución en un entorno controlado</p>
+                    <h6>Probás la solución en un entorno controlado.</h6>
                     <h5>Paso 5:</h5>
-                    <p>Una vez aprobados todos los detalles, lanzás tu APP en tu Universidad</p>
+                    <h6>Una vez aprobados todos los detalles, lanzás tu APP en tu Universidad.</h6>
                     
 
 
@@ -105,15 +105,15 @@ const HomePageComp = () =>{
                 <div className={classes.cuantoCuesta}>
                    
                     <h4>Etapa de personalización</h4>
-                    <p>La solución LoyaltyAPP tiene un costo mínimo de personalización dependiendo de las funcionalidades que desees agregar</p>
+                    <h6>La solución LoyaltyAPP tiene un costo mínimo de personalización dependiendo de las funcionalidades que desees agregar</h6>
                     <h4>Etapa operativa</h4>
-                    <p>Una vez operativo solo tiene un costo por resultados reales</p>
+                    <h6>Una vez operativo sólo tiene un costo por resultados reales</h6>
                 </div>
             </section>
             <section id="contacto">
             <div className={classes.contacto}>
                 <h2>Contacto</h2>
-                <p>Contactanos al:     <span><FaWhatsapp /></span> <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005</a></p>
+                <h6>Contactanos al:     <span><FaWhatsapp /></span> <a target={"_blank"} rel={"noreferrer"} href='https://wa.me/+595974265005?text=Quiero saber más sobre LoyaltyAPP'>(+595) 974 265 005</a></h6>
             </div>
             </section>
         </>
