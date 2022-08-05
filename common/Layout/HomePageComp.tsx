@@ -9,6 +9,9 @@ import screenShot2 from '../../public/images/ScreenStanford2.png';
 import {useRouter} from "next/router";
 
 const HomePageComp = () =>{
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
     return(
         
         <>
@@ -17,7 +20,9 @@ const HomePageComp = () =>{
                     <Image className={classes.backGroundImage} 
                     src={background} 
                     alt="Background"
+                    loader={loaderProp}
                     priority={true} 
+                    unoptimized={true}
                     layout="responsive" />
                 </div>
                 {/* <div className={classes.searchText}>

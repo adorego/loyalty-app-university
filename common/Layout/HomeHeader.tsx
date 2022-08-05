@@ -5,14 +5,16 @@ import { FaBars } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./HomeHeader.module.css";
-import logo from '../../public/images/loyalty_logo.png';
+import logo  from '../../public/images/loyalty_logo.png';
 import {useRouter} from 'next/router';
 
 const HomeHeader = () =>{
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
     
-    
+    const loaderProp =({ src }:any) => {
+        return src;
+    }
 
     useEffect(
         ()=>{
@@ -20,10 +22,17 @@ const HomeHeader = () =>{
             const getWindowWidth = () =>{
                 return window.innerWidth;
             }
+            if(getWindowWidth() >= 900){
+                console.log("Es mayor o igual a 600:", getWindowWidth());
+                setShowMenu(true);
+            }else{
+                setShowMenu(false);
+            }
+            
             function handleWindowResize() {
-                // console.log("width:", getWindowWidth());
+                console.log("width:", getWindowWidth());
                 if(getWindowWidth() >= 900){
-                    // console.log("Es mayor o igual a 600:", getWindowWidth());
+                    console.log("Es mayor o igual a 600:", getWindowWidth());
                     setShowMenu(true);
                 }else{
                     setShowMenu(false);
@@ -56,6 +65,8 @@ const HomeHeader = () =>{
                         layout="responsive"
                         priority={true}
                         onClick={onLogoClickHandler}
+                        loader={loaderProp}
+                        unoptimized={true}
                          />
                     </div>
                     {showMenu && <div className={classes.links}>
