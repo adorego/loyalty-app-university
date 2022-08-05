@@ -18,21 +18,19 @@ const HomeHeader = () =>{
 
     useEffect(
         ()=>{
-            console.log("Entro en useEffect");
+            
             const getWindowWidth = () =>{
                 return window.innerWidth;
             }
             if(getWindowWidth() >= 900){
-                console.log("Es mayor o igual a 600:", getWindowWidth());
+                
                 setShowMenu(true);
-            }else{
-                setShowMenu(false);
             }
             
             function handleWindowResize() {
-                console.log("width:", getWindowWidth());
+                
                 if(getWindowWidth() >= 900){
-                    console.log("Es mayor o igual a 600:", getWindowWidth());
+                    
                     setShowMenu(true);
                 }else{
                     setShowMenu(false);
