@@ -15,7 +15,8 @@ const authInitialState = {
     },
     university:{
         sigla:"",
-        logo:{src:"", width:"", height:""}
+        logo:{src:"", width:"", height:""},
+        favicon:""
         
     }
 }

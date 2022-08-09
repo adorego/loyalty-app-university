@@ -1,8 +1,34 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
 
+.cardContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 350px;
+    max-height: 350px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.imageContainer{
+    max-height: 320px;
+}
+
+.textContainer h4{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
 
 @media screen and (min-width:320px) and (max-width:400px){
     .container{
-        margin: 32px 16px 32px 16px;
+        margin: 0px 0px 0px 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -11,7 +37,6 @@
     }
 
     .cardContainer{
-        /* border:1px solid red; */
         height: 220px;
         display: flex;
         flex-direction: column;
@@ -25,18 +50,11 @@
     }
 
     .imageContainer{
-        width: 120px;
-        height: 120px;
-    }
-
-    .imageContainer{
-        /* border: 1px solid red; */
-        height: 100%;
         text-align: center;
     }
 
+    
     .textContainer{
-        /* border: 1px solid red; */
         margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
     }

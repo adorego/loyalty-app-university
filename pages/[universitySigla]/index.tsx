@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 
 import BenefitsPortal from "../../modules/universityPortal/BenefitsPortal";
 import CachedUniversityLayout from "../../common/Layout/CacheUniversityLayout";
+import Contactanos from "../../modules/universityPortal/Contactanos";
 import { GetServerSideProps } from "next";
 import HowItWorks from "../../modules/universityPortal/HowItWorks";
 import ImageModel from "../../common/models/ImageModel";
@@ -10,6 +11,7 @@ import PageWithLayoutType from "../../types/PageWithLayout";
 import UniversityPortal from "../../modules/universityPortal/UniversityPortal";
 import { authActions } from "../../store/auth-slice";
 import { benefitsList } from "../../common/models/testing_data";
+import classes from '../../styles/portal.module.css';
 import {signOut} from 'next-auth/react';
 import spinnerClass from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
@@ -17,6 +19,7 @@ import { useRouter } from "next/router";
 
 export interface UniversityPortalProps{
     logo:ImageModel;
+    favicon:string;
     primary_color:string;
     secondary_color:string;
     secondaryLight_color:string;
@@ -27,7 +30,10 @@ export interface UniversityPortalProps{
     forText:string;
     links:Array<string>;
     loading:boolean;
-    children:ReactNode
+    children:ReactNode;
+    contact_email:string;
+    contact_phone:string;
+    contact_whatsapp:string;
     
     
 
@@ -53,7 +59,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     
     useEffect(
         () =>{
-            dispatch(authActions.setUniversity({logo:props.logo, sigla:sigla}));
+            dispatch(authActions.setUniversity({logo:props.logo, sigla:sigla, favicon:props.favicon}));
             dispatch(uiActions.setColors({primary:props.primary_color, 
                 secondary:props.secondary_color,
                 secondaryLight:props.secondaryLight_color}));
@@ -66,8 +72,8 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
         )
     }
     return(
-        <>
-            <UniversityPortal 
+        <div className={classes.wrapper}>
+            <UniversityPortal
                 topLinks={props.links} 
                 title={props.title} 
                 backgroundImage={props.backGroundImage}
@@ -75,10 +81,14 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
                 forText={props.forText}
                 primaryColor={props.primary_color}
                 buttonText={props.buttonText}/>
-            <HowItWorks primaryColor={props.primary_color} />
-            <BenefitsPortal benefitList={benefitsList} />
+            <HowItWorks primaryColor={props.primary_color} secondaryColor={props.secondaryLight_color} />
+            <BenefitsPortal awardList={benefitsList} secondaryColor={props.secondaryLight_color} />
+            <Contactanos email={props.contact_email} 
+            phone={props.contact_phone}
+            whatsapp={props.contact_whatsapp} 
+            secondaryColor={props.secondaryLight_color}/>
             
-        </>
+        </div>
     )
     
     
@@ -92,11 +102,12 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
 export default UniversityHome;
 
 export  const getServerSideProps:GetServerSideProps = async (context) =>{
+    
     const {universitySigla} = context.query;
-    const url = new URL(`https://loyaltyapp.com.py/api/v1/university/${universitySigla}/portal`);
+    const url = new URL(`${process.env.API_HOST}/api/v1/university/${universitySigla}/portal`);
     const result = await fetch(url.href);
     const data = await result.json();
-    console.log("data:", data);
+    
     return{
         props:{
             ...data,

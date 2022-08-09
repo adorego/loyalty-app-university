@@ -5,16 +5,17 @@ import ImageComp from '../../common/UI/ImageComp';
 import classes from './BenefitsPortal.module.css';
 
 export interface BenefitsPortalProps{
-    benefitList:Array<Award>
+    awardList:Array<Award>;
+    secondaryColor:string;
 }
 const BenefitsPortal = (props:BenefitsPortalProps) =>{
     return(
         <section id="benefitPortalId" className={classes.container}>
-            <h4 className={classes.title}>Qué beneficios tenés ?</h4>
-            {props.benefitList.map(
+            {/* <h4 className={classes.title}>Qué beneficios tenés ?</h4> */}
+            {props.awardList.map(
                 (benefit, index) =>{
                     return (
-                        <BasicCard key={index}>
+                        <BasicCard key={index} additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                             <div className={classes.cardContainer}>
                                 <div className={classes.imageContainer}>
                                     {benefit.imageType === 'icon' && <BenefitIcon icon={String(benefit.icon)} />}

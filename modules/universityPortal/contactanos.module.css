@@ -1,7 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:16px;
+    background-color: var(--loyalty-section-portal-background);
+    padding: 32px 0px 32px 0px;
+}
+
+.iconClass{
+    font-size: 80px;
+}
+.cardContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    max-height: 250px;
+    text-align: center;
+    vertical-align: middle;
+}
 
 @media screen and (min-width:320px) and (max-width:400px){
     .container{
+        flex-direction: column;
         
-    }
+
+    }    
 
 }

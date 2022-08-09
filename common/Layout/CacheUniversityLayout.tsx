@@ -16,13 +16,14 @@ export interface CachedUniversityLayoutProps{
 const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
     const colors = useAppSelector(state => state.ui.color);
     const logo = useAppSelector(state => state.auth.university.logo);
+    const favicon = useAppSelector(state => state.auth.university.favicon);
     const {title, description} = useAppSelector(state => state.ui.head);
     const dispatch = useAppDispatch();
     const loading = useAppSelector(state => state.ui.loading);
     const notification = useAppSelector(state => state.ui.notification);
     const router = useRouter();
 
-    
+    console.log("logo:", logo);
     
     useEffect(
         () =>{
@@ -46,34 +47,38 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
     )
 
     const dataIsAvailable = () =>{
-        if(colors.primary !== "" && colors.secondary !== "" && logo.src !== ""){
+        if(colors.primary !== "" && colors.secondary !== "" && logo && logo.src !== "" && favicon !== ""){
             return true
         }
         return false
     }
 
+    
         return(
                 <>
                 <Head>
                     <meta charSet="UTF-8" />
-                    <meta name="keywords" content="titla, meta, nextjs" />
+                    <meta name="keywords" content={title} />
                     <meta name="author" content="LoyaltyAPP Inc" />
+                    <link rel="icon" href={favicon} />
                     <title>{title}</title>
                     <meta name="description" content={description} />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 </Head>
                 {loading && <div className={spinnerClasses.spin} ></div>}
                 {notification.show && <Notification message={notification.message} color= {notification.color} />}
-                {dataIsAvailable() && <UniversityHeader 
+                <UniversityHeader 
                         backGroundColor={colors.primary} 
                         logo={logo}
-                        loginLinkColor={colors.secondary} />}   
+                        loginLinkColor={colors.secondary} /> 
                 <main>
                     {children}
                 </main>
                 
                 </>
             )
+        
+    
     
     
 }

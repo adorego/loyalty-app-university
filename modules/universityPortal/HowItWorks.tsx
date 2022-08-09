@@ -7,29 +7,27 @@ import classes from './HowItWorks.module.css';
 export interface HowItWorksProps{
 
     primaryColor:string;
+    secondaryColor:string;
 }
 
 const HowItWorks = (props:HowItWorksProps) =>{
     return(
-        <section id='howItWorksId' className={classes.container}>
-            <h4 className={classes.title}>Cómo funciona ?</h4>
-            <BasicCard>
+        <section id='#cómofunciona' className={classes.container}>
+            {/* <h4 className={classes.title}>Cómo funciona ?</h4> */}
+            <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                 <div className={classes.cardContainer}>
-                    <div className={classes.firstRowCard}>
-                        <FaUserPlus className={classes.iconStep} />
-                        <div className={classes.stepTextContainer}>
-                            <h5 className={classes.stepText}>Paso 1</h5>
-                        </div>
-                    </div>
-                    <h3 className={classes.cardTagline}>Registrate</h3>
-                    <div className={classes.registerButtonContainer}>
+                    <FaUserPlus className={classes.iconStep} />
+                    <h5>Paso 1</h5>
+                    <h4>Registrate</h4>
+                    <div className={classes.registerBusttonContainer}>
                         <Button label={'Registrate hoy'} 
-                            isAvailable={true}
-                            additionalStyle={{backgroundColor:props.primaryColor, color:"white", padding:"16px 16px"}} />
+                                isAvailable={true}
+                                additionalStyle={{backgroundColor:props.primaryColor, color:"white", padding:"16px 16px"}} />
                     </div>
+                    
                 </div>
             </BasicCard>
-            <BasicCard>
+            <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                 <div className={classes.cardContainer}>
                     <div className={classes.firstRowCard}>
                         <FaUsers className={classes.iconStep}/>
@@ -40,7 +38,7 @@ const HowItWorks = (props:HowItWorksProps) =>{
                     <h4 className={classes.cardTagline}>Comparti Beneficios UCOM con tus amigos</h4>
                 </div>
             </BasicCard>
-            <BasicCard>
+            <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                 <div className={classes.cardContainer}>
                     <div className={classes.firstRowCard}>
                         <FaGifts className={classes.iconStep}/>

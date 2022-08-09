@@ -1,4 +1,10 @@
+.container{
+    margin: auto;
+    text-align: center;
+    
+}
 .container ul{
+    max-width: 100%;
     margin: 16px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     list-style: none;
@@ -12,24 +18,36 @@
     text-align: center;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
+    cursor: pointer;
+}
+.container ul li:hover{
+    color:darkgray;
 }
 
 .container ul li h5{
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-.container h3{
-    margin: 32px 0px 0px 0px;
-    text-align: center;
 
-}
+
 
 .headline{
     width: 100%;
-    height: 200px;
-    position: relative;
+    max-width: 800px;
+    min-height:500px;
+    color:white;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    box-shadow: var(--loyalty-light-shadow);
+    text-align: center;
+    padding:0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .insideContent{
@@ -44,6 +62,7 @@
     width: 100%;
     height: 100px;
     max-height: 100px;
+    max-width: 300px;
     
 }
 
@@ -55,7 +74,7 @@
 
 @media screen and (min-width:320px) and (max-width:400px){
     .container{
-        margin: 0px 16px 0px 16px;
+        margin: 0px 0px 0px 0px;
         
     }
 
@@ -69,19 +88,23 @@
     }
     .headline{
         margin: 24px 0px 0px 0px;
+        padding: 0px;
         height: auto;
     }
-    .headline h5{
+    .forText{
+        padding: 1rem;
+    }
+    .headline h4{
         line-height: 1.5;
         height: 100%;
         font-size: 18px;
     }
+    
+    .container ul{
+        flex-direction: column;
+    }
 
-    /* .registerButtonContainer{
-
-        top: 43vh;
-        left: calc((100% - 187px) / 2);
-    } */
+    
 }
 @media screen and (min-width:400px) and (max-width:600px) {
     .container{
@@ -98,30 +121,48 @@
     }
     .headline{
         margin: 24px 0px 0px 0px;
+        padding: 0px 8px 0px 8px;
         height: auto;
+        
     }
     .headline h5{
         line-height: 1.4;
+        font-size: 24px;
         height: 100%;
+        
     }
     
 }
 
 @media screen and (min-width:600px) {
     .container{
-        margin: 0px 64px 0px 64px;
+        margin: auto;
     }
     .headline{
-        margin: 32px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
+        gap: 16px;
+        
     }
     .headline h5{
-        margin: 10vw 32px 0px 32px;
-        line-height: 1.4;
-        font-size: 4vw;
+        margin: 0px 0px;
+        line-height: 1.2;
+        font-size: 28px;
     }
 
     .registerButtonContainer{
 
         margin: 32px 0px 0px 0px;
     }
+}
+
+@media screen and (min-width:800px) {
+    
+    .headline{
+        min-height: 700px;
+        margin: 0px 0px 0px 0px;
+        gap: 16px;
+        padding: 2rem;
+        
+    }
+    
 }

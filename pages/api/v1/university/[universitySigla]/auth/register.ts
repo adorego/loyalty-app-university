@@ -71,7 +71,7 @@ async function registrarUsuario(sigla:string, email:string, cedula:string, clave
 
 const sendVerificationCodeViaEmail = async (email:string, code:string, res:NextApiResponse) =>{
     try{
-        const response = await fetch(`http://localhost:${process.env.PORT}/api/email`,{
+        const response = await fetch(`${process.env.API_HOST}/api/email`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'

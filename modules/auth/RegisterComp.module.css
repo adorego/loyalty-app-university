@@ -53,7 +53,20 @@
     
    
 }
+@media screen and (max-width:599px) {
+    .title{
+        font-size: 32px;
+        margin: 0px 0px 0px 0px;
+    }
 
+    .passwordContainer{
+        margin: 0px 0px 0px 0px;
+    }
+
+    .confirmPasswordContainer{
+        margin: 0px 0px 0px 0px;
+    }
+}
 
 @media screen and (min-width:600px) {
     .submitButton{

@@ -24,16 +24,17 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
 
 
 async function getUniversityPortal(sigla:string, res:NextApiResponse){
-    
+        
         const db = await connect();
 
         const university_collection = db.collection('university');
         // console.log("university_collection:", university_collection);
         const result:any = await university_collection.findOne({sigla:sigla});
-        // console.log("data:", result.portal);
+        //console.log("data:", result);
 
         const portalData = {
             logo:result.logo, 
+            favicon:result.favicon,
             primary_color:result.configuration.primaryColor,
             secondary_color:result.configuration.secondaryColor,
             secondaryLight_color:result.configuration.secondaryLightColor,
@@ -42,7 +43,10 @@ async function getUniversityPortal(sigla:string, res:NextApiResponse){
             backGroundImage_large:result.portal.backgroundImage_large,
             buttonText:result.portal.buttonText,
             forText:result.portal.forText,
-            links:result.portal.links
+            links:result.portal.links,
+            contact_email:result.portal.contact_email,
+            contact_phone:result.portal.contact_phone,
+            contact_whatsapp:result.portal.contact_whatsapp
 
         }
         res.status(200).json({...portalData});
