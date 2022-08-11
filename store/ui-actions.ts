@@ -4,7 +4,7 @@ import { uiActions } from './ui-slice';
 
 export const fetchPortalData = (sigla:string):AppThunk =>
     async dispatch => {
-        const result = await fetch(`http://localhost:3000/api/v1/university/${sigla}/portal`);
+        const result = await fetch(`/api/v1/university/${sigla}/portal`);
         const data = await result.json();
         if(!result.ok){
             dispatch(uiActions.showNotification({show:true, message:data.message, color:"red"}));

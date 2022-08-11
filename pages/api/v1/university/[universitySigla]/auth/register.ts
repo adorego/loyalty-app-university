@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import API400Error from "../../../../../../common/DataBase/Api400Error";
 import API500Error from "../../../../../../common/DataBase/Api500Error";
+import { ObjectId } from "mongodb";
 import bcrypt from 'bcrypt';
 import { connect } from "../../../../../../common/DataBase/Connect";
 import errorHandler from "../../../../../../common/DataBase/errorHandler";
@@ -20,7 +21,7 @@ const  handler = async (req:NextApiRequest, res:NextApiResponse) =>{
            
 
         }catch(error){
-            // console.log('Ocurrio un error', error);
+            
             errorHandler(error, res);
         }
     }
@@ -35,8 +36,9 @@ async function registrarUsuario(sigla:string, email:string, cedula:string, clave
         const email_checker = university_collection.find({
             sigla:sigla,"users.email":email});
         const existedUser = await email_checker.next();
-        console.log("existedUser:", existedUser);
+        
         if(existedUser){
+            console.log('Error, el correo ya existe');
             throw new API400Error('Este correo ya existe');
         }
         const verification_code = generate_verification_code();
@@ -44,16 +46,11 @@ async function registrarUsuario(sigla:string, email:string, cedula:string, clave
         if(!sendEmailResult){
             throw new API500Error('No se pudo enviar el correo con la verificación');
         }
+        
         const result = await university_collection.updateOne(
             {sigla:sigla},
-            {$set:
-                {users:[
-                    { email, cedula, hash:hash, admin:false, verified:false}
-                ]}
-            },
-            {upsert:true}
-
-        );
+            {$push:{users:{_id:new ObjectId, email, cedula, hash}}}
+        )
         
         if(result.modifiedCount === 1){
             res.status(201).json({message:"Registro exitoso", verification_code:verification_code});
@@ -69,7 +66,7 @@ async function registrarUsuario(sigla:string, email:string, cedula:string, clave
 
 }
 
-const sendVerificationCodeViaEmail = async (email:string, code:string, res:NextApiResponse) =>{
+export const sendVerificationCodeViaEmail = async (email:string, code:string, res:NextApiResponse) =>{
     try{
         const response = await fetch(`${process.env.API_HOST}/api/email`,{
             method:'POST',
@@ -104,7 +101,7 @@ async function hashPassword(password:string):Promise<string>{
 }
 
 
-function generate_verification_code():string{
+export function generate_verification_code():string{
     let final_string = '';
     for(let i=0; i<6; i++){
         final_string = final_string.concat(String(Math.floor(Math.random() * 10)));

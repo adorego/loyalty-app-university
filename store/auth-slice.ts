@@ -43,6 +43,9 @@ const authSlice = createSlice({
         },
         setLogout(state, action){
             state.logOut = action.payload.logOut;
+        },
+        setUserEmail(state, action){
+            state.user.email = action.payload.email;
         }
     }
 });

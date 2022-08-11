@@ -1,13 +1,13 @@
 .notification{
     position: fixed;
     top:120px;
-    left:25vw;
+    left:10vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
-    width: 50vw;
+    width: 80vw;
     height: auto;
     padding: 10px;
     border-radius: 20px;

@@ -26,7 +26,7 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
     }
     return(
         <div className={classes.container}>
-            <h5>Compartí estos beneficios UCOM con tus amigos</h5>
+            <h5 className={classes.shareTitle}>Compartí estos beneficios UCOM con tus amigos</h5>
             <div className={classes.benefitsToShareListContainer}>
                     {props.benefitsToShare.map(
                         (configuredBenefit) =>{

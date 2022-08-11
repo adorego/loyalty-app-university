@@ -23,7 +23,7 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
     const notification = useAppSelector(state => state.ui.notification);
     const router = useRouter();
 
-    console.log("logo:", logo);
+    
     
     useEffect(
         () =>{
@@ -53,6 +53,7 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
         return false
     }
 
+    console.log("dataIsAvailable:", dataIsAvailable());
     
         return(
                 <>
@@ -67,10 +68,10 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
                 </Head>
                 {loading && <div className={spinnerClasses.spin} ></div>}
                 {notification.show && <Notification message={notification.message} color= {notification.color} />}
-                <UniversityHeader 
+                {dataIsAvailable() && <UniversityHeader 
                         backGroundColor={colors.primary} 
                         logo={logo}
-                        loginLinkColor={colors.secondary} /> 
+                        loginLinkColor={colors.secondary} />}
                 <main>
                     {children}
                 </main>
@@ -87,7 +88,7 @@ const setupRouterEvents = (dispatch:AppDispatch, router:any) =>{
   
   
     const loadingHandler = (loadingState:boolean) =>{
-      dispatch(uiActions.setLoading(loadingState));
+      dispatch(uiActions.setLoading({loading:loadingState}));
     }
     //Router events binding
     router.events.on('routeChangeStart', () => loadingHandler(true))

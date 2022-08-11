@@ -25,11 +25,11 @@ const uiSlice = createSlice({
     reducers:{
         showNotification(state, action){
             state.notification = action.payload;
-            state.loading = state.loading;
+            
         },
         setLoading(state, action){
-            state.loading = action.payload.loading,
-            state.notification = state.notification
+            state.loading = action.payload.loading
+            
         },
         setColors(state, action){
             state.color = action.payload

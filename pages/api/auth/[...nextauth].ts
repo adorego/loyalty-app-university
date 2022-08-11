@@ -46,6 +46,7 @@ export default NextAuth({
                         id:university_user.users[0]._id,
                         email: university_user.users[0].email
                         
+                        
                             
                     }
                 

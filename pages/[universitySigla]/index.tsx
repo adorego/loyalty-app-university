@@ -42,17 +42,25 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const router = useRouter();
     const {universitySigla:sigla} = router.query;
     const dispatch = useAppDispatch();
+    const globalLoading = useAppSelector(state => state.ui.loading);
     const logOut = useAppSelector(state => state.auth.logOut);
-    const [loadingState, setLoadingState] = useState(loading);
+    
     
     useEffect(
         () =>{
+            if(globalLoading){
+                dispatch(uiActions.setLoading({loading:false}));
+            }
+        },[]
+    )
+    useEffect(
+        () =>{
             if(logOut){
-                setLoadingState(true);
                 signOut();
-                dispatch(authActions.setLogout(false));
+                dispatch(authActions.setLogout({logout:false}));
+                dispatch(uiActions.setLoading({loading:false}));
             }else{
-                setLoadingState(false);
+                
             }
         }, [logOut, dispatch]
     )
@@ -66,11 +74,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
             dispatch(uiActions.setHead({title:props.title, description:props.forText}));
         },[]
     )
-    if(loadingState){
-        return(
-            <div className={spinnerClass.spin}></div>
-        )
-    }
+    
     return(
         <div className={classes.wrapper}>
             <UniversityPortal

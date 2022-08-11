@@ -1,13 +1,16 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import httpOperations, { HttpProps } from "../../common/http/http-operations";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Button from "../../common/UI/Button";
 import Input from "../../common/UI/Input";
+import VerificationCode from "./VerificationCode";
 import { authActions } from "../../store/auth-slice";
 import classes from './RegisterComp.module.css';
+import { fetchPortalData } from "../../store/ui-actions";
 import { isNumber } from "../../common/helpers/numberTestHelper";
+import spineerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
@@ -22,8 +25,24 @@ const RegisterComp = (props:RegisterCompProps) =>{
     const dispatch = useAppDispatch();
     const router = useRouter();
     const sigla = useAppSelector(state => state.auth.university.sigla);
+    const {universitySigla} = router.query;
+    const [verifyEmail, setVerifyEmail] = useState(false);
+    
 
     
+    useEffect(
+        () =>{
+            
+            if(sigla === ""){
+                dispatch(uiActions.setLoading({loading:true}));
+                universitySigla !== undefined ? dispatch(fetchPortalData(String(universitySigla))) : "";
+                 
+            }else{
+                dispatch(uiActions.setLoading({loading:true}));
+               
+            }
+        },[sigla, universitySigla, dispatch]
+    )
 
     const validateEmail = useCallback((value:string) =>{
         const result = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}/.test(value);
@@ -126,28 +145,24 @@ const RegisterComp = (props:RegisterCompProps) =>{
             !isInputPasswordInvalid && 
             !isInputRepeatedPasswordInvalid &&
             sigla !== ''){
-            //Submit object to backend
-                const dataToSend = {email, cedula, password, sigla};
+            //Send email verification
+                const dataToSend = {email, sigla};
                 dispatch(uiActions.setLoading({loading:true}));
                 
                 const sendParam:HttpProps = {
                     operation:'post',
-                    url:`/api/v1/university/${sigla}/auth/register`,
+                    url:`/api/v1/university/${sigla}/auth/sendVerificationCode`,
                     data:dataToSend
                 }
                 const {error, data, result} = await httpOperations(sendParam);
-                
+                console.log("Datos:", "error:", error, "data:", data, "result:", result);
                 if(!result.ok){
                     // console.log("Ocurrio un error:", error);
                     dispatch(
                         uiActions.showNotification({show:true, 
-                            message:`Ocurrió un error en el registro, ${data.message}`, color:"red"}));
+                            message:`Ocurrió un error en durante la verificación del correo, ${error.message}`, color:"red"}));
                 }else{
-                    dispatch(authActions.setVerificationCode({verification_code:data.verification_code}));
-                    dispatch(
-                        uiActions.showNotification({show:true, 
-                            message:`Registro exitoso`, color:"green"}));
-                    router.push(`/${sigla}/auth/confirm_email`);
+                    setVerifyEmail(true);
                 }
                 dispatch(uiActions.setLoading({loading:false}));
                 
@@ -160,6 +175,13 @@ const RegisterComp = (props:RegisterCompProps) =>{
         }
         return false;
             
+    }
+
+    if(verifyEmail){
+
+        return(
+            <VerificationCode registerData={{email:email, ci:cedula, password:password}}/>
+        )
     }
     
     return(

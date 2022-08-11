@@ -8,7 +8,7 @@ const httpOperations = async (props:HttpProps) =>{
     let result:any;
     let error = {status:"", message:""}
 
-    switch(props.operation){
+    switch(props.operation.toLowerCase()){
             case 'get':
                 result = await fetch(props.url);
                 
@@ -28,11 +28,14 @@ const httpOperations = async (props:HttpProps) =>{
                 });
                 
                 
+
                 if(!result.ok){
-                    error = {status:result.status, message:result.statusText};
+                    error = await result.json();
+                    console.log("Error:", error);
                    
                 }else{
                     data = await result.json();
+                    console.log("Data:", data);
                 }
         }
 

@@ -1,4 +1,5 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import httpOperations, { HttpProps } from "../../common/http/http-operations";
 // import { signIn, useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { useCallback, useEffect, useState } from "react";
@@ -9,6 +10,7 @@ import Link from "next/link";
 import { authActions } from "../../store/auth-slice";
 import classes from './LoginComp.module.css';
 import { fetchPortalData } from "../../store/ui-actions";
+import { sendVerificationCode } from "../../store/auth-actions";
 import {signIn} from "next-auth/react";
 import spineerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
@@ -28,10 +30,10 @@ const LoginComp = () =>{
 
     useEffect(
         () =>{
-            console.log("Entró en useEffect");
+            
             if(sigla === ""){
                 setLoading(true);
-                console.log("universitySigla:", universitySigla);
+                
                 universitySigla !== undefined ? dispatch(fetchPortalData(String(universitySigla))) : "";
                  
             }else{
@@ -114,17 +116,16 @@ const LoginComp = () =>{
                         sigla:sigla
                     
                     })
-                    console.log("result:", result);
-                    dispatch(uiActions.setLoading({loading:false}));
-                     if(result.error){
-                         
+                    if(result.error){
+                        dispatch(uiActions.setLoading({loading:false})); 
                         dispatch(uiActions.showNotification({show:true, message:"Hay un problema con el par usuario/clave", color:'red'}));
-                     }else{
+                    }else{
                         
-                        router.push(`/${sigla}/mainClient/`);
+                        router.push(`/${sigla}/mainClient`);
                 
                         
-                     }
+                    }
+                    dispatch(uiActions.setLoading({loading:false}));
                     
                     
                 }
@@ -133,7 +134,6 @@ const LoginComp = () =>{
     }
 
     const onRegisterClickHandler = (e:React.MouseEvent<HTMLButtonElement>) =>{
-        console.log("onRegisterClick");
         e.preventDefault();
         router.push(`/${sigla}/auth/register`);
     }

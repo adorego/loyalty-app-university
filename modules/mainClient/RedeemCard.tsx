@@ -40,7 +40,7 @@ const RedeemCard = (props:RedeemCardProps) =>{
         <div className={classes.redeemButtonContainer}>
                 <Button 
                     isAvailable={props.enableRedeem}
-                    label="Redimir" 
+                    label="Canjear" 
                     additionalStyle={{backgroundColor:props.colors.primary_color, 
                     color:"var(--loyalty-on-primary-text-color)", width:"100%", height:"49px"}}/>
         </div>
