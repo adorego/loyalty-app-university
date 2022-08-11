@@ -9,7 +9,6 @@ const authInitialState = {
         email:"",
         admin:false,
         university_id:"",
-        verified:false,
         verification_code:""
 
     },

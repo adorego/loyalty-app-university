@@ -1,5 +1,6 @@
 .box{
-    max-width: 90vw;
+    width: 90vw;
+    max-width: 320px;
     min-height: 300px;
     text-align: center;
     margin: auto;

@@ -65,6 +65,13 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
                     <title>{title}</title>
                     <meta name="description" content={description} />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <meta property="og:url" content={'https://www.loyaltyapp.com.py/ucom'} key="ogurl" />
+                    <meta property="og:image" itemProp="image" content={'https://loyaltyapp.com.py/images/ucom/social_ucom.png'} key="ogimage" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:updated_time" content="1440432930" />
+                    <meta property="og:site_name" content={title} key="ogsitename" />
+                    <meta property="og:title" content={title} key="ogtitle" />
+                    <meta property="og:description" content={description} key="ogdesc" />
                 </Head>
                 {loading && <div className={spinnerClasses.spin} ></div>}
                 {notification.show && <Notification message={notification.message} color= {notification.color} />}

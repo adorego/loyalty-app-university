@@ -10,7 +10,7 @@ import { authActions } from "../../store/auth-slice";
 import classes from './RegisterComp.module.css';
 import { fetchPortalData } from "../../store/ui-actions";
 import { isNumber } from "../../common/helpers/numberTestHelper";
-import spineerClasses from '../../styles/spinner.module.css';
+import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
@@ -27,6 +27,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
     const sigla = useAppSelector(state => state.auth.university.sigla);
     const {universitySigla} = router.query;
     const [verifyEmail, setVerifyEmail] = useState(false);
+    const [loading, setLoading] = useState(false);
     
 
     
@@ -34,11 +35,11 @@ const RegisterComp = (props:RegisterCompProps) =>{
         () =>{
             
             if(sigla === ""){
-                dispatch(uiActions.setLoading({loading:true}));
+                setLoading(true);
                 universitySigla !== undefined ? dispatch(fetchPortalData(String(universitySigla))) : "";
                  
             }else{
-                dispatch(uiActions.setLoading({loading:true}));
+                setLoading(false);
                
             }
         },[sigla, universitySigla, dispatch]
@@ -162,6 +163,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
                         uiActions.showNotification({show:true, 
                             message:`Ocurrió un error en durante la verificación del correo, ${error.message}`, color:"red"}));
                 }else{
+                    dispatch(authActions.setVerificationCode({verification_code:data.verification_code}));
                     setVerifyEmail(true);
                 }
                 dispatch(uiActions.setLoading({loading:false}));
@@ -182,6 +184,10 @@ const RegisterComp = (props:RegisterCompProps) =>{
         return(
             <VerificationCode registerData={{email:email, ci:cedula, password:password}}/>
         )
+    }
+
+    if(loading){
+        return <div className={spinnerClasses.spin}></div>
     }
     
     return(

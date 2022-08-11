@@ -26,9 +26,10 @@ const VerificationCode = (props:VerificationCodeProps) =>{
     
     
     const onValidate = async (event:React.ChangeEvent<HTMLButtonElement>) =>{
-        if(inputValue && inputValue.current){
+        console.log("onValidate:", inputValue.current?.value);
+        if(inputValue.current?.value !== ""){
             dispatch(uiActions.setLoading({loading:true}));
-             const currentValue = inputValue.current.value;
+             const currentValue = inputValue.current?.value;
              if(currentValue === verification_code){
                 const httpParams:HttpProps = {
                     operation:"post",
@@ -50,7 +51,7 @@ const VerificationCode = (props:VerificationCodeProps) =>{
                 
                 
              }
-             dispatch(uiActions.setLoading({loading:false}));
+            dispatch(uiActions.setLoading({loading:false}));
         }
        
     }
@@ -64,7 +65,7 @@ const VerificationCode = (props:VerificationCodeProps) =>{
                 label="Confirmar" 
                 additionalStyle={{color:"var(--loyalty-on-primary-text-color)", 
                 backgroundColor:colors.primary,
-                margin:"16px 0px 0px 0px", width:"90vw"}}/>
+                margin:"16px 0px 0px 0px", width:"90vw", maxWidth:"320px"}}/>
             </div>
     )
     
