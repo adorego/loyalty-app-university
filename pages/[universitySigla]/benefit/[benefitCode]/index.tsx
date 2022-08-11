@@ -15,3 +15,5 @@ const BenefitPage = (props:BenefitPageProps) =>{
 
 (BenefitPage as PageWithLayoutType).layout = CachedUniversityLayout;
 export default BenefitPage;
+
+

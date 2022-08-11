@@ -36,10 +36,6 @@ const authSlice = createSlice({
         setVerificationCode(state, action){
             state.user.verification_code = action.payload.verification_code;
         },
-        validate_email(state, action){
-            state.user.verified = action.payload.verified;
-
-        },
         setLogout(state, action){
             state.logOut = action.payload.logOut;
         },
