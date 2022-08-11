@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 
 import BenefitsPortal from "../../modules/universityPortal/BenefitsPortal";
 import CachedUniversityLayout from "../../common/Layout/CacheUniversityLayout";
-import Contactanos from "../../modules/universityPortal/Contactanos";
+import Contacto from "../../modules/universityPortal/Contacto";
 import { GetServerSideProps } from "next";
 import HowItWorks from "../../modules/universityPortal/HowItWorks";
 import ImageModel from "../../common/models/ImageModel";
@@ -87,7 +87,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
                 buttonText={props.buttonText}/>
             <HowItWorks primaryColor={props.primary_color} secondaryColor={props.secondaryLight_color} />
             <BenefitsPortal awardList={benefitsList} secondaryColor={props.secondaryLight_color} />
-            <Contactanos email={props.contact_email} 
+            <Contacto email={props.contact_email} 
             phone={props.contact_phone}
             whatsapp={props.contact_whatsapp} 
             secondaryColor={props.secondaryLight_color}/>

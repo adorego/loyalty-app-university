@@ -61,7 +61,7 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
                     <meta charSet="UTF-8" />
                     <meta name="keywords" content={title} />
                     <meta name="author" content="LoyaltyAPP Inc" />
-                    <link rel="icon" href={favicon} />
+                    <link rel="icon" href={favicon ? favicon : '/favicon.png'} />
                     <title>{title}</title>
                     <meta name="description" content={description} />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

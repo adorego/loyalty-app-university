@@ -1,16 +1,16 @@
 import { FaEnvelope, FaPhone, FaWhatsapp } from 'react-icons/fa';
 
 import BasicCard from '../../common/Layout/BasicCard';
-import classes from './Contactanos.module.css';
+import classes from './Contacto.module.css';
 
-export interface ContactanosProps{
+export interface ContactoProps{
     email:string;
     phone:string;
     whatsapp:string;
     secondaryColor:string;
     
 }
-const Contactanos = (props:ContactanosProps) =>{
+const Contacto = (props:ContactoProps) =>{
     return(
         <section id="contactanosId" className={classes.container}>
             <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
@@ -36,4 +36,4 @@ const Contactanos = (props:ContactanosProps) =>{
     )
 }
 
-export default Contactanos;
+export default Contacto;
