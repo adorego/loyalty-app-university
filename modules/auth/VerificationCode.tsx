@@ -10,7 +10,6 @@ import { uiActions } from "../../store/ui-slice";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import {useSession} from 'next-auth/react';
-import { verifyEmail } from "../../store/auth-actions";
 
 export interface VerificationCodeProps{
     registerData:RegisterModel;
