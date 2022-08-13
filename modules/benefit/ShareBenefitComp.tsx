@@ -198,7 +198,10 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     }
     
     
-    console.log("urlWA:", urlWA);
+    const generateBenefit = () =>{
+        //Almacenar los datos del beneficiario (nombre, apellido, celular, código del beneficio, código de la Campaña)
+    }
+    
     return(
             <div className={classes.container}>
                 <SectionHeader titleText="" centerMarginTitle={false} />
@@ -255,7 +258,7 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                     {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
                     <div className={classes[`${dinamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}>
                         
-                        <a className={classes.shareLink}  target={"_blank"} href={urlWA} rel="noreferrer">
+                        <a className={classes.shareLink}  target={"_blank"} href={urlWA} rel="noreferrer" onClick={generateBenefit}>
                             Ok Compartir!
                         </a>
                         

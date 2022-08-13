@@ -40,7 +40,7 @@ export default Main;
 
 export  const getServerSideProps:GetServerSideProps = async (context) =>{
     const {universitySigla} = context.query;
-    // const url = new URL(`http://localhost:3000/api/v1/university/${universitySigla}/portal`);
+    const url = new URL(`http://localhost:3000/api/v1/university/${universitySigla}/`);
     // const result = await fetch(url.href);
     // const data = await result.json();
     const data = {

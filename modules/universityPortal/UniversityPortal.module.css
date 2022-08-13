@@ -1,5 +1,5 @@
 .container{
-    margin: auto;
+        margin: auto;
     text-align: center;
     
 }
@@ -48,6 +48,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    
 }
 
 .insideContent{
@@ -157,12 +158,11 @@
 
 @media screen and (min-width:800px) {
     .container{
-        margin: 0px 16px 0px 16px;
+        margin: auto;
     }
     
     .headline{
         min-height: 700px;
-        margin: 0px 0px 0px 0px;
         gap: 16px;
         padding: 2rem;
         
