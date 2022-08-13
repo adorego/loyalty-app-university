@@ -136,7 +136,7 @@
 
 @media screen and (min-width:600px) {
     .container{
-        margin: auto;
+        margin: 0px 16px 0px 16px;
     }
     .headline{
         margin: 0px 0px 0px 0px;
@@ -156,6 +156,9 @@
 }
 
 @media screen and (min-width:800px) {
+    .container{
+        margin: 0px 16px 0px 16px;
+    }
     
     .headline{
         min-height: 700px;

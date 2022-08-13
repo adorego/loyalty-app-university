@@ -3,19 +3,25 @@
     
 }
 
+.benefitsToShareListContainer{
+    margin: 40px 0px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
 @media screen and (min-width:320px) and (max-width:600px) {
 
     .container{
         margin: 0px 8px 0px 8px;
         text-align: center;
+       
     }
-    .benefitsToShareListContainer{
-        margin: 40px 0px 0px 0px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
+    
+    .shareTitle{
+        font-size: 22px;
     }
 
 

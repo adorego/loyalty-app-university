@@ -156,7 +156,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
                     data:dataToSend
                 }
                 const {error, data, result} = await httpOperations(sendParam);
-                console.log("Datos:", "error:", error, "data:", data, "result:", result);
+                // console.log("Datos:", "error:", error, "data:", data, "result:", result);
                 if(!result.ok){
                     // console.log("Ocurrio un error:", error);
                     dispatch(

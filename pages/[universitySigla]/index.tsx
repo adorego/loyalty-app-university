@@ -13,9 +13,10 @@ import { authActions } from "../../store/auth-slice";
 import { benefitsList } from "../../common/models/testing_data";
 import classes from '../../styles/portal.module.css';
 import {signOut} from 'next-auth/react';
-import spinnerClass from '../../styles/spinner.module.css';
+import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 import { useRouter } from "next/router";
+import {useSession} from "next-auth/react";
 
 export interface UniversityPortalProps{
     logo:ImageModel;
@@ -44,36 +45,50 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const globalLoading = useAppSelector(state => state.ui.loading);
     const logOut = useAppSelector(state => state.auth.logOut);
+    const {data:session, status} = useSession();
     
+    
+    // useEffect(
+    //     () =>{
+    //         if(globalLoading){
+    //             dispatch(uiActions.setLoading({loading:false}));
+    //         }
+    //     },[]
+    // )
+    // useEffect(
+    //     () =>{
+    //         if(logOut){
+    //             signOut();
+    //             dispatch(authActions.setLogout({logout:false}));
+    //             dispatch(uiActions.setLoading({loading:false}));
+    //         }
+    //     }, [logOut, dispatch]
+    // )
     
     useEffect(
         () =>{
-            if(globalLoading){
-                dispatch(uiActions.setLoading({loading:false}));
+                dispatch(authActions.setUniversity({logo:props.logo, sigla:sigla, favicon:props.favicon}));
+                dispatch(uiActions.setColors({primary:props.primary_color, 
+                    secondary:props.secondary_color,
+                    secondaryLight:props.secondaryLight_color}));
+                dispatch(uiActions.setHead({title:props.title, description:props.forText}));
+            
+        },[]
+    )
+
+    useEffect(
+        () =>{
+            if(status === "authenticated" && sigla !== ""){
+                router.push(`/${sigla}/mainClient`);
             }
         },[]
     )
-    useEffect(
-        () =>{
-            if(logOut){
-                signOut();
-                dispatch(authActions.setLogout({logout:false}));
-                dispatch(uiActions.setLoading({loading:false}));
-            }else{
-                
-            }
-        }, [logOut, dispatch]
-    )
-    
-    useEffect(
-        () =>{
-            dispatch(authActions.setUniversity({logo:props.logo, sigla:sigla, favicon:props.favicon}));
-            dispatch(uiActions.setColors({primary:props.primary_color, 
-                secondary:props.secondary_color,
-                secondaryLight:props.secondaryLight_color}));
-            dispatch(uiActions.setHead({title:props.title, description:props.forText}));
-        },[]
-    )
+
+    if(status === 'authenticated'){
+        return(
+            <div className={spinnerClasses.spin}></div>
+        )
+    }
     
     return(
         <div className={classes.wrapper}>

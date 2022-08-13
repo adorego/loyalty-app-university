@@ -7,11 +7,12 @@ export interface MainPointsCardProps{
     points:string;
     footer:string;
     secondary_color:string;
+    containerClasses?:Array<string>;
 }
 
 const MainPointsCard = (props:MainPointsCardProps) =>{
     return(
-        <BasicCard additionalStyle={{border:`2px solid ${props.secondary_color}`}}>
+        <BasicCard  additionalStyle={{border:`2px solid ${props.secondary_color}`}}>
             <div className={classes.container} >
                 <h3 className={classes.header}>{props.header}</h3>
                 <h2 className={classes.points} style={{color:props.secondary_color}}>{props.points}</h2>

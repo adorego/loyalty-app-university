@@ -3,6 +3,7 @@ import ImageModel from '../models/ImageModel';
 import Link from 'next/link';
 import { authActions } from '../../store/auth-slice';
 import classes from './UniversityHeader.module.css';
+import { signOut } from 'next-auth/react';
 import { uiActions } from '../../store/ui-slice';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -26,13 +27,12 @@ const UniversityHeader = (props:UniversityHeaderProps) =>{
         // dispatch(uiActions.setLoading({loading:true}));
         dispatch(authActions.setLogout({logOut:true}));
         const result = await router.push(`/${sigla}/`);
-        // signOut();
+        signOut();
         dispatch(uiActions.setLoading({loading:false}));
         
     }
 
     const backToHome = () =>{
-        console.log('Entró en backHome');
         dispatch(uiActions.setLoading({loading:true}));
         router.push(`/${sigla}`);
     }

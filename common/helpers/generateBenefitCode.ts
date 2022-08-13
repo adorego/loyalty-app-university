@@ -1,10 +1,8 @@
 import httpOperations, { HttpProps } from "../http/http-operations";
 
-import { useCallback } from "react";
-
 export const getBenefitCode = async (sigla:string, benefitId:string, name:string, lastName:string, cellPhone:string) =>{
         
-    console.log("Before call getBenefitCode");
+    
     const dataToSend = {
             sigla:sigla,
             benefitId,

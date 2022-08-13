@@ -5,7 +5,6 @@ import AwardsTab from "./AwardTab";
 import BenefitsToShare from "./BenefitsToShare";
 import { ConfiguredAward } from "../../common/models/configuredAward";
 import { ConfiguredBenefit } from "../../common/models/configuredBenefit";
-import WinPoints from "./BenefitsToShare";
 import classes from './MainComp.module.css';
 import { fetchPortalData } from "../../store/ui-actions";
 import spinnerClasses from '../../styles/spinner.module.css';
@@ -48,7 +47,7 @@ const MainComp = (props:MainCompProps) =>{
                 setLoading(false);
                
             }
-        }
+        },[sigla, universitySigla, dispatch]
     )
 
     if(loading){

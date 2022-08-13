@@ -20,7 +20,6 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
     const onClickShareBenefitHandler = (benefit_id:string) =>{
         // console.log("Share Benefit Handler");
         const benefitToShare = props.benefitsToShare.filter((item) => item.benefit._id === benefit_id );
-        console.log("Selected benefit:", benefitToShare);
         dispatch(shareBenefitsActions.setShareBenefit({configuredBenefit:benefitToShare[0]}));
         router.push(`/${sigla}/share`);
     }

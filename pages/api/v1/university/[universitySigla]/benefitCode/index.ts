@@ -18,7 +18,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
                 name as string, lastName as string, cellPhone as string);
             res.status(201).json({code:code});
         }catch(error){
-            console.log('Ocurrio un error', error);
+            
             errorHandler(error, res);
         }
     }

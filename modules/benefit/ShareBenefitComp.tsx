@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import BasicCard from "../../common/Layout/BasicCard";
 import { Benefit } from "../../common/models/benefit";
-import Button from "../../common/UI/Button";
 import Input from "../../common/UI/Input";
 import SectionHeader from "../../common/UI/SectionHeader";
 import classes from "./ShareBenefitComp.module.css";
@@ -12,6 +11,7 @@ import { fetchPortalData } from "../../store/ui-actions";
 import { getBenefitCode } from "../../common/helpers/generateBenefitCode";
 import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
+import { url } from "inspector";
 import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
 import {useSession} from 'next-auth/react';
@@ -30,9 +30,9 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const codeGenerated = useRef<boolean>(false);
     const [benefitCode, setBenefitCode] = useState<string>("");
     const benefitToShare:Benefit = useAppSelector(state => state.shareBenefit.benefit);
-    let urlWA = '';
+    const [urlWA, setUrlWA] = useState<string>("");
     
-    
+    const dinamicShareButtonClass = codeGenerated.current ? "shareButtonContainer_visible" : "shareButtonContainer_notVisible" ;
     const validateName = useCallback((value:string) =>{
         const empty = value.length === 0;
         
@@ -121,11 +121,11 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                 setLoading(false);
                
             }
-        },[sigla, dispatch]
+        },[sigla, dispatch, router.query]
     )
 
     const isOkToShareButtonAvailable = useCallback(() =>{
-        if(validateName(name).pass && validateLastName(lastName).pass && validateCellPhone(cellPhone).pass){
+        if(validateName(name).pass && validateLastName(lastName).pass && validateCellPhone(cellPhone).pass && benefitToShare._id !== '' ){
             
             return true;
         }
@@ -138,7 +138,24 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
         return formatedNumber;
     }
 
-    
+    useEffect(
+        () =>{
+            console.log("benefitToShare is:", benefitToShare);
+            if(benefitToShare && Object.keys(benefitToShare).length === 0 && sigla !== ""){
+                console.log("Before routing");
+                router.push(`/${sigla}/mainClient`);
+            }
+        },[benefitToShare, sigla]
+    )
+
+    useEffect(
+        () =>{
+            if(benefitCode.length > 0 && codeGenerated.current){
+                const formatedCellPhone = transformCellPhoneNumber(cellPhone);
+                setUrlWA(`https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/benefit/${benefitCode}/`);
+            }
+        },[benefitCode, codeGenerated]
+    )
 
     useEffect(
         () =>{
@@ -148,22 +165,19 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                     if(!result.ok){
                         console.log("Ocurrio un error:", error);
                         dispatch(uiActions.showNotification({show:true, 
-                            message:`Ocurrió un error al generar el código:${error}`, color:"red"}))
+                            message:`Ocurrió un error al generar el código:${error.message}`, color:"red"}))
                     }else{
                         setBenefitCode(data.code);
                         codeGenerated.current = true;
                     }
                 }
-            const createShareUrl = () =>{
-                    const formatedCellPhone = transformCellPhoneNumber(cellPhone);
-                    urlWA = `https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/benefit/${benefitCode}`;
-                }
+            
             
             try{
-                console.log("before generate code");
+                
                 if(isOkToShareButtonAvailable()){
                     callGenerateCode();
-                    createShareUrl();
+                    
                 }
             }catch(error){
                 dispatch(uiActions.showNotification({show:true, 
@@ -176,25 +190,16 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     
 
 
-           
-    // if(loading === true || status === 'loading'){
-    //     return(
-    //         <div className={spinnerClasses.spin}></div>
-    //     )
-    // }
-    
-    
-    // if(Object.keys(benefitToShare).length === 0){
-    //     router.push(`/${sigla}/mainClient`);
-    // }
-    // if(status === 'unauthenticated'){
-    //     router.push(`/${sigla}/mainClient`);
-    //     return(
-    //         <div className={spinnerClasses.spin}></div>
-    //     )
-    // }
-    // if(status === 'authenticated'){
+   
+    if(loading === true || status === 'loading' || !benefitToShare._id){
         return(
+            <div className={spinnerClasses.spin}></div>
+        )
+    }
+    
+    
+    console.log("urlWA:", urlWA);
+    return(
             <div className={classes.container}>
                 <SectionHeader titleText="" centerMarginTitle={false} />
                 <h5 className={classes.title}>Datos de tu Referido</h5>
@@ -237,14 +242,19 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                 </div> */}
                 <h5 className={classes.benefitTitle}>Beneficio a compartir</h5>
                 
-                <BasicCard additionalStyle={{margin:"auto"}}>
+                <BasicCard additionalStyle={{margin:"auto", 
+                backgroundColor:colors.primary, 
+                color:"var(--loyalty-backGround-color)",
+                maxWidth:"450px",
+                textAlign:"center"}}>
                     <p className={classes.benefitText}>{`Este es un Beneficio Exlusivo para ${name} ${lastName}`} </p>
                     <hr />
                     <h6 className={classes.benefitDescription}>{benefitToShare.description}</h6>
                     <hr />
                     {benefitCode !== "" && <p className={classes.benefitText}>{'El código de este Beneficio Exclusivo es:'}</p>}
                     {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
-                    <div className={classes.shareButtonContainer} style={{backgroundColor:colors.primary, color:"var(--loyalty-backGround-color)"}}>
+                    <div className={classes[`${dinamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}>
+                        
                         <a className={classes.shareLink}  target={"_blank"} href={urlWA} rel="noreferrer">
                             Ok Compartir!
                         </a>

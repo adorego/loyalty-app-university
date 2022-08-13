@@ -53,10 +53,10 @@
 }
 @media screen and (min-width:600px) {
     .topElements{
-        padding: 16px 0px 0px 8px;
+        padding: 16px 0px 0px 0px;
     }
     .returnIconContainer{
-        margin: 0px 0px 0px 16px;
+        margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
     }
     .title{

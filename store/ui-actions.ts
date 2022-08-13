@@ -9,7 +9,7 @@ export const fetchPortalData = (sigla:string):AppThunk =>
         if(!result.ok){
             dispatch(uiActions.showNotification({show:true, message:data.message, color:"red"}));
         }else{
-            dispatch(authActions.setUniversity({logo:data.logo, sigla:sigla}));
+            dispatch(authActions.setUniversity({logo:data.logo, sigla:sigla, favicon:data.favicon}));
             dispatch(uiActions.setColors({primary:data.primary_color, secondary:data.secondary_color,
             secondaryLight:data.secondaryLight_color}));
             dispatch(uiActions.setHead({title:data.title, description:data.forText}));

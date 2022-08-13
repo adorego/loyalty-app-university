@@ -53,7 +53,7 @@ const CachedUniversityLayout = ({children}:CachedUniversityLayoutProps) =>{
         return false
     }
 
-    console.log("dataIsAvailable:", dataIsAvailable());
+    // console.log("dataIsAvailable:", dataIsAvailable());
     
         return(
                 <>

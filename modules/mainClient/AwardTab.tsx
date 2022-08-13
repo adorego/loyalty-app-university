@@ -21,7 +21,8 @@ const AwardsTab = (props:AwardsTabProps) =>{
         <div className={classes.container}>
             <MainPointsCard header={"Tenés"} 
             points={props.points} footer={"puntos"} 
-            secondary_color={props.secondary_color} />
+            secondary_color={props.secondary_color} 
+            />
             <div className={classes.redeemListContainer}>
                 {props.configuredAwards.map(
                     (configuredAward) =>{
