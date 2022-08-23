@@ -74,10 +74,10 @@ export const getStaticProps:GetStaticProps = async(context) => {
         props: {
             headInfo:{
                 title:"Beneficio exclusivo para Soledad Gonzalez", 
-                description:"Este es un beneficio exclusivo de Beneficios UCOM para Soledad Gonzalez",
+                description:"Con este beneficio tenés 500.000Gs de descuento en cualquier diplomado UCOM",
                 favicon:"/images/ucom/favicon.png",
                 social_image:{
-                    src:"/images/ucom/student1.png",
+                    src:"https://loyaltyapp.com.py/images/ucom/student1.png",
                     width:"700",
                     height:"500"
                 },
