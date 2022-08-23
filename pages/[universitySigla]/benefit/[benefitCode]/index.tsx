@@ -77,7 +77,7 @@ export const getStaticProps:GetStaticProps = async(context) => {
                 description:"Con este beneficio tenés 500.000Gs de descuento en cualquier diplomado UCOM",
                 favicon:"/images/ucom/favicon.png",
                 social_image:{
-                    src:"https://loyaltyapp.com.py/images/ucom/student1.png",
+                    src:"https://loyaltyapp.com.py/images/ucom/social_ucom.png",
                     width:"700",
                     height:"500"
                 },
