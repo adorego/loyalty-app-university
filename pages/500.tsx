@@ -2,11 +2,10 @@ import CachedUniversityLayout from '../common/Layout/CacheUniversityLayout';
 import Link from 'next/link';
 import PageWithLayoutType from '../types/PageWithLayout';
 
-export interface Page404Props{
+export interface Page500Props{
 
 }
-
-const Page500 = (props:Page404Props) =>{
+const Page500 = (props:Page500Props) =>{
   return(
      <div style={{textAlign:"center"}}>
       <Link href="/">
@@ -14,7 +13,8 @@ const Page500 = (props:Page404Props) =>{
           Volver
         </a>
       </Link>
-      <h3>{"500 - Hubo un error interno en el servidor"}</h3>
+      <h3>`500 - Hubo un error interno en el servidor`</h3>
+      
     </div>
     )
 }

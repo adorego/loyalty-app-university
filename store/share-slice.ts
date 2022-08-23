@@ -1,4 +1,4 @@
-import { Benefit } from '../common/models/benefit';
+import Benefit from '../common/models/benefit';
 import { ConfiguredBenefit } from './../common/models/configuredBenefit';
 import { createSlice } from "@reduxjs/toolkit";
 

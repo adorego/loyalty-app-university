@@ -1,5 +1,5 @@
 .container{
-        margin: auto;
+    margin: auto;
     text-align: center;
     
 }
@@ -73,9 +73,10 @@
 }
 
 
-@media screen and (min-width:320px) and (max-width:400px){
+@media screen and (min-width:320px) and (max-width:600px){
     .container{
         margin: 0px 0px 0px 0px;
+        max-width: 420px;
         
     }
 

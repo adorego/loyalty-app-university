@@ -44,26 +44,17 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const {universitySigla:sigla} = router.query;
     const dispatch = useAppDispatch();
     const globalLoading = useAppSelector(state => state.ui.loading);
-    const logOut = useAppSelector(state => state.auth.logOut);
     const {data:session, status} = useSession();
     
     
-    // useEffect(
-    //     () =>{
-    //         if(globalLoading){
-    //             dispatch(uiActions.setLoading({loading:false}));
-    //         }
-    //     },[]
-    // )
-    // useEffect(
-    //     () =>{
-    //         if(logOut){
-    //             signOut();
-    //             dispatch(authActions.setLogout({logout:false}));
-    //             dispatch(uiActions.setLoading({loading:false}));
-    //         }
-    //     }, [logOut, dispatch]
-    // )
+    useEffect(
+        () =>{
+            if(globalLoading){
+                dispatch(uiActions.setLoading({loading:false}));
+            }
+        },[]
+    )
+
     
     useEffect(
         () =>{

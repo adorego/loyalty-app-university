@@ -24,11 +24,9 @@ const UniversityHeader = (props:UniversityHeaderProps) =>{
     const linkStyle = props.loginLinkColor !== "" ? {color:props.loginLinkColor} : {};
     
     const signOutHandler = async () =>{
-        // dispatch(uiActions.setLoading({loading:true}));
-        dispatch(authActions.setLogout({logOut:true}));
-        const result = await router.push(`/${sigla}/`);
-        signOut();
-        dispatch(uiActions.setLoading({loading:false}));
+        dispatch(uiActions.setLoading({loading:true}));
+        signOut({callbackUrl:`/${sigla}/`});
+        
         
     }
 

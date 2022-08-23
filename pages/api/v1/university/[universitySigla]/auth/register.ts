@@ -33,11 +33,10 @@ async function registrarUsuario(sigla:string, email:string, cedula:string, clave
         const db = await connect();
         const university_collection = db.collection('university');
         const hash = await hashPassword(clave);
-        const email_checker = university_collection.find({
+        const existedUser = await university_collection.findOne({
             sigla:sigla,"users.email":email});
-        const existedUser = await email_checker.next();
-        
-        if(existedUser){
+        console.log("existedUser.length", existedUser?.length);
+        if(existedUser?.length > 0 ){
             console.log('Error, el correo ya existe');
             throw new API400Error('Este correo ya existe');
         }

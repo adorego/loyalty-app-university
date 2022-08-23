@@ -16,9 +16,7 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
     const dispatch = useAppDispatch();
     const router = useRouter();
     const sigla = useAppSelector(state => state.auth.university.sigla);
-
     const onClickShareBenefitHandler = (benefit_id:string) =>{
-        // console.log("Share Benefit Handler");
         const benefitToShare = props.benefitsToShare.filter((item) => item.benefit._id === benefit_id );
         dispatch(shareBenefitsActions.setShareBenefit({configuredBenefit:benefitToShare[0]}));
         router.push(`/${sigla}/share`);
@@ -29,6 +27,7 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
             <div className={classes.benefitsToShareListContainer}>
                     {props.benefitsToShare.map(
                         (configuredBenefit) =>{
+                            console.log(configuredBenefit.benefit);
                             return(
                                 <BenefitToShareCard 
                                 key={configuredBenefit.benefit._id} 

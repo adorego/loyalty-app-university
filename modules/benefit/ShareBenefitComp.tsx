@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import BasicCard from "../../common/Layout/BasicCard";
-import { Benefit } from "../../common/models/benefit";
+import Benefit from "../../common/models/benefit";
 import Input from "../../common/UI/Input";
 import SectionHeader from "../../common/UI/SectionHeader";
 import classes from "./ShareBenefitComp.module.css";
@@ -200,6 +200,8 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     
     const generateBenefit = () =>{
         //Almacenar los datos del beneficiario (nombre, apellido, celular, código del beneficio, código de la Campaña)
+    
+    
     }
     
     return(

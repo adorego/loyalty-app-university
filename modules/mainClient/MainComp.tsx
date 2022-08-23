@@ -25,6 +25,7 @@ const MainComp = (props:MainCompProps) =>{
     const router = useRouter();
     const {universitySigla} = router.query;
 
+    console.log("props.benefitsToShare:", props.benefitsToShare);
 
 
     const awardsStyleSelectedTab = selectedTab === 'awards' ? {color:colors.secondaryLight} : {color:"var(--loyalty-on-surface-text-color)"};

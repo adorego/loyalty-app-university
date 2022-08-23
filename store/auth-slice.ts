@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const authInitialState = {
     isLogged:false,
-    logOut:false,
     user:{
         name:"",
         lastName:"",
@@ -35,9 +34,6 @@ const authSlice = createSlice({
         },
         setVerificationCode(state, action){
             state.user.verification_code = action.payload.verification_code;
-        },
-        setLogout(state, action){
-            state.logOut = action.payload.logOut;
         },
         setUserEmail(state, action){
             state.user.email = action.payload.email;

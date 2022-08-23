@@ -1,4 +1,4 @@
-import { Benefit } from './benefit';
+import Benefit  from './benefit';
 import { GrantingBenefit } from './grantingBenefit';
 
 export interface ConfiguredBenefit{

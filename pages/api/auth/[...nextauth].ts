@@ -1,12 +1,13 @@
 import * as collectionNames from '../../../common/DataBase/CollectionsName';
 
+import NextAuth, { NextAuthOptions } from 'next-auth';
+
 import Api404Error from '../../../common/DataBase/Api404Error';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import NextAuth from 'next-auth';
 import { connect } from '../../../common/DataBase/Connect';
 import { verify_password } from '../../../modules/auth/helpers';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name:"Credentials",
@@ -22,7 +23,7 @@ export default NextAuth({
 
                     const university_collection = db.collection('university');
 
-                    const university_user = await university_collection.findOne({sigla:credentials?.sigla, 
+                    const university_user:any = await university_collection.findOne({sigla:credentials?.sigla, 
                         "users.email": credentials?.email});
                     
                     
@@ -72,4 +73,5 @@ export default NextAuth({
         // },
         // async decode() {},
       }
-});
+}
+export default NextAuth(authOptions);
