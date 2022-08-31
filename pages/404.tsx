@@ -1,8 +1,10 @@
 import CachedUniversityLayout from '../common/Layout/CacheUniversityLayout';
+import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import PageWithLayoutType from '../types/PageWithLayout';
 import { ReactNode } from 'react';
 import UniversityPortalHeadingInfo from '../common/models/universityPortalHeadingInfo';
+import { connect } from '../common/DataBase/Connect';
 
 export interface Page404Props{
   children:ReactNode;
@@ -25,3 +27,4 @@ const Page404 = ({children,...props}:Page404Props) =>{
 (Page404 as PageWithLayoutType).layout = CachedUniversityLayout
 
 export default Page404;
+
