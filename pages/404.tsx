@@ -1,12 +1,15 @@
 import CachedUniversityLayout from '../common/Layout/CacheUniversityLayout';
 import Link from 'next/link';
 import PageWithLayoutType from '../types/PageWithLayout';
+import { ReactNode } from 'react';
+import UniversityPortalHeadingInfo from '../common/models/universityPortalHeadingInfo';
 
 export interface Page404Props{
-
+  children:ReactNode;
+  headInfo:UniversityPortalHeadingInfo;
 }
 
-const Page404 = (props:Page404Props) =>{
+const Page404 = ({children,...props}:Page404Props) =>{
   return(
      <div style={{textAlign:"center"}}>
       <Link href="/">

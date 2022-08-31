@@ -1,18 +1,19 @@
+import { GetServerSideProps, GetStaticProps } from "next";
 import { ReactNode, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 
 import BenefitsPortal from "../../modules/universityPortal/BenefitsPortal";
 import CachedUniversityLayout from "../../common/Layout/CacheUniversityLayout";
 import Contacto from "../../modules/universityPortal/Contacto";
-import { GetServerSideProps } from "next";
 import HowItWorks from "../../modules/universityPortal/HowItWorks";
 import ImageModel from "../../common/models/ImageModel";
 import PageWithLayoutType from "../../types/PageWithLayout";
 import UniversityPortal from "../../modules/universityPortal/UniversityPortal";
-import { UniversityPortalHeadingInfo } from "../../common/models/universityPortalHeadingInfo";
+import UniversityPortalHeadingInfo from "../../common/models/universityPortalHeadingInfo";
 import { authActions } from "../../store/auth-slice";
 import { benefitsList } from "../../common/models/testing_data";
 import classes from '../../styles/portal.module.css';
+import { connect } from "../../common/DataBase/Connect";
 import {signOut} from 'next-auth/react';
 import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
@@ -47,7 +48,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const globalLoading = useAppSelector(state => state.ui.loading);
     const {data:session, status} = useSession();
-    
+    console.log("UniversityHome props:", props);
     
     useEffect(
         () =>{
@@ -114,18 +115,89 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
 
 export default UniversityHome;
 
-export  const getServerSideProps:GetServerSideProps = async (context) =>{
+export async function getStaticPaths(){
+    const db = await connect();
+    const university_collection = db.collection("university");
+    const projection = {sigla:1};
+    const university_list_cursor = university_collection.find().project(projection);
+    const universities = await university_list_cursor.toArray();
+   
+    let paths:Array<{}> = [];
+    universities.map(
+        (university) => {
+            
+                    
+                    paths.push({params:{universitySigla:university.sigla}});
+                   
+        })
+           
+            
+            
     
-    const {universitySigla} = context.query;
-    const url = new URL(`${process.env.API_HOST}/api/v1/university/${universitySigla}/portal`);
-    const result = await fetch(url.href);
-    const data = await result.json();
+    //  console.log("paths:", JSON.stringify(paths));
+    
     
     return{
-        props:{
-            ...data,
-            loading:false
+        paths:paths,
+        fallback:false
+    }
+
+    
+}
+
+export const getStaticProps:GetStaticProps = async(context) => {
+    //console.log("context:", context);
+    const db = await connect();
+    const university_collection = db.collection("university");
+    const sigla = context?.params?.universitySigla;
+    const result = await university_collection.findOne({sigla:sigla});
+    if(result !== null){
+        const portalData = {
+            logo:result.logo, 
+            favicon:result.favicon,
+            primary_color:result.configuration.primaryColor,
+            secondary_color:result.configuration.secondaryColor,
+            secondaryLight_color:result.configuration.secondaryLightColor,
+            title:result.portal.title,
+            backGroundImage:result.portal.backgroundImage,
+            backGroundImage_large:result.portal.backgroundImage_large,
+            buttonText:result.portal.buttonText,
+            forText:result.portal.forText,
+            links:result.portal.links,
+            contact_email:result.portal.contact_email,
+            contact_phone:result.portal.contact_phone,
+            contact_whatsapp:result.portal.contact_whatsapp,
+            headInfo:{
+                title:result.portal.title,
+                description:result.portal.forText,
+                favicon:result.favicon,
+                social_image:result.portal.social_image,
+                url:result.portal.portalUrl
+            }
+
+        }
+        return{
+            props:JSON.parse(JSON.stringify(portalData))
+        }
+    }else{
+        return {
+            props:{}
         }
     }
-        
 }
+
+// export  const getServerSideProps:GetServerSideProps = async (context) =>{
+    
+//     const {universitySigla} = context.query;
+//     const url = new URL(`${process.env.API_HOST}/api/v1/university/${universitySigla}/portal`);
+//     const result = await fetch(url.href);
+//     const data = await result.json();
+    
+//     return{
+//         props:{
+//             ...data,
+//             loading:false
+//         }
+//     }
+        
+// }

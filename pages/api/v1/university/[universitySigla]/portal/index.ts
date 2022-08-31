@@ -28,9 +28,8 @@ async function getUniversityPortal(sigla:string, res:NextApiResponse){
         const db = await connect();
 
         const university_collection = db.collection('university');
-        // console.log("university_collection:", university_collection);
         const result:any = await university_collection.findOne({sigla:sigla});
-        //console.log("data:", result);
+        // console.log("data:", result);
 
         const portalData = {
             logo:result.logo, 
@@ -56,6 +55,7 @@ async function getUniversityPortal(sigla:string, res:NextApiResponse){
             }
 
         }
+        
         res.status(200).json({...portalData});
     
 }

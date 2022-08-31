@@ -6,7 +6,7 @@ import { AppDispatch } from "../../store";
 import Head from "next/head";
 import Notification from "../UI/Notification";
 import UniversityHeader from "./UniversityHeader";
-import { UniversityPortalHeadingInfo } from "../models/universityPortalHeadingInfo";
+import UniversityPortalHeadingInfo from "../models/universityPortalHeadingInfo";
 import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 
@@ -19,13 +19,12 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
     const colors = useAppSelector(state => state.ui.color);
     const logo = useAppSelector(state => state.auth.university.logo);
     const favicon = useAppSelector(state => state.auth.university.favicon);
-    const {title, description} = useAppSelector(state => state.ui.head);
     const dispatch = useAppDispatch();
     const loading = useAppSelector(state => state.ui.loading);
     const notification = useAppSelector(state => state.ui.notification);
     const router = useRouter();
 
-    
+    console.log("CachedUniversityLayout props:", props);    
     
     useEffect(
         () =>{
@@ -36,7 +35,7 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
                     }, 4000
                 )
             }
-        },[notification.show]
+        },[notification.show, dispatch]
     )
 
     useEffect(
@@ -45,7 +44,7 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
           return () => {
                 setOffRouterEvents(dispatch, router);
             }
-        },[]
+        },[dispatch, router]
     )
 
     const dataIsAvailable = () =>{
@@ -56,14 +55,14 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
     }
 
     // console.log("dataIsAvailable:", dataIsAvailable());
-    
+    if(Object.entries(props).length > 0){
         return(
                 <>
                 <Head>
                     <meta charSet="UTF-8" />
                     <meta name="keywords" content={props.headInfo.description} />
                     <meta name="author" content="LoyaltyAPP Inc" />
-                    <link rel="icon" href={favicon ? favicon : '/favicon.png'} />
+                    <link rel="icon" href={props.headInfo.favicon} />
                     <title>{props.headInfo.title}</title>
                     <meta name="description" content={props.headInfo.description} />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -88,7 +87,13 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
                 </>
             )
         
-    
+    }else{
+        return(
+            <main>
+                {children}
+            </main>
+        )
+    }
     
     
 }

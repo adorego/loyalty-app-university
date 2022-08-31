@@ -59,6 +59,12 @@ const BenefitLayout = ({children, ...props}:BenefitLayoutProps) =>{
             </main>
             </Fragment>
         )
+    }else{
+        return(
+            <main>
+                {children}
+            </main>
+        )
     }
 }
 

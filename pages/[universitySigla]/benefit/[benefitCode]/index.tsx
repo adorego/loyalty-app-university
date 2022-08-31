@@ -67,9 +67,7 @@ export async function getStaticPaths(){
     
 }
 
-type ParamType = {
-    benefitCode:string
-}
+
 export const getStaticProps:GetStaticProps = async(context) => {
     //console.log("context:", context);
     const db = await connect();

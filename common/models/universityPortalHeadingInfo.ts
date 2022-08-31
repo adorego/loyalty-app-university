@@ -1,8 +1,10 @@
 import ImageModel from "./ImageModel";
-
-export interface UniversityPortalHeadingInfo{
+interface UniversityPortalHeadingInfo{
     title:string;
     description:string;
     social_image:ImageModel;
     url:string;
+    favicon:string;
 }
+
+export default UniversityPortalHeadingInfo;
