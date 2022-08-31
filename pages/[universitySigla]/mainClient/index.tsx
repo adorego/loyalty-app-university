@@ -9,6 +9,7 @@ import { ConfiguredBenefit } from "../../../common/models/configuredBenefit";
 import { GetServerSideProps } from "next/types";
 import MainComp from "../../../modules/mainClient/MainComp";
 import PageWithLayoutType from "../../../types/PageWithLayout";
+import UniversityPortalHeadingInfo from "../../../common/models/universityPortalHeadingInfo";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { connect } from "../../../common/DataBase/Connect";
 import spinnerClass from '../../../styles/spinner.module.css';
@@ -20,6 +21,7 @@ export interface MainProps{
     points:string;
     configuredAwards:Array<ConfiguredAward>;
     benefitsToShare:Array<ConfiguredBenefit>;
+    headInfo:UniversityPortalHeadingInfo;
 }
 const Main = (props:MainProps) =>{
     const {data:session, status} = useSession();
@@ -112,12 +114,19 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
 
         console.log("benefitToShare:", benefitsToShare);
         
+        const headInfo = {
+            title:university.portal.title,
+            description:university.portal.forText,
+            favicon:university.favicon,
+            social_image:university.portal.social_image,
+            url:university.portal.portalUrl
+        }
         return{
             props:{
                 points:JSON.parse(JSON.stringify(user.points)),
                 configuredAwards:JSON.parse(JSON.stringify(university.awards)),
-                benefitsToShare:JSON.parse(JSON.stringify(benefitsToShare))
-
+                benefitsToShare:JSON.parse(JSON.stringify(benefitsToShare)),
+                headInfo:JSON.parse(JSON.stringify(headInfo))
                 
               }
          }

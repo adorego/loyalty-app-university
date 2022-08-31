@@ -18,7 +18,7 @@ const MyApp = ({
 }: AppLayoutProps) => {
   const Layout = Component.layout || ((children:ReactNode) => <>{children}</>);
   
-  console.log("pageProps:", {...pageProps});
+  
   return(
     <NextAuthProvider session={pageProps.session}>
       <ReduxProvider store={store}>
