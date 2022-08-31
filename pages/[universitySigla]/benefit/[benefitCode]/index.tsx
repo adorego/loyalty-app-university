@@ -43,7 +43,7 @@ export const getServerSideProps:GetServerSideProps = async (context) =>{
         const sigla = context?.params?.universitySigla;
         const benefitCode_match = await university_collection.findOne({sigla:sigla, 
             "campaign_leads.benefit_code":context?.params?.benefitCode},
-            {projection:{"campaign_leads":1, campaigns:1, benefits:1, configuration:1}});
+            {projection:{"campaign_leads":1, campaigns:1, benefits:1, configuration:1, portal:1}});
         // console.log("benefitCode_match:", benefitCode_match);
         const campaign_lead = benefitCode_match?.campaign_leads.filter(
             (item:any) => item.benefit_code === context?.params?.benefitCode);
@@ -66,6 +66,7 @@ export const getServerSideProps:GetServerSideProps = async (context) =>{
         let portalHead = {} as BenefitPortalHeadProps;
         if(!error.hasError){
             portalHead = createHeadBenefitPortal({name:campaign_lead[0].name, sigla,
+                portal_url:benefitCode_match?.portal.portalUrl,
                 lastName:campaign_lead[0].lastName, favicon:campaign_lead[0]?.head_information.favicon, 
                 benefit:benefit[0].benefit, benefitCode:campaign_lead[0].benefit_code  ,...campaign_lead[0].head_information});
             const mainDataBenefitPortal:BenefitPortalModel = {
@@ -122,13 +123,14 @@ const createHeadBenefitPortal = (benefitPortalHeadInfo:BenefitPortalHeadInfo):Be
     title = title.replace(/\$lastName/, benefitPortalHeadInfo.lastName);
     const description = benefitPortalHeadInfo.benefit.description;
     let url = benefitPortalHeadInfo.url.replace(/\$oferNumber/, benefitPortalHeadInfo.benefitCode);
-    url = url.replace(/\$sigla/, benefitPortalHeadInfo.sigla)
+    url = url.replace(/\$sigla/, benefitPortalHeadInfo.sigla);
+    const image_url = benefitPortalHeadInfo.portal_url + benefitPortalHeadInfo.benefit.image.src ;
     return{
         title,
         description,
         favicon:benefitPortalHeadInfo.favicon,
         social_image:{
-            src:benefitPortalHeadInfo.benefit.image.src,
+            src:image_url,
             width:benefitPortalHeadInfo.benefit.image.width,
             height:benefitPortalHeadInfo.benefit.image.height
         },

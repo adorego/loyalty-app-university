@@ -11,6 +11,7 @@ interface BenefitPortalHeadInfo{
     favicon:string;
     image:ImageModel;
     url:string;
+    portal_url:string;
 }
 
 export default BenefitPortalHeadInfo;

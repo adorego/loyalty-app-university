@@ -6,6 +6,7 @@ interface BenefitPortalHeadProps{
     favicon:string;
     social_image:ImageModel;
     url:string;
+    
 } 
 
 export default BenefitPortalHeadProps;
