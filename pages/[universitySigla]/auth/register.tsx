@@ -58,20 +58,20 @@ export const getStaticProps:GetStaticProps = async(context) => {
     const db = await connect();
     const university_collection = db.collection("university");
     const sigla = context?.params?.universitySigla;
-    const result = await university_collection.findOne({sigla:sigla},{projection:{favicon:1, portal:1}});
+    const result = await university_collection.findOne({sigla:sigla},{projection:{portal:1}});
     if(result !== null){
-        const loginData = {
+        const registerData = {
             headInfo:{
-                title:result.portal.title,
-                description:result.portal.forText,
-                favicon:result.favicon,
-                social_image:result.portal.social_image,
-                url:result.portal.portalUrl
+                title:result.portal.head_information.title,
+                description:result.portal.head_information.description,
+                favicon:result.portal.head_information.favicon,
+                social_image:result.portal.head_information.social_image,
+                url:result.portal.head_information.url
             }
 
         }
         return{
-            props:JSON.parse(JSON.stringify(loginData))
+            props:JSON.parse(JSON.stringify(registerData))
         }
     }else{
         return {

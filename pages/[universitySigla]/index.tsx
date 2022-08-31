@@ -134,7 +134,7 @@ export async function getStaticPaths(){
             
             
     
-    //  console.log("paths:", JSON.stringify(paths));
+      console.log("paths:", JSON.stringify(paths));
     
     
     return{
@@ -168,11 +168,11 @@ export const getStaticProps:GetStaticProps = async(context) => {
             contact_phone:result.portal.contact_phone,
             contact_whatsapp:result.portal.contact_whatsapp,
             headInfo:{
-                title:result.portal.title,
-                description:result.portal.forText,
-                favicon:result.favicon,
-                social_image:result.portal.social_image,
-                url:result.portal.portalUrl
+                title:result.portal.head_information.title,
+                description:result.portal.head_information.description,
+                favicon:result.portal.head_information.favicon,
+                social_image:result.portal.head_information.social_image,
+                url:result.portal.head_information.url
             }
 
         }

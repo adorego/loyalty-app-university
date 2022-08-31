@@ -115,11 +115,11 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
         console.log("benefitToShare:", benefitsToShare);
         
         const headInfo = {
-            title:university.portal.title,
-            description:university.portal.forText,
-            favicon:university.favicon,
-            social_image:university.portal.social_image,
-            url:university.portal.portalUrl
+                title:university.portal.head_information.title,
+                description:university.portal.head_information.description,
+                favicon:university.portal.head_information.favicon,
+                social_image:university.portal.head_information.social_image,
+                url:university.portal.head_information.url
         }
         return{
             props:{

@@ -75,7 +75,7 @@ export const getStaticProps:GetStaticProps = async(context) => {
     const sigla = context?.params?.universitySigla;
     const benefitCode_match = await university_collection.findOne({sigla:sigla, 
         "campaign_leads.benefit_code":context?.params?.benefitCode},
-        {projection:{"campaign_leads":1, campaigns:1, benefits:1, favicon:1, configuration:1}});
+        {projection:{"campaign_leads":1, campaigns:1, benefits:1, configuration:1}});
     
     const campaign_lead = benefitCode_match?.campaign_leads.filter(
         (item:any) => item.benefit_code === context?.params?.benefitCode);
@@ -98,7 +98,7 @@ export const getStaticProps:GetStaticProps = async(context) => {
     let portalHead = {} as BenefitPortalHeadProps;
     if(!error.hasError){
         portalHead = createHeadBenefitPortal({name:campaign_lead[0].name, sigla,
-            lastName:campaign_lead[0].lastName, favicon:benefitCode_match?.favicon, 
+            lastName:campaign_lead[0].lastName, favicon:campaign_lead[0]?.head_information.favicon, 
             benefit:benefit[0].benefit, benefitCode:campaign_lead[0].benefit_code  ,...campaign_lead[0].head_information});
         const mainDataBenefitPortal:BenefitPortalModel = {
             title:portalHead.title,
