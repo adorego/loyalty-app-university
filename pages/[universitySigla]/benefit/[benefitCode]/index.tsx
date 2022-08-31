@@ -124,7 +124,7 @@ const createHeadBenefitPortal = (benefitPortalHeadInfo:BenefitPortalHeadInfo):Be
     const description = benefitPortalHeadInfo.benefit.description;
     let url = benefitPortalHeadInfo.url.replace(/\$oferNumber/, benefitPortalHeadInfo.benefitCode);
     url = url.replace(/\$sigla/, benefitPortalHeadInfo.sigla);
-    const image_url = benefitPortalHeadInfo.portal_url + benefitPortalHeadInfo.benefit.image.src ;
+    const image_url = benefitPortalHeadInfo.portal_url.replace(/\/ucom/, benefitPortalHeadInfo.benefit.image.src);
     return{
         title,
         description,
