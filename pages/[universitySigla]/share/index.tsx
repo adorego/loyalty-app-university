@@ -70,7 +70,8 @@ export const getStaticProps:GetStaticProps = async(context) => {
 
         }
         return{
-            props:JSON.parse(JSON.stringify(shareData))
+            props:JSON.parse(JSON.stringify(shareData)),
+            revalidate: 10,
         }
     }else{
         return {

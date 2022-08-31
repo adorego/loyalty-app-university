@@ -71,7 +71,8 @@ export const getStaticProps:GetStaticProps = async(context) => {
 
         }
         return{
-            props:JSON.parse(JSON.stringify(registerData))
+            props:JSON.parse(JSON.stringify(registerData)),
+            revalidate: 10,
         }
     }else{
         return {

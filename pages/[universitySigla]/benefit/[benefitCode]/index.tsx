@@ -115,7 +115,8 @@ export const getStaticProps:GetStaticProps = async(context) => {
         }
         // console.log("benefitData:", benefitPortalData);
         return{
-            props:JSON.parse(JSON.stringify(benefitPortalData))
+            props:JSON.parse(JSON.stringify(benefitPortalData)),
+            revalidate: 10,
         }
     
     }

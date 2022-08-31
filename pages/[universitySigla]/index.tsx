@@ -154,7 +154,7 @@ export const getStaticProps:GetStaticProps = async(context) => {
     if(result !== null){
         const portalData = {
             logo:result.logo, 
-            favicon:result.favicon,
+            favicon:result.portal.head_information.favicon,
             primary_color:result.configuration.primaryColor,
             secondary_color:result.configuration.secondaryColor,
             secondaryLight_color:result.configuration.secondaryLightColor,
@@ -177,7 +177,12 @@ export const getStaticProps:GetStaticProps = async(context) => {
 
         }
         return{
-            props:JSON.parse(JSON.stringify(portalData))
+
+            props:{
+                ...portalData,
+            },
+            revalidate: 10,
+                
         }
     }else{
         return {
