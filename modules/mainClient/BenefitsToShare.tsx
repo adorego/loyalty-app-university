@@ -27,7 +27,6 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
             <div className={classes.benefitsToShareListContainer}>
                     {props.benefitsToShare.map(
                         (configuredBenefit) =>{
-                            console.log(configuredBenefit.benefit);
                             return(
                                 <BenefitToShareCard 
                                 key={configuredBenefit.benefit._id} 

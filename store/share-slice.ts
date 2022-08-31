@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const shareBenefitInitialState:ConfiguredBenefit ={
     benefit:{} as Benefit,
+    campaign_id:"",
     granting:[]
 }
 
@@ -12,8 +13,8 @@ const shareBenefitSlice = createSlice({
     initialState:shareBenefitInitialState,
     reducers:{
         setShareBenefit(state, action){
-            console.log("Action.payload:", action.payload)
             state.benefit = action.payload.configuredBenefit.benefit;
+            state.campaign_id = action.payload.configuredBenefit.campaign_id;
             state.granting = action.payload.configuredBenefit.granting;
         }
     }

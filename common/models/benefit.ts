@@ -6,4 +6,5 @@ export default interface Benefit{
     description:string;
     image:ImageModel;
     
+    
 }

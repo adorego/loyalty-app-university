@@ -34,30 +34,32 @@ const BenefitLayout = ({children, ...props}:BenefitLayoutProps) =>{
     if(loading){
         <div className={spinnerClasses.spin}></div>
     }
-    return(
-        <Fragment>
-        <Head>
-        <meta charSet="UTF-8" />
-                    <meta name="keywords" content={props.headInfo.title} />
-                    <meta name="author" content="LoyaltyAPP Inc" />
-                    <link rel="icon" href={props.headInfo.favicon ? props.headInfo.favicon : '/favicon.png'} />
-                    <title>{props.headInfo.title}</title>
-                    <meta name="description" content={props.headInfo.description} />
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <meta property="og:url" content={props.headInfo.url} key="ogurl" />
-                    <meta property="og:image" itemProp="image" content={props.headInfo.social_image.src} key="ogimage" />
-                    <meta property="og:type" content="website" />
-                    <meta property="og:updated_time" content="1440432930" />
-                    <meta property="og:site_name" content={props.headInfo.title} key="ogsitename" />
-                    <meta property="og:title" content={props.headInfo.title} key="ogtitle" />
-                    <meta property="og:description" content={props.headInfo.description} key="ogdesc" />
-        </Head>
-       
-        <main>
-            {children}
-        </main>
-        </Fragment>
-    )
+    if(Object.entries(props).length > 0){
+        return(
+            <Fragment>
+            <Head>
+            <meta charSet="UTF-8" />
+                        <meta name="keywords" content={props.headInfo.title} />
+                        <meta name="author" content="LoyaltyAPP Inc" />
+                        <link rel="icon" href={props.headInfo.favicon ? props.headInfo.favicon : '/favicon.png'} />
+                        <title>{props.headInfo.title}</title>
+                        <meta name="description" content={props.headInfo.description} />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta property="og:url" content={props.headInfo.url} key="ogurl" />
+                        <meta property="og:image" itemProp="image" content={props.headInfo.social_image.src} key="ogimage" />
+                        <meta property="og:type" content="website" />
+                        <meta property="og:updated_time" content="1440432930" />
+                        <meta property="og:site_name" content={props.headInfo.title} key="ogsitename" />
+                        <meta property="og:title" content={props.headInfo.title} key="ogtitle" />
+                        <meta property="og:description" content={props.headInfo.description} key="ogdesc" />
+            </Head>
+        
+            <main>
+                {children}
+            </main>
+            </Fragment>
+        )
+    }
 }
 
 export default BenefitLayout;

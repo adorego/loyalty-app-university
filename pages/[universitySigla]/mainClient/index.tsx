@@ -1,22 +1,16 @@
 import { DefaultSession, unstable_getServerSession } from "next-auth";
 
-import API400Error from "../../../common/DataBase/Api400Error";
 import API401Error from "../../../common/DataBase/Api401Error";
 import API404Error from "../../../common/DataBase/Api404Error";
-import Benefit from "../../../common/models/benefit";
 import CachedUniversityLayout from "../../../common/Layout/CacheUniversityLayout";
+import CampaignModel from "../../../common/models/campaignModel";
 import { ConfiguredAward } from "../../../common/models/configuredAward";
 import { ConfiguredBenefit } from "../../../common/models/configuredBenefit";
 import { GetServerSideProps } from "next/types";
 import MainComp from "../../../modules/mainClient/MainComp";
-import { ObjectId } from "mongodb";
-import Page500 from "../../500";
 import PageWithLayoutType from "../../../types/PageWithLayout";
-import { ServerResponse } from "http";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { connect } from "../../../common/DataBase/Connect";
-import { errorNextHandler } from "../../../common/DataBase/errorHandler";
-import { parse } from "path";
 import spinnerClass from '../../../styles/spinner.module.css';
 import { useAppSelector } from "../../../hooks/store-hooks";
 import { useRouter } from "next/router";
@@ -32,7 +26,7 @@ const Main = (props:MainProps) =>{
     const router = useRouter();
     const sigla = useAppSelector(state => state.auth.university.sigla);
 
-    console.log("props:", props);
+    // console.log("props:", props);
     if(status === 'authenticated'){
         if(Object.values(props).length > 0){
             return(
@@ -41,7 +35,7 @@ const Main = (props:MainProps) =>{
             )
         }else{
             console.log("No se enviaron props");
-            // <Page500 message="Lo sentimos pero tenemos un problema en la comunicación del Internet"/>
+            
         }
     }
     if(status === "unauthenticated"){
@@ -64,6 +58,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
             throw new API401Error('Usuario no autorizado');
         }
         const db = await connect();
+        
         const university_collection = db.collection("university");
         const university = await university_collection.findOne({sigla:universitySigla, "users.email":session.user?.email});
         if(university === null){
@@ -82,27 +77,41 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 return new Date(item.initial_date).getTime() <= Date.now() && new Date(item.end_date).getTime() >= Date.now()
             }
         )
-        // console.log("Valid Campaigns:", valid_campaigns);
-
-        const benefitsIdsToShare = valid_campaigns.map(
-            (campaign:any) => campaign.benefit.toString()
-        )
-
-        const uniqueBenefitIds = new Set(benefitsIdsToShare);
-        
-
-        const benefitsToShare = Array.from(uniqueBenefitIds).map(
-            (benefitId:any) =>{
+        console.log("Valid Campaigns:", valid_campaigns);
+        type BenefitCampaign = {
+            benefit:string,
+            campaign_id:string
+        }
+        const benefitsIdsToShare:Array<BenefitCampaign> = valid_campaigns.map(
+            (campaign:CampaignModel) =>{
+               return{
+                    benefit:campaign.benefit.toString(),
+                    campaign_id:campaign._id.toString()
+               } 
+            }
                 
-                 return university?.benefits.find(
-                    (benefit:any) =>{
-                       
-                        return benefit.benefit._id ? benefit.benefit._id.toString() === benefitId : false;
-                        
-                     }
-                 )
+                
+            
+        )
+        console.log("benefitsIdsToShare:", benefitsIdsToShare);
+        
+        const benefitsToShare = benefitsIdsToShare.map(
+            (benefitCampaign:BenefitCampaign) =>{
+                const benefitItem = university?.benefits.find(
+                    (item:any) =>{
+                        return item.benefit._id.toString() === benefitCampaign.benefit
+                    }
+                )
+                return{
+                    benefit:benefitItem.benefit,
+                    campaign_id:benefitCampaign.campaign_id,
+                    granting:benefitItem.granting
+                }
             }
         )
+
+        console.log("benefitToShare:", benefitsToShare);
+        
         return{
             props:{
                 points:JSON.parse(JSON.stringify(user.points)),
@@ -110,8 +119,8 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 benefitsToShare:JSON.parse(JSON.stringify(benefitsToShare))
 
                 
-             }
-        }
+              }
+         }
         // return {
         //     props:{...getDummyData()}
         // }
@@ -231,6 +240,7 @@ const getDummyData = () =>{
                     height:"500"
                     }
                 },
+                campaign_id:"7878787878",
                 granting:[{
                     points_to_grant:"600",
                     business_event:"REGISTRATION"
@@ -248,6 +258,7 @@ const getDummyData = () =>{
                     height:"500"
                     }
                 },
+                campaign_id:"7878787879",
                 granting:[{
                     points_to_grant:"800",
                     business_event:"REGISTRATION"

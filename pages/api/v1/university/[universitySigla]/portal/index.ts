@@ -46,7 +46,14 @@ async function getUniversityPortal(sigla:string, res:NextApiResponse){
             links:result.portal.links,
             contact_email:result.portal.contact_email,
             contact_phone:result.portal.contact_phone,
-            contact_whatsapp:result.portal.contact_whatsapp
+            contact_whatsapp:result.portal.contact_whatsapp,
+            headInfo:{
+                title:result.portal.title,
+                description:result.portal.forText,
+                favicon:result.favicon,
+                social_image:result.portal.social_image,
+                url:result.portal.portalUrl
+            }
 
         }
         res.status(200).json({...portalData});

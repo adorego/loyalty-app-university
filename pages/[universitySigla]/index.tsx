@@ -9,6 +9,7 @@ import HowItWorks from "../../modules/universityPortal/HowItWorks";
 import ImageModel from "../../common/models/ImageModel";
 import PageWithLayoutType from "../../types/PageWithLayout";
 import UniversityPortal from "../../modules/universityPortal/UniversityPortal";
+import { UniversityPortalHeadingInfo } from "../../common/models/universityPortalHeadingInfo";
 import { authActions } from "../../store/auth-slice";
 import { benefitsList } from "../../common/models/testing_data";
 import classes from '../../styles/portal.module.css';
@@ -35,6 +36,7 @@ export interface UniversityPortalProps{
     contact_email:string;
     contact_phone:string;
     contact_whatsapp:string;
+    headInfo:UniversityPortalHeadingInfo;
     
     
 
@@ -69,10 +71,11 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
 
     useEffect(
         () =>{
+            
             if(status === "authenticated" && sigla !== ""){
                 router.push(`/${sigla}/mainClient`);
             }
-        },[]
+        },[status, sigla, router]
     )
 
     if(status === 'authenticated'){

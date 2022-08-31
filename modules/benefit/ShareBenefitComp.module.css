@@ -1,7 +1,12 @@
 .container{
     max-width: 420px;
     margin: auto;
+    margin-bottom: 32px;
     
+}
+
+.shareLink{
+    display: none;
 }
 
 @media screen and (min-width:320px) and (max-width:599px) {
@@ -60,11 +65,7 @@
         display: none;
     }
 
-    .shareLink{
-        
-        vertical-align: middle;
-       
-    }
+    
 }
 
 @media screen and (min-width:600px) {

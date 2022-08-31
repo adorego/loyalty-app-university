@@ -1,9 +1,10 @@
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import httpOperations, { HttpProps } from "../../common/http/http-operations";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 import BasicCard from "../../common/Layout/BasicCard";
-import Benefit from "../../common/models/benefit";
+import Button from "../../common/UI/Button";
+import { ConfiguredBenefit } from "../../common/models/configuredBenefit";
 import Input from "../../common/UI/Input";
 import SectionHeader from "../../common/UI/SectionHeader";
 import classes from "./ShareBenefitComp.module.css";
@@ -11,7 +12,6 @@ import { fetchPortalData } from "../../store/ui-actions";
 import { getBenefitCode } from "../../common/helpers/generateBenefitCode";
 import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
-import { url } from "inspector";
 import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
 import {useSession} from 'next-auth/react';
@@ -24,15 +24,15 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const dispatch = useAppDispatch();
     const sigla = useAppSelector(state => state.auth.university.sigla);
     const colors = useAppSelector(state => state.ui.color);
-    const {data:session, status} = useSession();
-    
+   
+    const waLink = useRef<HTMLAnchorElement>(null);
     const [loading, setLoading] = useState(true);
+    const [generatingCode, setGeneratingCode] = useState(false);
     const codeGenerated = useRef<boolean>(false);
     const [benefitCode, setBenefitCode] = useState<string>("");
-    const benefitToShare:Benefit = useAppSelector(state => state.shareBenefit.benefit);
+    const benefitToShare:ConfiguredBenefit = useAppSelector(state => state.shareBenefit);
     const [urlWA, setUrlWA] = useState<string>("");
     
-    const dinamicShareButtonClass = codeGenerated.current ? "shareButtonContainer_visible" : "shareButtonContainer_notVisible" ;
     const validateName = useCallback((value:string) =>{
         const empty = value.length === 0;
         
@@ -125,27 +125,29 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     )
 
     const isOkToShareButtonAvailable = useCallback(() =>{
-        if(validateName(name).pass && validateLastName(lastName).pass && validateCellPhone(cellPhone).pass && benefitToShare._id !== '' ){
+        if(nameValueIsValid && lastNameValueIsValid && cellPhoneValueIsValid && benefitToShare.benefit._id !== '' ){
             
             return true;
         }
         return false;
-    },[validateName, name, validateLastName, lastName, validateCellPhone, cellPhone]);
+    },[nameValueIsValid, lastNameValueIsValid, cellPhoneValueIsValid, benefitToShare.benefit._id]);
 
+    const dynamicShareButtonClass = isOkToShareButtonAvailable() ? "shareButtonContainer_visible" : "shareButtonContainer_notVisible" ;
+    
     const transformCellPhoneNumber = (number:string) =>{
         const formatedNumber = '+595' + number.slice(1);
-        console.log("formatedNumber:", formatedNumber);
+        // console.log("formatedNumber:", formatedNumber);
         return formatedNumber;
     }
 
     useEffect(
         () =>{
-            console.log("benefitToShare is:", benefitToShare);
+            // console.log("benefitToShare is:", benefitToShare);
             if(benefitToShare && Object.keys(benefitToShare).length === 0 && sigla !== ""){
-                console.log("Before routing");
+                // console.log("Before routing");
                 router.push(`/${sigla}/mainClient`);
             }
-        },[benefitToShare, sigla]
+        },[benefitToShare, sigla, router]
     )
 
     useEffect(
@@ -154,54 +156,80 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                 const formatedCellPhone = transformCellPhoneNumber(cellPhone);
                 setUrlWA(`https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/benefit/${benefitCode}/`);
             }
-        },[benefitCode, codeGenerated]
+        },[benefitCode, codeGenerated, cellPhone]
     )
 
     useEffect(
         () =>{
             const callGenerateCode = async () =>{
-                
-                    const {error, data, result} = await getBenefitCode(sigla, benefitToShare._id, name, lastName, cellPhone);
+                    setGeneratingCode(true);
+                    const {error, data, result} = await getBenefitCode(sigla, benefitToShare.benefit._id, name, lastName, cellPhone);
+                    setGeneratingCode(false);
                     if(!result.ok){
-                        console.log("Ocurrio un error:", error);
+                        // console.log("Ocurrio un error:", error);
                         dispatch(uiActions.showNotification({show:true, 
                             message:`Ocurrió un error al generar el código:${error.message}`, color:"red"}))
                     }else{
                         setBenefitCode(data.code);
                         codeGenerated.current = true;
                     }
+                    
                 }
             
             
             try{
-                
+                // console.log("Before generate code", isOkToShareButtonAvailable());
                 if(isOkToShareButtonAvailable()){
+                    console.log("Code will be generated");
                     callGenerateCode();
                     
+                }else{
+                    setBenefitCode("");
                 }
             }catch(error){
                 dispatch(uiActions.showNotification({show:true, 
                         message:`Ocurrió un error al generar el código:${error}`, color:"red"}))
             }
             
-        },[sigla, benefitToShare._id, name, lastName, cellPhone, dispatch, isOkToShareButtonAvailable]
+        },[sigla, benefitToShare.benefit._id, name, lastName, cellPhone, dispatch, isOkToShareButtonAvailable]
     )
 
+    const generateBenefit = async () =>{
+        //Almacenar los datos del beneficiario (nombre, apellido, celular, código del beneficio, código de la Campaña)
+        // console.log("Before send data");
+        const httpProps:HttpProps = {
+            operation:'post',
+            url:`/api/v1/university/${sigla}/campaign_lead`,
+            data:{
+                name,
+                lastName,
+                cellPhone,
+                benefitCode,
+                campaign_id:benefitToShare.campaign_id,
+                sigla
+                
+            }
+        };
+        dispatch(uiActions.setLoading({loading:true}));
+        const {data, error, result} = await httpOperations(httpProps);
+        dispatch(uiActions.setLoading({loading:false}));
+        if(!result.ok){
+            dispatch(uiActions.showNotification({message:`Ocurrio un error en la operación:${error.message}`, show:true, color:"red"}));
+        }else{
+            // dispatch(uiActions.showNotification({message:`Operación exitosa`, show:true, color:"green"}))
+            shareBenefitViaWA();
+        }
     
+    }
 
-
-   
-    if(loading === true || status === 'loading' || !benefitToShare._id){
+    const shareBenefitViaWA = () =>{
+        // window.open(urlWA);
+        waLink.current?.click();
+    }
+    if(loading === true || !benefitToShare.benefit._id){
         return(
             <div className={spinnerClasses.spin}></div>
         )
-    }
-    
-    
-    const generateBenefit = () =>{
-        //Almacenar los datos del beneficiario (nombre, apellido, celular, código del beneficio, código de la Campaña)
-    
-    
     }
     
     return(
@@ -254,17 +282,29 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
                 textAlign:"center"}}>
                     <p className={classes.benefitText}>{`Este es un Beneficio Exlusivo para ${name} ${lastName}`} </p>
                     <hr />
-                    <h6 className={classes.benefitDescription}>{benefitToShare.description}</h6>
+                    <h6 className={classes.benefitDescription}>{benefitToShare.benefit.description}</h6>
                     <hr />
-                    {benefitCode !== "" && <p className={classes.benefitText}>{'El código de este Beneficio Exclusivo es:'}</p>}
-                    {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
-                    <div className={classes[`${dinamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}>
+                    
+                        {benefitCode !== "" && <p className={classes.benefitText}>{'El código de este Beneficio Exclusivo es:'}</p>}
+                        {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
+                    {generatingCode && <div className={spinnerClasses.spin}></div>}
+                    {!generatingCode &&    
+                        <div className={classes[`${dynamicShareButtonClass}`]}>
+                            <Button label="OK Compartir" isAvailable={true} onClickHandler={generateBenefit} 
+                                
+                                additionalStyle={{backgroundColor:colors.secondaryLight,
+                                color:"var(--loyalty-backGround-color)", width:"100%",
+                                margin:"16px 0px 32px 0px"}}
+                            />
+                        </div>
+                    }
+                    {/* <div className={classes[`${dynamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}> */}
                         
-                        <a className={classes.shareLink}  target={"_blank"} href={urlWA} rel="noreferrer" onClick={generateBenefit}>
+                        <a className={classes.shareLink} ref={waLink}  target={"_blank"} href={urlWA} rel="noreferrer" >
                             Ok Compartir!
                         </a>
                         
-                    </div>
+                    {/* </div> */}
                     
                 </BasicCard>
                 

@@ -31,11 +31,11 @@ const httpOperations = async (props:HttpProps) =>{
 
                 if(!result.ok){
                     error = await result.json();
-                    console.log("Error:", error);
+                    // console.log("Error:", error);
                    
                 }else{
                     data = await result.json();
-                    console.log("Data:", data);
+                    // console.log("Data:", data);
                 }
         }
 
