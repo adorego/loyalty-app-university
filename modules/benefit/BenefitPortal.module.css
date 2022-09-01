@@ -7,8 +7,15 @@
     /* border: 2px solid red; */
 }
 
+.sectionTitle{
+    text-align: center;
+}
 .title{
     font-size: 21px;
+}
+
+.validity{
+    max-width: 420px;
 }
 
 .description{

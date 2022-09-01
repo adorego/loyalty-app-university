@@ -1,0 +1,58 @@
+.container{
+    position: relative;
+    width: 100vw;
+    max-width: 420px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding:"16px 8px 16px 8px"; */
+    margin: 16px 8px 16px 8px;
+    /* border: 2px solid red; */
+
+
+}
+
+.textTitle{
+    margin: 0px 0px 0px 0px;
+}
+.imageContainer{
+    /* position: relative; */
+    width: 100%;
+    max-width: 420px;
+    margin: 0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+.mainImage{
+
+}
+
+.knowMoreLink{
+    text-decoration: underline;
+}
+
+.leftArrow{
+    position:absolute;
+    top: 50%;
+    left: 0px;
+    font-size: 32px;
+    color: black;
+    z-index: 10;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    /* border: 2px solid red; */
+}
+
+.rightArrow{
+    position:absolute;
+    top: 50%;
+    right: 0px;
+    font-size: 32px;
+    color: black;
+    z-index: 10;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    /* border: 2px solid red; */
+}

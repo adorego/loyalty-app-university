@@ -154,9 +154,9 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
         () =>{
             if(benefitCode.length > 0 && codeGenerated.current){
                 const formatedCellPhone = transformCellPhoneNumber(cellPhone);
-                setUrlWA(`https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/benefit/${benefitCode}/`);
+                setUrlWA(`https://wa.me/${formatedCellPhone}?text=https://www.loyaltyapp.com.py/${sigla}/benefit/${benefitCode}/`);
             }
-        },[benefitCode, codeGenerated, cellPhone]
+        },[benefitCode, codeGenerated, cellPhone, sigla]
     )
 
     useEffect(
