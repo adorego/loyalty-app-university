@@ -1,5 +1,5 @@
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { FaAngleLeft, FaAngleRight, FaCircle } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
 
 import BasicCard from "../Layout/BasicCard";
 import Button from "./Button";
@@ -19,7 +19,7 @@ export interface CarrucelCardProps{
 }
 const CarrucelCard = (props:CarrucelCardProps) =>{
     const [contentIndex, setContentIndex] = useState<number>(0);
-
+    const intervalId = useRef<ReturnType<typeof setInterval>>() ;
     useEffect(
         () =>{
             const animateCarrucel = () =>{
@@ -34,15 +34,20 @@ const CarrucelCard = (props:CarrucelCardProps) =>{
             }
             
             if(props.content.length > 1){
-                const id = setInterval(animateCarrucel, 5000);
+                intervalId.current = setInterval(animateCarrucel, 5000);
                 return function clean(){
-                    clearInterval(id);
+                    clearInterval(intervalId.current);
                 }
             }
         },[]
     )
 
-    
+    const stopAnimation = (index:number) =>{
+        clearInterval(intervalId.current);
+        
+        setContentIndex(index);
+
+    }
     return(
         
         <BasicCard>
@@ -52,8 +57,12 @@ const CarrucelCard = (props:CarrucelCardProps) =>{
                     width={props.content[contentIndex].img.width} 
                     height={props.content[contentIndex].img.height} 
                     layout={'responsive'} />
-                    {/* <FaAngleLeft className={classes.leftArrow} onClick={nextContent} />
-                    <FaAngleRight className={classes.rightArrow} onClick={nextContent}/> */}
+                    
+                </div>
+                <div className={classes.roller}>
+                    {props.content.map(
+                        (item, index) => (<FaCircle style={contentIndex === index ?{color:"blue"} : {}} className={classes.rollerPoint}  key={index} onClick={(e) =>stopAnimation(index)} ></FaCircle>)
+                    )}
                 </div>
                 <div className={classes.textContainer}>
                     <h4 className={classes.textTitle}>{props.content[contentIndex].title}</h4>

@@ -46,7 +46,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
     )
 
     const validateEmail = useCallback((value:string) =>{
-        const result = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}/.test(value);
+        const result = /([a-z0-9_.-]+)@([da-z.-]+).([a-z.]{2,6})/.test(value);
         return{pass:result, errorMessage:'Email invalido'}
 
     },[]);

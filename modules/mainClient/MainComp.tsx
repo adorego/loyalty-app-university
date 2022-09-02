@@ -61,8 +61,8 @@ const MainComp = (props:MainCompProps) =>{
        
         <div className={classes.container}>
             <nav className={classes.tabContainer}>
-                <button value={"awards"} style={awardsStyleSelectedTab} className={classes.tabLink} onClick={selectTab}>Puntos</button>
-                <button value={"winpoints"} style={winPointsStyleSelectedTab} className={classes.tabLink} onClick={selectTab}>Ganá</button>
+                <button value={"awards"} style={awardsStyleSelectedTab} className={classes.tabLink} onClick={selectTab}>Tus Puntos</button>
+                <button value={"winpoints"} style={winPointsStyleSelectedTab} className={classes.tabLink} onClick={selectTab}>Ganá Puntos</button>
             </nav>
             <div className={classes.mainContentContainer}>
                 {selectedTab === "awards" && <AwardsTab points={props.points} 
