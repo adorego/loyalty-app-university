@@ -79,7 +79,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 return new Date(item.initial_date).getTime() <= Date.now() && new Date(item.end_date).getTime() >= Date.now()
             }
         )
-        console.log("Valid Campaigns:", valid_campaigns);
+        // console.log("Valid Campaigns:", valid_campaigns);
         type BenefitCampaign = {
             benefit:string,
             campaign_id:string
@@ -95,7 +95,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 
             
         )
-        console.log("benefitsIdsToShare:", benefitsIdsToShare);
+        // console.log("benefitsIdsToShare:", benefitsIdsToShare);
         
         const benefitsToShare = benefitsIdsToShare.map(
             (benefitCampaign:BenefitCampaign) =>{
@@ -112,7 +112,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
             }
         )
 
-        console.log("benefitToShare:", benefitsToShare);
+        // console.log("benefitToShare:", benefitsToShare);
         
         const headInfo = {
                 title:university.portal.head_information.title,

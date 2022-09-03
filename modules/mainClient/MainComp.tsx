@@ -5,10 +5,13 @@ import AwardsTab from "./AwardTab";
 import BenefitsToShare from "./BenefitsToShare";
 import { ConfiguredAward } from "../../common/models/configuredAward";
 import { ConfiguredBenefit } from "../../common/models/configuredBenefit";
+import { authActions } from "../../store/auth-slice";
 import classes from './MainComp.module.css';
+import { fetchAuthData } from "../../store/auth-actions";
 import { fetchPortalData } from "../../store/ui-actions";
 import spinnerClasses from '../../styles/spinner.module.css';
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export interface MainCompProps{
     points:string;
@@ -24,6 +27,8 @@ const MainComp = (props:MainCompProps) =>{
     const sigla = useAppSelector(state => state.auth.university.sigla);
     const router = useRouter();
     const {universitySigla} = router.query;
+    const {data:session, status} = useSession();
+    const user = useAppSelector(state => state.auth.user);
 
     // console.log("props.benefitsToShare:", props.benefitsToShare);
 
@@ -49,6 +54,14 @@ const MainComp = (props:MainCompProps) =>{
                
             }
         },[sigla, universitySigla, dispatch]
+    )
+
+    useEffect(
+        () =>{
+            if(user.id === "" && sigla !== ""){
+                dispatch(fetchAuthData(sigla));
+            }
+        }
     )
 
     if(loading){

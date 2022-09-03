@@ -38,6 +38,9 @@ const authSlice = createSlice({
         },
         setUserEmail(state, action){
             state.user.email = action.payload.email;
+        },
+        setUserData(state, action){
+            state.user = action.payload.user;
         }
     }
 });
