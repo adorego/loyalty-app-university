@@ -48,7 +48,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
             // console.log("validity_date:", validity_date);
             const result = await university_collection.updateOne({sigla:sigla},
                 {$push:{campaign_leads:{
-                    source_user:source_user,
+                    source_user:new ObjectId(source_user),
                     benefit_code:benefitCode,
                     name,
                     lastName,
