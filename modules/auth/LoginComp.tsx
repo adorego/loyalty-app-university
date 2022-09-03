@@ -116,11 +116,12 @@ const LoginComp = () =>{
                         sigla:sigla
                     
                     })
+                    const data = await result.json();
                     if(result.error){
                         dispatch(uiActions.setLoading({loading:false})); 
                         dispatch(uiActions.showNotification({show:true, message:"Hay un problema con el par usuario/clave", color:'red'}));
                     }else{
-                        
+                        dispatch(authActions.login({id:data.id, email:data.email}))
                         router.push(`/${sigla}/mainClient`);
                 
                         

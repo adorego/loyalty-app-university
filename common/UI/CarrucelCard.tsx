@@ -20,6 +20,8 @@ export interface CarrucelCardProps{
 const CarrucelCard = (props:CarrucelCardProps) =>{
     const [contentIndex, setContentIndex] = useState<number>(0);
     const intervalId = useRef<ReturnType<typeof setInterval>>() ;
+
+    
     useEffect(
         () =>{
             const animateCarrucel = () =>{
@@ -42,6 +44,9 @@ const CarrucelCard = (props:CarrucelCardProps) =>{
         },[]
     )
 
+    const swipeEventHandler = () =>{
+
+    }
     const stopAnimation = (index:number) =>{
         clearInterval(intervalId.current);
         
@@ -56,6 +61,7 @@ const CarrucelCard = (props:CarrucelCardProps) =>{
                     <Image className={classes.mainImage} src={props.content[contentIndex].img.src} alt={props.content[contentIndex].img.alt} 
                     width={props.content[contentIndex].img.width} 
                     height={props.content[contentIndex].img.height} 
+                    priority={true}
                     layout={'responsive'} />
                     
                 </div>

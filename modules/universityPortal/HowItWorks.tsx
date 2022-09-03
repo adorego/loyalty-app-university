@@ -12,12 +12,12 @@ export interface HowItWorksProps{
 
 const HowItWorks = (props:HowItWorksProps) =>{
     return(
-        <section id='#cómofunciona' className={classes.container}>
+        <section id='section1' className={classes.container} style={{backgroundColor:props.primaryColor}}>
             {/* <h4 className={classes.title}>Cómo funciona ?</h4> */}
             <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                 <div className={classes.cardContainer}>
                     <FaUserPlus className={classes.iconStep} />
-                    <h5>Paso 1</h5>
+                    <h5>Paso 1 </h5>
                     <h4>Registrate</h4>
                     <div className={classes.registerBusttonContainer}>
                         <Button label={'Registrate hoy'} 

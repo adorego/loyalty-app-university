@@ -1,8 +1,8 @@
+import BenefitPortal, { LandingSection, SectionContent } from "../../../../modules/benefit/BenefitPortal";
 import { GetServerSideProps, GetStaticProps } from "next";
 import {useEffect, useState} from "react";
 
 import BenefitLayout from "../../../../common/Layout/BenefitLayout";
-import BenefitPortal from "../../../../modules/benefit/BenefitPortal";
 import BenefitPortalHeadInfo from "../../../../common/models/benefitPortalHeadInfo";
 import BenefitPortalHeadProps from "../../../../common/models/benefitPortalHeadProps";
 import BenefitPortalModel from "../../../../common/models/benefitPortalModel";
@@ -16,7 +16,8 @@ export interface BenefitPageProps{
     error:ErrorApp;
     headInfo:BenefitPortalHeadProps;
     mainData:BenefitPortalModel;
-    colors:{primaryColor:string, secondaryColor:string, secondaryLightColor:string}
+    colors:{primaryColor:string, secondaryColor:string, secondaryLightColor:string};
+    landingSections:Array<LandingSection>;
     
 }
 const BenefitPage = (props:BenefitPageProps) =>{
@@ -25,7 +26,10 @@ const BenefitPage = (props:BenefitPageProps) =>{
     // console.log("props:", props, "loading:", loading);
     if(!props.error.hasError){
         return(
-            <BenefitPortal mainData={props.mainData} secondaryLightColor={props.colors.secondaryLightColor} />
+            <BenefitPortal mainData={props.mainData} 
+            secondaryLightColor={props.colors.secondaryLightColor} 
+            landingSections={props.landingSections}
+            />
         )
     }else{
         <h2>{props.error.description}</h2>
@@ -43,7 +47,7 @@ export const getServerSideProps:GetServerSideProps = async (context) =>{
         const sigla = context?.params?.universitySigla;
         const benefitCode_match = await university_collection.findOne({sigla:sigla, 
             "campaign_leads.benefit_code":context?.params?.benefitCode},
-            {projection:{"campaign_leads":1, campaigns:1, benefits:1, configuration:1, portal:1}});
+            {projection:{"campaign_leads":1, campaigns:1, benefits:1, configuration:1, portal:1, landing:1}});
         // console.log("benefitCode_match:", benefitCode_match);
         const campaign_lead = benefitCode_match?.campaign_leads.filter(
             (item:any) => item.benefit_code === context?.params?.benefitCode);
@@ -60,6 +64,19 @@ export const getServerSideProps:GetServerSideProps = async (context) =>{
             (item:any) => item.benefit._id.toString() === campaign[0].benefit.toString()
         ) : "";
         // console.log("benefit:", benefit);
+        
+        const landingSections = benefitCode_match?.landing;
+        let landingSectionsToAdd:Array<LandingSection> = [];
+        if(landingSections !== null && campaign[0].landing.length > 0){
+            campaign[0].landing.filter(
+                (item:any) => {
+                    const sectionToAdd = landingSections.filter(
+                        (section:any) => item.toString() === section._id.toString()
+                    )
+                    landingSectionsToAdd.push(sectionToAdd[0]);
+                }
+            )
+        }
         
         const error:ErrorApp = checkCampaignValidity(campaign[0]);
         // console.log("error:", error);
@@ -80,7 +97,8 @@ export const getServerSideProps:GetServerSideProps = async (context) =>{
                     error,
                     headInfo:portalHead,
                     mainData:mainDataBenefitPortal,
-                    colors:benefitCode_match?.configuration
+                    colors:benefitCode_match?.configuration,
+                    landingSections:landingSectionsToAdd
             }
             // console.log("benefitData:", benefitPortalData);
             return{

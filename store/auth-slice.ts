@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const authInitialState = {
     isLogged:false,
     user:{
+        id:"",
         name:"",
         lastName:"",
         email:"",

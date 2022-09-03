@@ -3,14 +3,26 @@ import BenefitPortalModel from "../../common/models/benefitPortalModel";
 import Button from "../../common/UI/Button";
 import CarrucelCard from "../../common/UI/CarrucelCard";
 import classes from "./BenefitPortal.module.css";
+export interface SectionContent{
+    img:{src:string, width:string, height:string, alt:string},
+    title:string;
+    text:string;
+}
 
+export interface LandingSection{
+    _id:string;
+    title:string;
+    content:Array<SectionContent>;
+
+}
 export interface BenefitPortalProps{
     mainData:BenefitPortalModel;
     secondaryLightColor:string;
+    landingSections?:Array<LandingSection>;
 
 }
 const BenefitPortal = (props:BenefitPortalProps) =>{
-
+    console.log("props:", props.landingSections);
     return(
         <div className={classes.container}>
             <section id="#topBenefit">
@@ -27,13 +39,27 @@ const BenefitPortal = (props:BenefitPortalProps) =>{
                                 />
                 </BasicCard>
             </section>
-            <section id="#diplomadosId">
+            {props.landingSections?.map(
+                    (landingSection, index) =>{
+                        // console.log("landingSection:", landingSection);
+                        const sectionContent = landingSection.content;
+                        const sectionId = `${landingSection.title}`.trim().toLowerCase();
+                        return(
+                            <section className={classes.section} key={index} id={sectionId}>
+                            <h3 className={classes.sectionTitle}>{landingSection.title}</h3>
+                            <CarrucelCard content={sectionContent} secondaryLightColor={props.secondaryLightColor} />
+                            </section>
+                        )
+                    }
+            )}
+            {/* <section id="#diplomadosId">
+                
                 <h3 className={classes.sectionTitle}>Diplomados UCOM</h3> 
                 <CarrucelCard content={[{img:{src:'/images/ucom/diplomado_fintech.png', width:"704", height:"508", alt:"Diplomado en Fintech"},
                                         title:"Diplomado en Fintech", text:"El Diplomado en Fintech es la fusión entre las áreas de tecnología y las finanzas"},
-                                        {img:{src:'/images/ucom/diplomado_inteligencia_de_negocios.png', width:"710", height:"584", alt:"Diplomado en Fintech"},
+                                        {img:{src:'/images/ucom/diplomado_inteligencia_de_negocios.png', width:"704", height:"508", alt:"Diplomado en Inteligencia de Negocios"},
                                         title:"Diplomado en Inteligencia de Negocios", text:"El Diplomado en Inteligencia de Negocios fusiona las áreas de negocios con BigData"},
-                                        {img:{src:'/images/ucom/diplomado_machine_learning.png', width:"710", height:"750", alt:"Diplomado en Machine Learning"},
+                                        {img:{src:'/images/ucom/diplomado_machine_learning.png', width:"704", height:"508", alt:"Diplomado en Machine Learning"},
                                         title:"Diplomado en Machine Learning", text:"El Diplomado en Machine Learning te prepara el el fantástico mundo del análisis de Datos"}]}   
                               secondaryLightColor="#8E9600"  />          
             </section>
@@ -47,7 +73,7 @@ const BenefitPortal = (props:BenefitPortalProps) =>{
                                         title:"Lic. Juan Pablo Bazán", text:"Licenciado en Análisis de Sistemas por la Universidad Católica (2015), apasionado por el análisis de datos y la tecnología. Con experiencia de más de 10 años analizando datos y su correspondiente visualización."}]}   
                               secondaryLightColor="#8E9600"  />   
                 
-            </section>
+            </section> */}
         </div>
     )
 }

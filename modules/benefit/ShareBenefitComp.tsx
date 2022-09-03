@@ -32,6 +32,8 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const [benefitCode, setBenefitCode] = useState<string>("");
     const benefitToShare:ConfiguredBenefit = useAppSelector(state => state.shareBenefit);
     const [urlWA, setUrlWA] = useState<string>("");
+    const {data:session, status} = useSession();
+    const user = useAppSelector(state => state.auth.user);
     
     const validateName = useCallback((value:string) =>{
         const empty = value.length === 0;
@@ -201,6 +203,7 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
             operation:'post',
             url:`/api/v1/university/${sigla}/campaign_lead`,
             data:{
+                source_user:user.id,
                 name,
                 lastName,
                 cellPhone,
@@ -226,90 +229,103 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
         // window.open(urlWA);
         waLink.current?.click();
     }
-    if(loading === true || !benefitToShare.benefit._id){
+    if(loading === true || !benefitToShare.benefit._id || status === 'loading'){
+        return(
+            <div className={spinnerClasses.spin}></div>
+        )
+    }
+
+    if(status === 'unauthenticated'){
+        router.push(`/${sigla}`);
         return(
             <div className={spinnerClasses.spin}></div>
         )
     }
     
-    return(
-            <div className={classes.container}>
-                <SectionHeader titleText="" centerMarginTitle={false} />
-                <h5 className={classes.title}>Datos de tu Referido</h5>
-                <Input 
-                        required={true}
-                        id="nameId" 
-                        label="Nombre" 
-                        value={name} 
-                        onFocusHandler={onFocusNameHandler}
-                        onChangeHandler={onChangeNameHandler}
-                        onBlurHandler={onBlurNameHandler}
-                        isInputInvalid={isInputNameInvalid}
-                        errorMessage={errorMessageName}
-                        additionalAttributes={{type:"text", autoComplete:"off"}}/>
-                <Input 
-                        required={true}
-                        id="lastNameId" 
-                        label="Apellido" 
-                        value={lastName} 
-                        onFocusHandler={onFocusLastNameHandler}
-                        onChangeHandler={onChangeLastNameHandler}
-                        onBlurHandler={onBlurLastNameHandler}
-                        isInputInvalid={isInputLastNameInvalid}
-                        errorMessage={errorMessageLastName}
-                        additionalAttributes={{type:"text", autoComplete:"off"}}/>
-                <Input 
-                        required={true}
-                        id="cellPhoneId" 
-                        label="Celular" 
-                        value={cellPhone} 
-                        onFocusHandler={onFocusCellPhoneHandler}
-                        onChangeHandler={onChangeCellPhoneHandler}
-                        onBlurHandler={onBlurCellPhoneHandler}
-                        isInputInvalid={isInputCellPhoneInvalid}
-                        errorMessage={errorMessageLastCellPhone}
-                        additionalAttributes={{type:"text", autoComplete:"off"}}/>
-                {/* <div className={classes.includeNameContainer}>
-                    <input className={classes.includeName} type="checkbox" id="includeNameId" />
-                    <label htmlFor="includeNameId">Incluir mi nombre</label>
-                </div> */}
-                <h5 className={classes.benefitTitle}>Beneficio a compartir</h5>
-                
-                <BasicCard additionalStyle={{margin:"auto", 
-                backgroundColor:colors.primary, 
-                color:"var(--loyalty-backGround-color)",
-                maxWidth:"450px",
-                textAlign:"center"}}>
-                    <p className={classes.benefitText}>{`Este es un Beneficio Exlusivo para ${name} ${lastName}`} </p>
-                    <hr />
-                    <h6 className={classes.benefitDescription}>{benefitToShare.benefit.description}</h6>
-                    <hr />
+    if(status === 'authenticated'){
+        return(
+                <div className={classes.container}>
+                    <SectionHeader titleText="" centerMarginTitle={false} />
+                    <h5 className={classes.title}>Datos de tu Referido</h5>
+                    <Input 
+                            required={true}
+                            id="nameId" 
+                            label="Nombre" 
+                            value={name} 
+                            onFocusHandler={onFocusNameHandler}
+                            onChangeHandler={onChangeNameHandler}
+                            onBlurHandler={onBlurNameHandler}
+                            isInputInvalid={isInputNameInvalid}
+                            errorMessage={errorMessageName}
+                            additionalAttributes={{type:"text", autoComplete:"off"}}/>
+                    <Input 
+                            required={true}
+                            id="lastNameId" 
+                            label="Apellido" 
+                            value={lastName} 
+                            onFocusHandler={onFocusLastNameHandler}
+                            onChangeHandler={onChangeLastNameHandler}
+                            onBlurHandler={onBlurLastNameHandler}
+                            isInputInvalid={isInputLastNameInvalid}
+                            errorMessage={errorMessageLastName}
+                            additionalAttributes={{type:"text", autoComplete:"off"}}/>
+                    <Input 
+                            required={true}
+                            id="cellPhoneId" 
+                            label="Celular" 
+                            value={cellPhone} 
+                            onFocusHandler={onFocusCellPhoneHandler}
+                            onChangeHandler={onChangeCellPhoneHandler}
+                            onBlurHandler={onBlurCellPhoneHandler}
+                            isInputInvalid={isInputCellPhoneInvalid}
+                            errorMessage={errorMessageLastCellPhone}
+                            additionalAttributes={{type:"text", autoComplete:"off"}}/>
+                    {/* <div className={classes.includeNameContainer}>
+                        <input className={classes.includeName} type="checkbox" id="includeNameId" />
+                        <label htmlFor="includeNameId">Incluir mi nombre</label>
+                    </div> */}
+                    <h5 className={classes.benefitTitle}>Beneficio a compartir</h5>
                     
-                        {benefitCode !== "" && <p className={classes.benefitText}>{'El código de este Beneficio Exclusivo es:'}</p>}
-                        {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
-                    {generatingCode && <div className={spinnerClasses.spin}></div>}
-                    {!generatingCode &&    
-                        <div className={classes[`${dynamicShareButtonClass}`]}>
-                            <Button label="OK Compartir" isAvailable={true} onClickHandler={generateBenefit} 
-                                
-                                additionalStyle={{backgroundColor:colors.secondaryLight,
-                                color:"var(--loyalty-backGround-color)", width:"100%",
-                                margin:"16px 0px 32px 0px"}}
-                            />
-                        </div>
-                    }
-                    {/* <div className={classes[`${dynamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}> */}
+                    <BasicCard additionalStyle={{margin:"auto", 
+                    backgroundColor:colors.primary, 
+                    color:"var(--loyalty-backGround-color)",
+                    maxWidth:"450px",
+                    textAlign:"center"}}>
+                        <p className={classes.benefitText}>{`Este es un Beneficio Exlusivo para ${name} ${lastName}`} </p>
+                        <hr />
+                        <h6 className={classes.benefitDescription}>{benefitToShare.benefit.description}</h6>
+                        <hr />
                         
-                        <a className={classes.shareLink} ref={waLink}  target={"_blank"} href={urlWA} rel="noreferrer" >
-                            Ok Compartir!
-                        </a>
+                            {benefitCode !== "" && <p className={classes.benefitText}>{'El código de este Beneficio Exclusivo es:'}</p>}
+                            {benefitCode !== "" && <p className={classes.benefitText}>{benefitCode}</p>}
+                        {generatingCode && <div className={spinnerClasses.spin}></div>}
+                        {!generatingCode &&    
+                            <div className={classes[`${dynamicShareButtonClass}`]}>
+                                <Button label="OK Compartir" isAvailable={true} onClickHandler={generateBenefit} 
+                                    
+                                    additionalStyle={{backgroundColor:colors.secondaryLight,
+                                    color:"var(--loyalty-backGround-color)", width:"100%",
+                                    margin:"16px 0px 32px 0px"}}
+                                />
+                            </div>
+                        }
+                        {/* <div className={classes[`${dynamicShareButtonClass}`]} style={{backgroundColor:colors.secondaryLight, color:"var(--loyalty-backGround-color)"}}> */}
+                            
+                            <a className={classes.shareLink} ref={waLink}  target={"_blank"} href={urlWA} rel="noreferrer" >
+                                Ok Compartir!
+                            </a>
+                            
+                        {/* </div> */}
                         
-                    {/* </div> */}
+                    </BasicCard>
                     
-                </BasicCard>
-                
-            </div>
-        )
+                </div>
+            )
+        }else{
+            return(
+                <div className={spinnerClasses.spin}></div>
+            )
+        }
     
 }
 

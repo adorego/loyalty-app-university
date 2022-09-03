@@ -48,7 +48,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const globalLoading = useAppSelector(state => state.ui.loading);
     const {data:session, status} = useSession();
-    console.log("UniversityHome props:", props);
+    // console.log("UniversityHome props:", props);
     
     useEffect(
         () =>{
@@ -100,7 +100,8 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
             <Contacto email={props.contact_email} 
             phone={props.contact_phone}
             whatsapp={props.contact_whatsapp} 
-            secondaryColor={props.secondaryLight_color}/>
+            secondaryColor={props.secondaryLight_color}
+            primaryColor={props.primary_color}/>
             
         </div>
     )

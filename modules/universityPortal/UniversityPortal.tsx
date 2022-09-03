@@ -34,11 +34,11 @@ const UniversityPortal = (props:UniversityPortalProps) =>{
             {props.topLinks && <ul>
                 {props.topLinks.map(
                     (title, index) =>{
-                        const hrefLink = title.replace(/\s/g,'').toLowerCase();
+                        const hrefLink = '#'+ `section${index+1}` ;
                         
                         return(
                             
-                            <li key={index}><h5 className={classes.topLinks}>{title}</h5></li>
+                            <li key={index}><h5 className={classes.topLinks}><a href={hrefLink}>{title}</a></h5></li>
                         )
                     }
                 )}

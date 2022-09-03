@@ -38,6 +38,7 @@
     max-width: 800px;
     min-height:500px;
     color:white;
+    border:8px solid white;
     background-repeat: no-repeat;
     background-size:cover;
     background-position: center;
@@ -82,14 +83,17 @@
 
     .topLinks{
         font-size: 15px;
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
         
     }
     .title{
-        margin: 24px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
         font-size: 35px;
     }
     .headline{
-        margin: 24px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
         padding: 0px;
         height: auto;
     }
@@ -103,7 +107,9 @@
     }
     
     .container ul{
-        flex-direction: column;
+        flex-direction: row;
+        padding: 0px 0px 0px 0px;
+        margin: 0px 8px 0px 8px;
     }
 
     

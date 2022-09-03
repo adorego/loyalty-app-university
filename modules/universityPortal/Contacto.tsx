@@ -8,11 +8,12 @@ export interface ContactoProps{
     phone:string;
     whatsapp:string;
     secondaryColor:string;
+    primaryColor:string;
     
 }
 const Contacto = (props:ContactoProps) =>{
     return(
-        <section id="contactanosId" className={classes.container}>
+        <section id="section3" className={classes.container} style={{backgroundColor:props.primaryColor}}>
             <BasicCard additionalStyle={{border:`1px solid ${props.secondaryColor}`, maxWidth:"320px" }}>
                 <div className={classes.cardContainer}>
                     <FaEnvelope className={classes.iconClass} />

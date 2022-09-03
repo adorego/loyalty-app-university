@@ -10,7 +10,7 @@ export interface BenefitsPortalProps{
 }
 const BenefitsPortal = (props:BenefitsPortalProps) =>{
     return(
-        <section id="benefitPortalId" className={classes.container}>
+        <section id="section2" className={classes.container}>
             {/* <h4 className={classes.title}>Qué beneficios tenés ?</h4> */}
             {props.awardList.map(
                 (benefit, index) =>{

@@ -7,6 +7,12 @@
     /* border: 2px solid red; */
 }
 
+.section{
+    width: 100%;
+    min-height: 200px;
+    /* border:2px solid red */
+}
+
 .sectionTitle{
     text-align: center;
 }

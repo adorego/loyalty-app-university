@@ -16,7 +16,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
         try{
             //Get name, lastName, cellphone, campaignId, 
             const session = unstable_getServerSession(req, res, authOptions);
-            const {name, lastName, cellPhone, campaign_id, benefitCode, sigla} = JSON.parse(req.body);
+            const {name, lastName, cellPhone, campaign_id, benefitCode, sigla, source_user} = JSON.parse(req.body);
             // console.log("Data received:", name, lastName, cellPhone, campaign_id, benefitCode, sigla);
             if(!name || !lastName || !cellPhone || !campaign_id || !benefitCode || !sigla){
                 throw new API400Error('Faltan parametros de entrada');
@@ -29,7 +29,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
                 throw new Api500Error('Ya existe este código de beneficio');
             }
             const campaignsResult = await university_collection.findOne({sigla:sigla, "campaigns._id":new ObjectId(campaign_id)},{projection:{campaigns:1, benefits:1}});
-            console.log("campaign:", campaignsResult);
+            // console.log("campaign:", campaignsResult);
             const campaign = campaignsResult?.campaigns.filter(
                 (item:CampaignModel) =>{
                     return item._id.toString() === campaign_id
@@ -48,6 +48,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
             // console.log("validity_date:", validity_date);
             const result = await university_collection.updateOne({sigla:sigla},
                 {$push:{campaign_leads:{
+                    source_user:source_user,
                     benefit_code:benefitCode,
                     name,
                     lastName,
