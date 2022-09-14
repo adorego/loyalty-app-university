@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react';
 import Button from '../../common/UI/Button';
 import Image from 'next/image';
 import ImageModel from '../../common/models/ImageModel';
-import Link from 'next/link';
 import classes from './UniversityPortal.module.css';
-import { url } from 'inspector';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { useRouter } from 'next/router';
 
@@ -17,6 +15,7 @@ export interface UniversityPortalProps{
     forText:string;
     buttonText:string;
     primaryColor:string;
+    forTextColor?:string;
 }
 const UniversityPortal = (props:UniversityPortalProps) =>{
     const router = useRouter();
@@ -45,7 +44,7 @@ const UniversityPortal = (props:UniversityPortalProps) =>{
             </ul>}
             <h2 className={classes.title}>{props.title}</h2>
             <div className={classes.headline} style = {props.backgroundImage ? {backgroundImage:`url(${props.backgroundImage.src})`} : {}}>
-                    <h4 className={classes.forText}>{props.forText}</h4>
+                    <h4 className={classes.forText} style={props.forTextColor ? {color:props.forTextColor} : {color:"white"}}>{props.forText}</h4>
                     <Button label={props.buttonText} 
                             onClickHandler={onRegisterButtonClick}
                             isAvailable={true}

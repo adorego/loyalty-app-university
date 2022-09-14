@@ -1,14 +1,12 @@
 .notification{
     position: fixed;
     top:120px;
-    left:10vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
-    width: 80vw;
-    max-width: 600px;
+    max-width: 80vw;
     height: auto;
     padding: 10px;
     border-radius: 20px;
@@ -40,10 +38,17 @@
 .main{
     color: grey;
 }
-
- @media only screen and (min-width: 600px) {
+@media only screen and (max-width: 800px){
+    .notification{
+        width: 80vw;
+        left:10vw;
+        margin: auto;
+    }
+}
+ @media only screen and (min-width: 800px) {
     .notification{
         width: 50vw;
+        left:25vw;
         margin: auto;
     }
 } 

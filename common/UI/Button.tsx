@@ -11,22 +11,21 @@ export interface ButtonInterface{
 const Button =({isAvailable, ...props}:ButtonInterface) => {
     
 
-    const dynamicClass = classes["button-per"] + " button-app"; //button-app is a global style
-    const disabledButton = <button onClick={props.onClickHandler} className={dynamicClass} style={props.additionalStyle} disabled>
-                                {props.label}{props.children}
-                            </button>
-    const enabledButton =  <button onClick={props.onClickHandler} className={dynamicClass} style={props.additionalStyle}    >
-                                {props.label}{props.children}
-                            </button>
-
-
-if(!isAvailable){
-    // console.log('disabled button');
-    return disabledButton;
-}else{
-    // console.log('Enabled button');
-    return enabledButton;
-}
+   
+    if(isAvailable){
+        return (
+            <button onClick={props.onClickHandler} className={`${classes["button-per"]} button-app`} style={props.additionalStyle ? props.additionalStyle : ""}    >
+                {props.label}{props.children}
+            </button>
+        )
+        
+    }else{
+        return(
+            <button onClick={props.onClickHandler} className={`${classes["button-per"]} button-app`} style={props.additionalStyle ? props.additionalStyle : ""} disabled >
+                {props.label}{props.children}
+            </button>
+        )
+    }
     
 }
 

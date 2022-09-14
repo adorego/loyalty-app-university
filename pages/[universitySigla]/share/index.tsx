@@ -1,17 +1,27 @@
+import API401Error from "../../../common/DataBase/Api401Error"
+import API404Error from "../../../common/DataBase/Api404Error"
 import CachedUniversityLayout from "../../../common/Layout/CacheUniversityLayout"
-import { GetStaticProps } from "next"
+import { GetServerSideProps } from "next"
 import PageWithLayoutType from "../../../types/PageWithLayout"
 import { ReactNode } from "react"
 import ShareBenefitComp from "../../../modules/benefit/ShareBenefitComp"
 import UniversityPortalHeadingInfo from "../../../common/models/universityPortalHeadingInfo"
+import { authOptions } from "../../api/auth/[...nextauth]"
 import { connect } from "../../../common/DataBase/Connect"
+import { unstable_getServerSession } from "next-auth"
+import { useSession } from "next-auth/react"
 
 export interface ShareBenefitProps{
     children:ReactNode;
     headInfo:UniversityPortalHeadingInfo;
+    headerBackgroundColor:string;
+    logoWidth:string;
+    loginColor:string;
 }
 const ShareBenefit = (props:ShareBenefitProps) =>{
-    
+    const {data:session, status} = useSession();
+
+    console.log("session:", session, "status:", status);
     return(
         <ShareBenefitComp />
     )
@@ -22,59 +32,53 @@ const ShareBenefit = (props:ShareBenefitProps) =>{
 
 export default ShareBenefit;
 
-export async function getStaticPaths(){
-    const db = await connect();
-    const university_collection = db.collection("university");
-    const projection = {sigla:1};
-    const university_list_cursor = university_collection.find().project(projection);
-    const universities = await university_list_cursor.toArray();
-   
-    let paths:Array<{}> = [];
-    universities.map(
-        (university) => {
-            
-                    
-                    paths.push({params:{universitySigla:university.sigla}});
-                   
-        })
-           
-            
-            
-    
-    //  console.log("paths:", JSON.stringify(paths));
-    
-    
-    return{
-        paths:paths,
-        fallback:false
-    }
 
-    
-}
 
-export const getStaticProps:GetStaticProps = async(context) => {
+export  const getServerSideProps:GetServerSideProps = async (context) =>{
+    try{
     //console.log("context:", context);
-    const db = await connect();
-    const university_collection = db.collection("university");
-    const sigla = context?.params?.universitySigla;
-    const result = await university_collection.findOne({sigla:sigla},{projection:{portal:1}});
-    if(result !== null){
+        const {universitySigla} = context.query;
+        console.log("universitySigla:", universitySigla);
+        const session = await unstable_getServerSession(context.req, context.res, authOptions);
+        console.log("session:", session);
+        if(session === null){
+            throw new API401Error('Usuario no autorizado');
+        }
+        const db = await connect();
+        
+        const university_collection = db.collection("university");
+        const university = await university_collection.findOne({sigla:universitySigla},{projection:{portal:1, configuration:1}});
+        console.log("university:", university);
+        if(university === null){
+            throw new API404Error('No existe esta Universidad.');
+        }
+        if(university !== null){
         const shareData = {
             headInfo:{
-                title:result.portal.head_information.title,
-                description:result.portal.head_information.description,
-                favicon:result.portal.head_information.favicon,
-                social_image:result.portal.head_information.social_image,
-                url:result.portal.head_information.url
-            }
+                title:university.portal.head_information.title,
+                description:university.portal.head_information.description,
+                favicon:university.portal.head_information.favicon,
+                social_image:university.portal.head_information.social_image,
+                url:university.portal.head_information.url
+            },
+            headerBackgroundColor:university.configuration.headerBackgroundColor,
+            logoWidth:university.configuration.logoWidth,
+            loginColor:university.configuration.loginColor
 
         }
         return{
-            props:JSON.parse(JSON.stringify(shareData)),
-            revalidate: 10,
+            props:JSON.parse(JSON.stringify(shareData))
+            
         }
-    }else{
-        return {
+        }else{
+            return{
+                props:{}
+            }
+        }
+    
+    }catch(error){
+        console.log("Ocurrio un error", error);
+        return{
             props:{}
         }
     }

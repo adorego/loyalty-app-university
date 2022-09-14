@@ -9,7 +9,8 @@ import { useRouter } from 'next/router';
 
 export interface BenefitsToShareProps{
     benefitsToShare:Array<ConfiguredBenefit>;
-    colors:colors_app
+    colors:colors_app;
+    shareTitle:string;
 }
 const BenefitsToShare = (props:BenefitsToShareProps) =>{
 
@@ -23,7 +24,7 @@ const BenefitsToShare = (props:BenefitsToShareProps) =>{
     }
     return(
         <div className={classes.container}>
-            <h5 className={classes.shareTitle}>Compartí estos beneficios UCOM con tus amigos y ganá puntos</h5>
+            <h5 className={classes.shareTitle}>{props.shareTitle}</h5>
             <div className={classes.benefitsToShareListContainer}>
                     {props.benefitsToShare.map(
                         (configuredBenefit) =>{

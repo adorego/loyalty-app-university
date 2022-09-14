@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 
 export interface RegisterCompProps{
     primary_color:string;
+    onPrimaryTextColor:string;
 
 }
 const RegisterComp = (props:RegisterCompProps) =>{
@@ -142,6 +143,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
 
     const onSubmit = async (e:React.SyntheticEvent) =>{
         e.preventDefault();
+        console.log("onSubmit");
         if( !isInputEmailInvalid && 
             !isInputPasswordInvalid && 
             !isInputRepeatedPasswordInvalid &&
@@ -171,8 +173,8 @@ const RegisterComp = (props:RegisterCompProps) =>{
             }
     }
     const submitIsAvailable = () =>{
-        if(validateEmail(email).pass && validateCedula(cedula).pass && validatePassword(password).pass
-        && validateConfirmPassword(repeatedPassword)){
+        if(!isInputEmailInvalid && !isInputCedulaInvalid && !isInputPasswordInvalid
+        && !isInputRepeatedPasswordInvalid){
             return true;
         }
         return false;
@@ -190,6 +192,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
         return <div className={spinnerClasses.spin}></div>
     }
     
+    console.log("is")
     return(
             <form className={classes.form} onSubmit={onSubmit}>
             <h3 className={classes.title}>Bienvenido, registráte !</h3>
@@ -212,7 +215,7 @@ const RegisterComp = (props:RegisterCompProps) =>{
                     errorMessage={errorMessageCedula}
                     additionalAttributes={{type:"text", autoComplete:"off"}}/>
                    
-            <div className={classes.passwordContainer}>
+                    <div className={classes.passwordContainer}>
                         <Input id="passwordId" 
                         required={true}
                         label="Clave" 
@@ -239,14 +242,13 @@ const RegisterComp = (props:RegisterCompProps) =>{
                         {showEyeRecovery && <i><FaEye  className={classes.eyeIcon} onClick={() => setShowEyeRecovery(!showEyeRecovery)}/></i>}
                         {!showEyeRecovery && <i><FaEyeSlash className={classes.eyeIcon} onClick={() => setShowEyeRecovery(!showEyeRecovery)}/></i>}
                     </div>
-                    <div className={classes.submitButton}>
-                        <Button label="Registrarme" isAvailable={submitIsAvailable()} 
-                        
-                        additionalStyle={{backgroundColor:props.primary_color,
-                        color:"var(--loyalty-on-primary-text-color)", width:"100%",
+                    {props.onPrimaryTextColor && props.primary_color && <div className={classes.submitButton}>
+                        <Button label="Registrarme"  isAvailable={submitIsAvailable()} 
+                        additionalStyle={{backgroundColor:props?.primary_color,
+                        color:props?.onPrimaryTextColor, width:"100%",
                         margin:"16px 0px 32px 0px"}}
                          />
-                    </div>
+                    </div>}
                 </form>
     )
 }

@@ -22,6 +22,13 @@ export interface MainProps{
     configuredAwards:Array<ConfiguredAward>;
     benefitsToShare:Array<ConfiguredBenefit>;
     headInfo:UniversityPortalHeadingInfo;
+    headerBackgroundColor:string;
+    logoWidth:string;
+    loginColor:string;
+    onPrimaryTextColor:string;
+    onSecondaryTextColor:string;
+    shareTitle:string;
+
 }
 const Main = (props:MainProps) =>{
     const {data:session, status} = useSession();
@@ -33,7 +40,7 @@ const Main = (props:MainProps) =>{
         if(Object.values(props).length > 0){
             return(
                 <MainComp points={props.points} configuredAwards={props.configuredAwards} 
-                benefitsToShare={props.benefitsToShare} />
+                benefitsToShare={props.benefitsToShare} shareTitle={props.shareTitle} />
             )
         }else{
             console.log("No se enviaron props");
@@ -66,6 +73,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
         if(university === null){
             throw new API404Error('No existe esta Universidad.');
         }
+        // console.log("university:", university);
         const user = university.users.find(
             (user:any) =>{
                 return user.email === session.user?.email
@@ -79,7 +87,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 return new Date(item.initial_date).getTime() <= Date.now() && new Date(item.end_date).getTime() >= Date.now()
             }
         )
-        // console.log("Valid Campaigns:", valid_campaigns);
+        
         type BenefitCampaign = {
             benefit:string,
             campaign_id:string
@@ -87,7 +95,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
         const benefitsIdsToShare:Array<BenefitCampaign> = valid_campaigns.map(
             (campaign:CampaignModel) =>{
                return{
-                    benefit:campaign.benefit.toString(),
+                    benefit:campaign?.benefit?.toString(),
                     campaign_id:campaign._id.toString()
                } 
             }
@@ -95,25 +103,25 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 
             
         )
-        // console.log("benefitsIdsToShare:", benefitsIdsToShare);
+        
+        
         
         const benefitsToShare = benefitsIdsToShare.map(
             (benefitCampaign:BenefitCampaign) =>{
                 const benefitItem = university?.benefits.find(
                     (item:any) =>{
-                        return item.benefit._id.toString() === benefitCampaign.benefit
+                        return item.benefit?._id.toString() === benefitCampaign?.benefit
                     }
                 )
                 return{
-                    benefit:benefitItem.benefit,
-                    campaign_id:benefitCampaign.campaign_id,
-                    granting:benefitItem.granting
+                    benefit:benefitItem?.benefit,
+                    campaign_id:benefitCampaign?.campaign_id,
+                    granting:benefitItem?.granting
                 }
             }
         )
-
-        // console.log("benefitToShare:", benefitsToShare);
         
+    
         const headInfo = {
                 title:university.portal.head_information.title,
                 description:university.portal.head_information.description,
@@ -121,12 +129,27 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
                 social_image:university.portal.head_information.social_image,
                 url:university.portal.head_information.url
         }
+        
+        const headerBackgroundColor = university?.configuration?.headerBackgroundColor;
+        const logoWidth = university?.configuration?.logoWidth;
+        const loginColor = university?.configuration?.loginColor;
+        const onPrimaryTextColor = university?.configuration?.onPrimaryTextColor;
+        const onSecondaryTextColor = university?.configuration?.onSecondaryTextColor;
+        const shareTitle = university.pages.shareTitle;
+
         return{
             props:{
                 points:JSON.parse(JSON.stringify(user.points)),
                 configuredAwards:JSON.parse(JSON.stringify(university.awards)),
                 benefitsToShare:JSON.parse(JSON.stringify(benefitsToShare)),
-                headInfo:JSON.parse(JSON.stringify(headInfo))
+                headInfo:JSON.parse(JSON.stringify(headInfo)),
+                headerBackgroundColor:JSON.parse(JSON.stringify(headerBackgroundColor)),
+                logoWidth:JSON.parse(JSON.stringify(logoWidth)),
+                loginColor:JSON.parse(JSON.stringify(loginColor)),
+                onPrimaryTextColor:JSON.parse(JSON.stringify(onPrimaryTextColor)),
+                onSecondaryTextColor:JSON.parse(JSON.stringify(onSecondaryTextColor)),
+                shareTitle:JSON.parse(JSON.stringify(shareTitle))
+
                 
               }
          }
@@ -136,7 +159,7 @@ export  const getServerSideProps:GetServerSideProps = async (context) =>{
 
     }catch(error){
         // errorNextHandler(error, context.res);
-        console.log("Ocurrio un error");
+        console.log("Ocurrio un error", error);
         return{
             props:{}
         }

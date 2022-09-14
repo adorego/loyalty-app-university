@@ -2,6 +2,7 @@ import { GetServerSideProps, GetStaticProps } from "next";
 import { ReactNode, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 
+import API404Error from "../../common/DataBase/Api404Error";
 import BenefitsPortal from "../../modules/universityPortal/BenefitsPortal";
 import CachedUniversityLayout from "../../common/Layout/CacheUniversityLayout";
 import Contacto from "../../modules/universityPortal/Contacto";
@@ -14,7 +15,7 @@ import { authActions } from "../../store/auth-slice";
 import { benefitsList } from "../../common/models/testing_data";
 import classes from '../../styles/portal.module.css';
 import { connect } from "../../common/DataBase/Connect";
-import {signOut} from 'next-auth/react';
+import { parse } from "path";
 import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 import { useRouter } from "next/router";
@@ -22,15 +23,20 @@ import {useSession} from "next-auth/react";
 
 export interface UniversityPortalProps{
     logo:ImageModel;
+    logoWidth:string;
+    loginColor:string;
     favicon:string;
     primary_color:string;
     secondary_color:string;
     secondaryLight_color:string;
+    selectedTabColor:string;
+    headerBackgroundColor:string;
     title:string;
     backGroundImage:ImageModel;
     backGroundImage_large:ImageModel;
     buttonText:string;
     forText:string;
+    forTextColor:string;
     links:Array<string>;
     loading:boolean;
     children:ReactNode;
@@ -48,7 +54,9 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
     const dispatch = useAppDispatch();
     const globalLoading = useAppSelector(state => state.ui.loading);
     const {data:session, status} = useSession();
+    
     // console.log("UniversityHome props:", props);
+    
     
     useEffect(
         () =>{
@@ -64,7 +72,7 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
                 dispatch(authActions.setUniversity({logo:props.logo, sigla:sigla, favicon:props.favicon}));
                 dispatch(uiActions.setColors({primary:props.primary_color, 
                     secondary:props.secondary_color,
-                    secondaryLight:props.secondaryLight_color}));
+                    secondaryLight:props.secondaryLight_color, selectedTabColor:props.selectedTabColor}));
                 dispatch(uiActions.setHead({title:props.title, description:props.forText}));
             
         },[]
@@ -85,26 +93,33 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
         )
     }
     
-    return(
-        <div className={classes.wrapper}>
-            <UniversityPortal
-                topLinks={props.links} 
-                title={props.title} 
-                backgroundImage={props.backGroundImage}
-                backgroundImage_large={props.backGroundImage_large}
-                forText={props.forText}
-                primaryColor={props.primary_color}
-                buttonText={props.buttonText}/>
-            <HowItWorks primaryColor={props.primary_color} secondaryColor={props.secondaryLight_color} />
-            <BenefitsPortal awardList={benefitsList} secondaryColor={props.secondaryLight_color} />
-            <Contacto email={props.contact_email} 
-            phone={props.contact_phone}
-            whatsapp={props.contact_whatsapp} 
-            secondaryColor={props.secondaryLight_color}
-            primaryColor={props.primary_color}/>
-            
-        </div>
-    )
+    if(Object.entries(props).length > 0){
+        return(
+            <div className={classes.wrapper}>
+                <UniversityPortal
+                    topLinks={props.links} 
+                    title={props.title} 
+                    backgroundImage={props.backGroundImage}
+                    backgroundImage_large={props?.backGroundImage_large}
+                    forText={props.forText}
+                    forTextColor={props.forTextColor}
+                    primaryColor={props.primary_color}
+                    buttonText={props.buttonText}/>
+                <HowItWorks primaryColor={props.primary_color} secondaryColor={props.secondaryLight_color} />
+                <BenefitsPortal awardList={benefitsList} secondaryColor={props.secondaryLight_color} />
+                <Contacto email={props.contact_email} 
+                phone={props.contact_phone}
+                whatsapp={props.contact_whatsapp} 
+                secondaryColor={props.secondaryLight_color}
+                primaryColor={props.primary_color}/>
+                
+            </div>
+        )
+    }else{
+        return(
+            <p>Pagina no encontrada</p>
+        )
+    }
     
     
 }
@@ -116,94 +131,58 @@ const UniversityHome = ({loading=true, ...props}:UniversityPortalProps) =>{
 
 export default UniversityHome;
 
-export async function getStaticPaths(){
-    const db = await connect();
-    const university_collection = db.collection("university");
-    const projection = {sigla:1};
-    const university_list_cursor = university_collection.find().project(projection);
-    const universities = await university_list_cursor.toArray();
-   
-    let paths:Array<{}> = [];
-    universities.map(
-        (university) => {
-            
-                    
-                    paths.push({params:{universitySigla:university.sigla}});
-                   
-        })
-           
-            
-            
-    
-      console.log("paths:", JSON.stringify(paths));
-    
-    
-    return{
-        paths:paths,
-        fallback:false
-    }
-
-    
-}
-
-export const getStaticProps:GetStaticProps = async(context) => {
-    //console.log("context:", context);
-    const db = await connect();
-    const university_collection = db.collection("university");
-    const sigla = context?.params?.universitySigla;
-    const result = await university_collection.findOne({sigla:sigla});
-    if(result !== null){
+export const getServerSideProps:GetServerSideProps = async (context) =>{
+    try{
+        const {universitySigla} = context.query;
+        const db = await connect();
+        
+        const university_collection = db.collection("university");
+        const university = await university_collection.findOne({sigla:universitySigla});
+        
+        if(university === null){
+            throw new API404Error('No existe esta Universidad.');
+        }
         const portalData = {
-            logo:result.logo, 
-            favicon:result.portal.head_information.favicon,
-            primary_color:result.configuration.primaryColor,
-            secondary_color:result.configuration.secondaryColor,
-            secondaryLight_color:result.configuration.secondaryLightColor,
-            title:result.portal.title,
-            backGroundImage:result.portal.backgroundImage,
-            backGroundImage_large:result.portal.backgroundImage_large,
-            buttonText:result.portal.buttonText,
-            forText:result.portal.forText,
-            links:result.portal.links,
-            contact_email:result.portal.contact_email,
-            contact_phone:result.portal.contact_phone,
-            contact_whatsapp:result.portal.contact_whatsapp,
-            headInfo:{
-                title:result.portal.head_information.title,
-                description:result.portal.head_information.description,
-                favicon:result.portal.head_information.favicon,
-                social_image:result.portal.head_information.social_image,
-                url:result.portal.head_information.url
-            }
-
-        }
-        return{
-
-            props:{
-                ...portalData,
-            },
-            revalidate: 10,
+                        logo:university.logo, 
+                        logoWidth:university.configuration.logoWidth,
+                        loginColor:university.configuration.loginColor,
+                        favicon:university.portal.head_information.favicon,
+                        primary_color:university.configuration.primaryColor,
+                        secondary_color:university.configuration.secondaryColor,
+                        secondaryLight_color:university.configuration.secondaryLightColor,
+                        selectedTabColor:university.configuration.selectedTabColor,
+                        headerBackgroundColor:university.configuration.headerBackgroundColor,
+                        title:university.portal.title,
+                        backGroundImage:university.portal.backgroundImage,
+                        backGroundImage_large:university.portal.backgroundImage_large,
+                        buttonText:university.portal.buttonText,
+                        forText:university.portal.forText,
+                        forTextColor:university.portal.forTextColor,
+                        links:university.portal.links,
+                        contact_email:university.portal.contact_email,
+                        contact_phone:university.portal.contact_phone,
+                        contact_whatsapp:university.portal.contact_whatsapp,
+                        headInfo:{
+                            title:university.portal.head_information.title,
+                            description:university.portal.head_information.description,
+                            favicon:university.portal.head_information.favicon,
+                            social_image:university.portal.head_information.social_image,
+                            url:university.portal.head_information.url
+                        }
+            
+                    }
+                    
+                    return{
+            
+                        props:{
+                            ...portalData,
+                        }
+                            
+                    }
                 
-        }
-    }else{
-        return {
+    }catch(error){
+        return{
             props:{}
         }
     }
 }
-
-// export  const getServerSideProps:GetServerSideProps = async (context) =>{
-    
-//     const {universitySigla} = context.query;
-//     const url = new URL(`${process.env.API_HOST}/api/v1/university/${universitySigla}/portal`);
-//     const result = await fetch(url.href);
-//     const data = await result.json();
-    
-//     return{
-//         props:{
-//             ...data,
-//             loading:false
-//         }
-//     }
-        
-// }

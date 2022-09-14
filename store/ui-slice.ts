@@ -9,7 +9,8 @@ const initialState = {
     color:{
         primary:"",
         secondary:"",
-        secondaryLight:""
+        secondaryLight:"",
+        selectedTabColor:""
 
     },
     loading:false,

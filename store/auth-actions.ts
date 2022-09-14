@@ -30,7 +30,7 @@ async dispatch => {
         }
     }
     const {data, error, result} = await httpOperations(httpOperationParam);
-    console.log("data:", data);
+    
     if(!result.ok){
         dispatch(uiActions.showNotification({show:true, message:`Ocurrió un error:+ ${error}`, color:"red"}));
     }else{

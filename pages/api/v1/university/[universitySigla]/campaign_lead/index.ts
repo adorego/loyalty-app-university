@@ -36,7 +36,7 @@ const handler = async (req:NextApiRequest, res:NextApiResponse) =>{
                 }
 
             )
-            console.log("campaign:", campaign[0]);
+            // console.log("campaign:", campaign[0]);
             const benefit = campaignsResult?.benefits.filter(
                 (item:ConfiguredBenefit) =>{
                     return item.benefit._id.toString() === campaign[0].benefit.toString()

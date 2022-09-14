@@ -17,6 +17,7 @@ export interface MainCompProps{
     points:string;
     configuredAwards:Array<ConfiguredAward>;
     benefitsToShare:Array<ConfiguredBenefit>;
+    shareTitle:string;
 }
 
 const MainComp = (props:MainCompProps) =>{
@@ -33,8 +34,8 @@ const MainComp = (props:MainCompProps) =>{
     // console.log("props.benefitsToShare:", props.benefitsToShare);
 
 
-    const awardsStyleSelectedTab = selectedTab === 'awards' ? {color:colors.secondaryLight} : {color:"var(--loyalty-on-surface-text-color)"};
-    const winPointsStyleSelectedTab = selectedTab === 'winpoints' ? {color:colors.secondaryLight} : {color:"var(--loyalty-on-surface-text-color)"};
+    const awardsStyleSelectedTab = selectedTab === 'awards' ? {color:colors.selectedTabColor} : {color:"var(--loyalty-on-surface-text-color)"};
+    const winPointsStyleSelectedTab = selectedTab === 'winpoints' ? {color:colors.selectedTabColor} : {color:"var(--loyalty-on-surface-text-color)"};
     
     const selectTab = (e:React.SyntheticEvent<HTMLButtonElement>) =>{
         // console.log("selected tab:", e.target.value);
@@ -82,7 +83,7 @@ const MainComp = (props:MainCompProps) =>{
                 primary_color={colors.primary}
                 secondary_color={colors.secondaryLight} configuredAwards={props.configuredAwards} />}
                 {selectedTab === "winpoints" && <BenefitsToShare benefitsToShare={props.benefitsToShare}
-                colors={colors} />}
+                colors={colors} shareTitle={props.shareTitle} />}
             </div>
         </div>
         

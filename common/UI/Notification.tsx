@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import classes from './Notification.module.css';
 
 export interface NotificationProps{
@@ -7,11 +8,10 @@ export interface NotificationProps{
 }
 
 const Notification = (props:NotificationProps) =>{
+    const dynamicClass = classes.notification + ' ' + classes[props.color];
     
-    const dinamicClass = classes.notification + ' ' + classes[props.color];
-    // console.log('dinamicClass:', dinamicClass);
     return (
-        <div className={dinamicClass}>
+        <div  className={dynamicClass}>
             <p className={classes.message}>{props.message}</p>
         </div>
     )

@@ -11,7 +11,7 @@ export const fetchPortalData = (sigla:string):AppThunk =>
         }else{
             dispatch(authActions.setUniversity({logo:data.logo, sigla:sigla, favicon:data.favicon}));
             dispatch(uiActions.setColors({primary:data.primary_color, secondary:data.secondary_color,
-            secondaryLight:data.secondaryLight_color}));
+            secondaryLight:data.secondaryLight_color, selectedTabColor:data.selectedTab_color}));
             dispatch(uiActions.setHead({title:data.title, description:data.forText}));
         }
 

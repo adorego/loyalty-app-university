@@ -13,6 +13,10 @@ import { uiActions } from "../../store/ui-slice";
 export interface CachedUniversityLayoutProps{
     children:ReactNode;
     headInfo:UniversityPortalHeadingInfo;
+    headerBackgroundColor:string;
+    logoWidth:string;
+    loginColor:string;
+    
 }
 
 const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps) =>{
@@ -24,6 +28,7 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
     const notification = useAppSelector(state => state.ui.notification);
     const router = useRouter();
 
+    // console.log("props:", props);
     
     
     useEffect(
@@ -77,9 +82,10 @@ const CachedUniversityLayout = ({children, ...props}:CachedUniversityLayoutProps
                 {loading && <div className={spinnerClasses.spin} ></div>}
                 {notification.show && <Notification message={notification.message} color= {notification.color} />}
                 {dataIsAvailable() && <UniversityHeader 
-                        backGroundColor={colors.primary} 
+                        backGroundColor={props.headerBackgroundColor ? props.headerBackgroundColor : colors.primary} 
                         logo={logo}
-                        loginLinkColor={colors.secondary} />}
+                        logoWidth={props.logoWidth}
+                        loginLinkColor={props.loginColor} />}
                 <main>
                     {children}
                 </main>

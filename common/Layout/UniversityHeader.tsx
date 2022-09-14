@@ -13,6 +13,7 @@ export interface UniversityHeaderProps{
     backGroundColor:string;
     loginLinkColor:string;
     logo:ImageModel;
+    logoWidth:string;
     
 }
 const UniversityHeader = (props:UniversityHeaderProps) =>{
@@ -22,6 +23,7 @@ const UniversityHeader = (props:UniversityHeaderProps) =>{
     const {universitySigla:sigla} = router.query;
     const containerStyle = props.backGroundColor !== "" ? {backgroundColor:props.backGroundColor} : {};
     const linkStyle = props.loginLinkColor !== "" ? {color:props.loginLinkColor} : {};
+    
     
     const signOutHandler = async () =>{
         dispatch(uiActions.setLoading({loading:true}));
@@ -37,7 +39,7 @@ const UniversityHeader = (props:UniversityHeaderProps) =>{
     return(
             <div className={classes.container}
                         style={containerStyle}>
-                <div className={classes.logo}>
+                <div className={classes.logo} style={{width:props.logoWidth}}>
                     {props.logo && props.logo.src &&  
                     <Image 
                         onClick={backToHome}     
@@ -49,7 +51,7 @@ const UniversityHeader = (props:UniversityHeaderProps) =>{
                         priority={true}/>
                     }
                 </div>
-                <div className={classes.logginLink}>
+                <div className={classes.loginLink}>
                     {status === 'unauthenticated' && 
                         <Link href={`/${sigla}/auth/login`}>
                             <a className={classes.SignInOutLink} style={linkStyle}>Ingresar</a>

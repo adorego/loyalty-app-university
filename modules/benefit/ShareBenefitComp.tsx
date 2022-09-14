@@ -26,6 +26,7 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const colors = useAppSelector(state => state.ui.color);
    
     const waLink = useRef<HTMLAnchorElement>(null);
+    const leadSaved = useRef<boolean>(false);
     const [loading, setLoading] = useState(true);
     const [generatingCode, setGeneratingCode] = useState(false);
     const codeGenerated = useRef<boolean>(false);
@@ -199,27 +200,33 @@ const ShareBenefitComp = (props:ShareBenefitCompProps) =>{
     const generateBenefit = async () =>{
         //Almacenar los datos del beneficiario (nombre, apellido, celular, código del beneficio, código de la Campaña)
         // console.log("Before send data");
-        const httpProps:HttpProps = {
-            operation:'post',
-            url:`/api/v1/university/${sigla}/campaign_lead`,
-            data:{
-                source_user:user.id,
-                name,
-                lastName,
-                cellPhone,
-                benefitCode,
-                campaign_id:benefitToShare.campaign_id,
-                sigla
-                
+        if(leadSaved.current === false){
+            const httpProps:HttpProps = {
+                operation:'post',
+                url:`/api/v1/university/${sigla}/campaign_lead`,
+                data:{
+                    source_user:user.id,
+                    name,
+                    lastName,
+                    cellPhone,
+                    benefitCode,
+                    campaign_id:benefitToShare.campaign_id,
+                    sigla
+                    
+                }
+            };
+            dispatch(uiActions.setLoading({loading:true}));
+            const {data, error, result} = await httpOperations(httpProps);
+            dispatch(uiActions.setLoading({loading:false}));
+            if(!result.ok){
+                leadSaved.current = false;
+                dispatch(uiActions.showNotification({message:`Ocurrio un error en la operación:${error.message}`, show:true, color:"red"}));
+            }else{
+                // dispatch(uiActions.showNotification({message:`Operación exitosa`, show:true, color:"green"}))
+                leadSaved.current = true;
+                shareBenefitViaWA();
             }
-        };
-        dispatch(uiActions.setLoading({loading:true}));
-        const {data, error, result} = await httpOperations(httpProps);
-        dispatch(uiActions.setLoading({loading:false}));
-        if(!result.ok){
-            dispatch(uiActions.showNotification({message:`Ocurrio un error en la operación:${error.message}`, show:true, color:"red"}));
         }else{
-            // dispatch(uiActions.showNotification({message:`Operación exitosa`, show:true, color:"green"}))
             shareBenefitViaWA();
         }
     

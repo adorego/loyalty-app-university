@@ -12,12 +12,19 @@ import classes from './LoginComp.module.css';
 import { fetchPortalData } from "../../store/ui-actions";
 import { sendVerificationCode } from "../../store/auth-actions";
 import {signIn} from "next-auth/react";
-import spineerClasses from '../../styles/spinner.module.css';
+import spinnerClasses from '../../styles/spinner.module.css';
 import { uiActions } from "../../store/ui-slice";
 import useInput from "../../hooks/use-input";
 import { useRouter } from "next/router";
 
-const LoginComp = () =>{
+export interface LoginCompProps{
+    onPrimaryTextColor:string;
+    onSecondaryTextColor:string;
+    
+
+}
+
+const LoginComp = (props:LoginCompProps) =>{
     const dispatch = useAppDispatch();
     const router = useRouter();
     const sigla = useAppSelector(state => state.auth.university.sigla);
@@ -116,7 +123,7 @@ const LoginComp = () =>{
                         sigla:sigla
                     
                     })
-                    
+                    // console.log("login result:", result);
                     if(result.error){
                         dispatch(uiActions.setLoading({loading:false})); 
                         dispatch(uiActions.showNotification({show:true, message:"Hay un problema con el par usuario/clave", color:'red'}));
@@ -144,7 +151,7 @@ const LoginComp = () =>{
     
         if(loading){
             return(
-                <div className={spineerClasses.spin}></div>
+                <div className={spinnerClasses.spin}></div>
             )
         }
         return (
@@ -190,7 +197,7 @@ const LoginComp = () =>{
                         isAvailable={enableSubmit}
                         label="Ingresar" 
                         additionalStyle={{backgroundColor:colors.primary, 
-                        color:"var(--loyalty-on-primary-text-color)", width:"100%", height:"49px"}}/>
+                        color:props.onPrimaryTextColor, width:"100%", height:"49px"}}/>
                     </div>}
                     
                     
@@ -200,7 +207,8 @@ const LoginComp = () =>{
                         isAvailable={true}
                         label="Registrarme" 
                         onClickHandler={onRegisterClickHandler}
-                        additionalStyle={{backgroundColor:colors.secondaryLight, color:"1A1A1A", width:"100%", height:"49px"}}/>
+                        additionalStyle={{backgroundColor:colors.secondaryLight, 
+                        color:props.onSecondaryTextColor, width:"100%", height:"49px"}}/>
                 </div>
                 
         

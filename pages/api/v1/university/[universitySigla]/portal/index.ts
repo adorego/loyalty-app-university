@@ -37,6 +37,7 @@ async function getUniversityPortal(sigla:string, res:NextApiResponse){
             primary_color:result.configuration.primaryColor,
             secondary_color:result.configuration.secondaryColor,
             secondaryLight_color:result.configuration.secondaryLightColor,
+            selectedTab_color:result.configuration.selectedTabColor,
             title:result.portal.title,
             backGroundImage:result.portal.backgroundImage,
             backGroundImage_large:result.portal.backgroundImage_large,
